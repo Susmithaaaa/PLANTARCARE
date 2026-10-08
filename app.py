@@ -34,7 +34,11 @@ from reportlab.lib import colors
 
 app = Flask(__name__)
 
-app.secret_key = "plantarcare-secret-key-2026"
+# GitHub + Render compatible secret key
+app.secret_key = os.environ.get(
+    "SECRET_KEY",
+    "plantarcare-local-key"
+)
 
 
 # ============================================================
@@ -230,15 +234,10 @@ def get_care_plan(risk_level):
             "care_details": [
 
                 "Keep daily activity comfortable and gradual.",
-
                 "Use comfortable and supportive footwear.",
-
                 "Take breaks during prolonged standing or walking.",
-
                 "Avoid forcing painful movements.",
-
                 "Monitor changes in symptoms.",
-
                 "If symptoms persist or worsen, seek professional guidance."
 
             ],
@@ -246,13 +245,9 @@ def get_care_plan(risk_level):
             "daily_routine": [
 
                 "Morning: begin with gentle comfortable movement.",
-
                 "Daytime: use comfortable footwear.",
-
                 "Take short breaks during prolonged standing.",
-
                 "Evening: allow adequate recovery time.",
-
                 "Monitor any persistent or worsening symptoms."
 
             ],
@@ -260,11 +255,8 @@ def get_care_plan(risk_level):
             "footwear": [
 
                 "Choose comfortable and stable footwear.",
-
                 "Avoid footwear that causes rubbing or pressure.",
-
                 "Use footwear suitable for the activity.",
-
                 "Replace footwear when it becomes excessively worn."
 
             ],
@@ -272,13 +264,9 @@ def get_care_plan(risk_level):
             "nutrition": [
 
                 "Eat regular balanced meals.",
-
                 "Include vegetables and fruits.",
-
                 "Include protein-rich foods.",
-
                 "Choose a variety of nutrient-rich foods.",
-
                 "Drink water regularly."
 
             ]
@@ -296,15 +284,10 @@ def get_care_plan(risk_level):
             "care_details": [
 
                 "Keep activity gradual and comfortable.",
-
                 "Use supportive and comfortable footwear.",
-
                 "Avoid long periods of continuous standing when possible.",
-
                 "Take regular activity breaks.",
-
                 "Avoid movements that increase discomfort.",
-
                 "If symptoms persist or worsen, seek professional guidance."
 
             ],
@@ -312,13 +295,9 @@ def get_care_plan(risk_level):
             "daily_routine": [
 
                 "Morning: start with gentle comfortable movement.",
-
                 "During the day: take breaks from prolonged standing.",
-
                 "Use comfortable footwear during walking.",
-
                 "Avoid sudden increases in strenuous activity.",
-
                 "Allow sufficient recovery time."
 
             ],
@@ -326,11 +305,8 @@ def get_care_plan(risk_level):
             "footwear": [
 
                 "Choose footwear that feels comfortable and stable.",
-
                 "Avoid footwear that creates pressure or rubbing.",
-
                 "Use appropriate footwear for walking and daily activities.",
-
                 "Check footwear condition regularly."
 
             ],
@@ -338,13 +314,9 @@ def get_care_plan(risk_level):
             "nutrition": [
 
                 "Maintain regular balanced meals.",
-
                 "Include vegetables, fruits and whole grains.",
-
                 "Include varied protein foods.",
-
                 "Stay hydrated throughout the day.",
-
                 "Choose a variety of nutrient-rich foods."
 
             ]
@@ -362,15 +334,10 @@ def get_care_plan(risk_level):
             "care_details": [
 
                 "Keep activity within a comfortable range.",
-
                 "Avoid sudden increases in strenuous activity.",
-
                 "Use comfortable and supportive footwear.",
-
                 "Take regular breaks from prolonged standing or walking.",
-
                 "Do not force movements that cause discomfort.",
-
                 "If symptoms persist or worsen, seek professional guidance."
 
             ],
@@ -378,13 +345,9 @@ def get_care_plan(risk_level):
             "daily_routine": [
 
                 "Morning: begin slowly with comfortable movement.",
-
                 "During the day: reduce prolonged continuous standing where possible.",
-
                 "Take regular rest breaks.",
-
                 "Avoid sudden increases in physical activity.",
-
                 "Monitor persistent or worsening symptoms."
 
             ],
@@ -392,11 +355,8 @@ def get_care_plan(risk_level):
             "footwear": [
 
                 "Choose comfortable, stable footwear.",
-
                 "Avoid footwear that causes pressure or rubbing.",
-
                 "Use activity-appropriate footwear.",
-
                 "Replace excessively worn footwear."
 
             ],
@@ -404,13 +364,9 @@ def get_care_plan(risk_level):
             "nutrition": [
 
                 "Maintain balanced and regular meals.",
-
                 "Include vegetables and fruits.",
-
                 "Include varied protein foods.",
-
                 "Choose whole and nutrient-rich foods.",
-
                 "Drink water regularly."
 
             ]
@@ -473,17 +429,11 @@ def calculate_risk(
     yes_fields = [
 
         "plantar_pain",
-
         "morning_pain",
-
         "previous_injury",
-
         "heel_symptom",
-
         "arch_symptom",
-
         "swelling",
-
         "diabetes"
 
     ]
@@ -556,10 +506,8 @@ def calculate_risk(
     else:
 
         return "Low"
-
-
-# ============================================================
-# HOME
+    # ============================================================
+# HOME ROUTE
 # ============================================================
 
 @app.route("/")
@@ -571,7 +519,7 @@ def home():
 
 
 # ============================================================
-# INDEX
+# INDEX ROUTE
 # ============================================================
 
 @app.route("/index")
@@ -583,7 +531,7 @@ def index():
 
 
 # ============================================================
-# LOGIN
+# LOGIN ROUTE
 # ============================================================
 
 @app.route(
@@ -605,17 +553,23 @@ def login():
         ).strip()
 
 
-        if username:
+        if not username:
 
-            session["username"] = username
+            flash(
+                "Please enter your name.",
+                "error"
+            )
 
             return redirect(
-                url_for("home")
+                url_for("login")
             )
 
 
-        flash(
-            "Please enter your username."
+        session["username"] = username
+
+
+        return redirect(
+            url_for("home")
         )
 
 
@@ -625,7 +579,7 @@ def login():
 
 
 # ============================================================
-# LOGOUT
+# LOGOUT ROUTE
 # ============================================================
 
 @app.route("/logout")
@@ -634,12 +588,12 @@ def logout():
     session.clear()
 
     return redirect(
-        url_for("login")
+        url_for("home")
     )
 
 
 # ============================================================
-# FEATURES
+# FEATURES ROUTE
 # ============================================================
 
 @app.route("/features")
@@ -652,8 +606,6 @@ def features():
 
 # ============================================================
 # PREDICTION PAGE
-# IMPORTANT:
-# THIS ROUTE MUST EXIST ONLY ONCE
 # ============================================================
 
 @app.route("/prediction")
@@ -666,8 +618,6 @@ def prediction():
 
 # ============================================================
 # PREDICTION PROCESSING
-# IMPORTANT:
-# FORM MUST POST TO /predict
 # ============================================================
 
 @app.route(
@@ -676,11 +626,109 @@ def prediction():
 )
 def predict():
 
-    if model is None:
+    # --------------------------------------------------------
+    # GET USER INPUT
+    # --------------------------------------------------------
+
+    name = request.form.get(
+        "name",
+        ""
+    ).strip()
+
+
+    age = request.form.get(
+        "age",
+        ""
+    ).strip()
+
+
+    height = request.form.get(
+        "height",
+        ""
+    ).strip()
+
+
+    weight = request.form.get(
+        "weight",
+        ""
+    ).strip()
+
+
+    standing_hours = request.form.get(
+        "standing_hours",
+        "0"
+    ).strip()
+
+
+    plantar_pain = request.form.get(
+        "plantar_pain",
+        "No"
+    )
+
+
+    morning_pain = request.form.get(
+        "morning_pain",
+        "No"
+    )
+
+
+    walking_activity = request.form.get(
+        "walking_activity",
+        "No"
+    )
+
+
+    previous_injury = request.form.get(
+        "previous_injury",
+        "No"
+    )
+
+
+    heel_symptom = request.form.get(
+        "heel_symptom",
+        "No"
+    )
+
+
+    arch_symptom = request.form.get(
+        "arch_symptom",
+        "No"
+    )
+
+
+    swelling = request.form.get(
+        "swelling",
+        "No"
+    )
+
+
+    diabetes = request.form.get(
+        "diabetes",
+        "No"
+    )
+
+
+    # --------------------------------------------------------
+    # VALIDATE NUMERIC INPUTS
+    # --------------------------------------------------------
+
+    try:
+
+        age_value = int(age)
+
+        height_value = float(height)
+
+        weight_value = float(weight)
+
+        standing_value = float(
+            standing_hours
+        )
+
+    except ValueError:
 
         flash(
-            "Machine learning model not found. "
-            "Please run train_model.py first."
+            "Please enter valid numeric values.",
+            "error"
         )
 
         return redirect(
@@ -688,357 +736,367 @@ def predict():
         )
 
 
-    try:
+    # --------------------------------------------------------
+    # VALIDATE HEIGHT AND WEIGHT
+    # --------------------------------------------------------
 
-        form = request.form
+    if (
+        height_value <= 0
+        or weight_value <= 0
+    ):
 
+        flash(
+            "Height and weight must be greater than zero.",
+            "error"
+        )
 
-        name = form.get(
-            "name",
-            "User"
+        return redirect(
+            url_for("prediction")
         )
 
 
-        age = float(
-            form["age"]
-        )
+    # --------------------------------------------------------
+    # PATIENT DATA
+    # --------------------------------------------------------
+
+    patient_data = {
+
+        "name": name,
+
+        "age": age_value,
+
+        "height": height_value,
+
+        "weight": weight_value,
+
+        "standing_hours":
+            standing_value,
+
+        "plantar_pain":
+            plantar_pain,
+
+        "morning_pain":
+            morning_pain,
+
+        "walking_activity":
+            walking_activity,
+
+        "previous_injury":
+            previous_injury,
+
+        "heel_symptom":
+            heel_symptom,
+
+        "arch_symptom":
+            arch_symptom,
+
+        "swelling":
+            swelling,
+
+        "diabetes":
+            diabetes
+
+    }
 
 
-        height = float(
-            form["height"]
-        )
+    # ========================================================
+    # MACHINE LEARNING INPUT
+    # ========================================================
 
+    model_input = pd.DataFrame(
 
-        weight = float(
-            form["weight"]
-        )
+        [[
 
+            age_value,
 
-        standing_hours = float(
-            form["standing_hours"]
-        )
+            height_value,
 
+            weight_value,
 
-        plantar_pain = form[
-            "plantar_pain"
+            plantar_pain,
+
+            morning_pain,
+
+            standing_value,
+
+            walking_activity,
+
+            previous_injury,
+
+            heel_symptom,
+
+            arch_symptom,
+
+            swelling,
+
+            diabetes
+
+        ]],
+
+        columns=[
+
+            "Age",
+
+            "HeightCm",
+
+            "WeightKg",
+
+            "PlantarPain",
+
+            "MorningPain",
+
+            "StandingHours",
+
+            "WalkingActivity",
+
+            "PreviousInjury",
+
+            "HeelSymptom",
+
+            "ArchSymptom",
+
+            "Swelling",
+
+            "Diabetes"
+
         ]
 
-
-        morning_pain = form[
-            "morning_pain"
-        ]
+    )
 
 
-        walking_activity = form[
-            "walking_activity"
-        ]
+    # ========================================================
+    # MACHINE LEARNING PREDICTION
+    # ========================================================
+
+    prediction_value = "Not Available"
+
+    confidence = 0
 
 
-        previous_injury = form[
-            "previous_injury"
-        ]
+    if model is not None:
 
+        try:
 
-        heel_symptom = form[
-            "heel_symptom"
-        ]
-
-
-        arch_symptom = form[
-            "arch_symptom"
-        ]
-
-
-        swelling = form[
-            "swelling"
-        ]
-
-
-        diabetes = form[
-            "diabetes"
-        ]
-
-
-        # ----------------------------------------------------
-        # PATIENT DATA
-        # ----------------------------------------------------
-
-        patient_data = {
-
-            "name": name,
-
-            "age": age,
-
-            "height": height,
-
-            "weight": weight,
-
-            "standing_hours":
-                standing_hours,
-
-            "plantar_pain":
-                plantar_pain,
-
-            "morning_pain":
-                morning_pain,
-
-            "walking_activity":
-                walking_activity,
-
-            "previous_injury":
-                previous_injury,
-
-            "heel_symptom":
-                heel_symptom,
-
-            "arch_symptom":
-                arch_symptom,
-
-            "swelling":
-                swelling,
-
-            "diabetes":
-                diabetes
-
-        }
-
-
-        # ----------------------------------------------------
-        # MODEL INPUT
-        # ----------------------------------------------------
-
-        model_input = pd.DataFrame([{
-
-            "Age": age,
-
-            "HeightCm": height,
-
-            "WeightKg": weight,
-
-            "PlantarPain":
-                plantar_pain,
-
-            "MorningPain":
-                morning_pain,
-
-            "StandingHours":
-                standing_hours,
-
-            "WalkingActivity":
-                walking_activity,
-
-            "PreviousInjury":
-                previous_injury,
-
-            "HeelSymptom":
-                heel_symptom,
-
-            "ArchSymptom":
-                arch_symptom,
-
-            "Swelling":
-                swelling,
-
-            "Diabetes":
-                diabetes
-
-        }])
-
-
-        # ----------------------------------------------------
-        # MODEL PREDICTION
-        # ----------------------------------------------------
-
-        model_prediction = model.predict(
-            model_input
-        )[0]
-
-
-        prediction_text = (
-
-            "Yes"
-
-            if str(
-                model_prediction
-            ).lower()
-            in [
-                "yes",
-                "1",
-                "true"
-            ]
-
-            else "No"
-
-        )
-
-
-        # ----------------------------------------------------
-        # CONFIDENCE
-        # ----------------------------------------------------
-
-        confidence = "N/A"
-
-
-        if hasattr(
-            model,
-            "predict_proba"
-        ):
-
-            probability = model.predict_proba(
+            model_prediction = model.predict(
                 model_input
             )[0]
 
 
-            confidence = round(
-                float(
-                    max(probability)
-                ) * 100,
-                1
-            )
+            if str(
+                model_prediction
+            ).strip().lower() in [
+                "yes",
+                "1",
+                "true"
+            ]:
+
+                prediction_value = "Yes"
+
+            else:
+
+                prediction_value = "No"
 
 
-        # ----------------------------------------------------
-        # BMI
-        # ----------------------------------------------------
+            # ------------------------------------------------
+            # PREDICTION PROBABILITY
+            # ------------------------------------------------
 
-        bmi = weight / (
-            (height / 100) ** 2
-        )
+            if hasattr(
+                model,
+                "predict_proba"
+            ):
 
-
-        bmi = round(
-            bmi,
-            1
-        )
-
-
-        bmi_category = get_bmi_category(
-            bmi
-        )
+                probabilities = model.predict_proba(
+                    model_input
+                )[0]
 
 
-        # ----------------------------------------------------
-        # RISK
-        # ----------------------------------------------------
-
-        risk_level = calculate_risk(
-            patient_data,
-            prediction_text
-        )
-
-
-        # ----------------------------------------------------
-        # FEATURE SUMMARY
-        # ----------------------------------------------------
-
-        feature_summary = {
-
-            "Plantar Pain":
-                plantar_pain,
-
-            "Morning Pain":
-                morning_pain,
-
-            "Walking Activity":
-                walking_activity,
-
-            "Previous Injury":
-                previous_injury,
-
-            "Heel Symptoms":
-                heel_symptom,
-
-            "Arch Symptoms":
-                arch_symptom,
-
-            "Swelling":
-                swelling,
-
-            "Diabetes":
-                diabetes
-
-        }
-
-
-        # ----------------------------------------------------
-        # FINAL RESULT
-        # ----------------------------------------------------
-
-        result = {
-
-            "patient":
-                patient_data,
-
-            "bmi":
-                bmi,
-
-            "bmi_category":
-                bmi_category,
-
-            "prediction":
-                prediction_text,
-
-            "risk_level":
-                risk_level,
-
-            "confidence":
-                confidence,
-
-            "feature_summary":
-                feature_summary,
-
-            "generated_at":
-                datetime.now().strftime(
-                    "%d-%m-%Y %H:%M"
+                confidence = round(
+                    max(probabilities) * 100,
+                    1
                 )
 
-        }
 
+        except Exception as error:
 
-        # ----------------------------------------------------
-        # SESSION
-        # ----------------------------------------------------
-
-        session["result"] = result
-
-        session["risk_level"] = risk_level
-
-
-        # ----------------------------------------------------
-        # RESULT PAGE
-        # ----------------------------------------------------
-
-        return redirect(
-            url_for(
-                "prediction_result"
+            print(
+                "Prediction error:",
+                error
             )
+
+            prediction_value = "Not Available"
+
+            confidence = 0
+
+
+    # ========================================================
+    # BMI CALCULATION
+    # ========================================================
+
+    height_meters = (
+        height_value / 100
+    )
+
+
+    bmi = round(
+
+        weight_value
+        / (
+            height_meters
+            * height_meters
+        ),
+
+        2
+
+    )
+
+
+    bmi_category = get_bmi_category(
+        bmi
+    )
+
+
+    # ========================================================
+    # RISK LEVEL
+    # ========================================================
+
+    risk_level = calculate_risk(
+
+        patient_data,
+
+        prediction_value
+
+    )
+
+
+    # ========================================================
+    # FEATURE SUMMARY
+    # ========================================================
+
+    feature_summary = {
+
+        "Age":
+            age_value,
+
+        "Height":
+            f"{height_value:.1f} cm",
+
+        "Weight":
+            f"{weight_value:.1f} kg",
+
+        "BMI":
+            bmi,
+
+        "BMI Category":
+            bmi_category,
+
+        "Plantar Pain":
+            plantar_pain,
+
+        "Morning Pain":
+            morning_pain,
+
+        "Standing Hours":
+            standing_value,
+
+        "Walking Activity":
+            walking_activity,
+
+        "Previous Injury":
+            previous_injury,
+
+        "Heel Symptom":
+            heel_symptom,
+
+        "Arch Symptom":
+            arch_symptom,
+
+        "Swelling":
+            swelling,
+
+        "Diabetes":
+            diabetes
+
+    }
+
+
+    # ========================================================
+    # RESULT DATA
+    # ========================================================
+
+    result = {
+
+        "patient": {
+
+            "name": name,
+
+            "age": age_value,
+
+            "height": height_value,
+
+            "weight": weight_value
+
+        },
+
+
+        "bmi": bmi,
+
+
+        "bmi_category":
+            bmi_category,
+
+
+        "prediction":
+            prediction_value,
+
+
+        "risk_level":
+            risk_level,
+
+
+        "confidence":
+            confidence,
+
+
+        "feature_summary":
+            feature_summary,
+
+
+        "generated_at":
+            datetime.now().strftime(
+                "%d-%m-%Y %I:%M %p"
+            )
+
+    }
+
+
+    # ========================================================
+    # SAVE RESULT IN SESSION
+    # ========================================================
+
+    session["result"] = result
+
+    session["risk_level"] = risk_level
+
+
+    # ========================================================
+    # REDIRECT TO RESULT PAGE
+    # ========================================================
+
+    return redirect(
+        url_for(
+            "prediction_result"
         )
-
-
-    except Exception as error:
-
-        print(
-            "Prediction error:",
-            error
-        )
-
-
-        flash(
-            "Please check all entered values "
-            "and Yes/No selections."
-        )
-
-
-        return redirect(
-            url_for("prediction")
-        )
+    )
 
 
 # ============================================================
-# PREDICTION RESULT
+# PREDICTION RESULT PAGE
 # ============================================================
 
-@app.route("/prediction-result")
+@app.route(
+    "/prediction-result"
+)
 def prediction_result():
 
     result = session.get(
@@ -1047,6 +1105,11 @@ def prediction_result():
 
 
     if not result:
+
+        flash(
+            "Please complete the prediction assessment first.",
+            "error"
+        )
 
         return redirect(
             url_for("prediction")
@@ -1074,67 +1137,41 @@ def prediction_result():
 
         "prediction-result.html",
 
-        patient=result.get(
-            "patient",
-            {}
-        ),
-
-        bmi=result.get(
-            "bmi"
-        ),
-
-        bmi_category=result.get(
-            "bmi_category"
-        ),
-
-        prediction=result.get(
-            "prediction"
-        ),
+        result=result,
 
         risk_level=risk_level,
-
-        confidence=result.get(
-            "confidence"
-        ),
-
-        feature_summary=result.get(
-            "feature_summary",
-            {}
-        ),
-
-        generated_at=result.get(
-            "generated_at"
-        ),
 
         risk_info=risk_info,
 
         videos=videos
 
     )
-
-
 # ============================================================
-# CARE PAGE
+# GENERAL CARE ROUTE
 # ============================================================
 
 @app.route("/care")
 def care():
 
+    result = session.get(
+        "result"
+    )
+
     risk_level = session.get(
         "risk_level",
         "Low"
     )
 
-
     risk_info = get_care_plan(
         risk_level
     )
-
 
     return render_template(
 
         "plantar-care.html",
 
+        result=result,
+
         risk_level=risk_level,
 
         risk_info=risk_info
@@ -1143,27 +1180,31 @@ def care():
 
 
 # ============================================================
-# DAILY ROUTINE
+# DAILY ROUTINE ROUTE
 # ============================================================
 
 @app.route("/daily-routine")
 def daily_routine():
 
+    result = session.get(
+        "result"
+    )
+
     risk_level = session.get(
         "risk_level",
         "Low"
     )
 
-
     risk_info = get_care_plan(
         risk_level
     )
-
 
     return render_template(
 
         "daily-routine.html",
 
+        result=result,
+
         risk_level=risk_level,
 
         risk_info=risk_info
@@ -1172,27 +1213,31 @@ def daily_routine():
 
 
 # ============================================================
-# FOOTWEAR
+# FOOTWEAR ROUTE
 # ============================================================
 
 @app.route("/footwear")
 def footwear():
 
+    result = session.get(
+        "result"
+    )
+
     risk_level = session.get(
         "risk_level",
         "Low"
     )
 
-
     risk_info = get_care_plan(
         risk_level
     )
-
 
     return render_template(
 
         "footwear.html",
 
+        result=result,
+
         risk_level=risk_level,
 
         risk_info=risk_info
@@ -1201,26 +1246,30 @@ def footwear():
 
 
 # ============================================================
-# NUTRITION
+# NUTRITION ROUTE
 # ============================================================
 
 @app.route("/nutrition")
 def nutrition():
 
+    result = session.get(
+        "result"
+    )
+
     risk_level = session.get(
         "risk_level",
         "Low"
     )
 
-
     risk_info = get_care_plan(
         risk_level
     )
 
-
     return render_template(
 
         "nutrition.html",
+
+        result=result,
 
         risk_level=risk_level,
 
@@ -1230,26 +1279,31 @@ def nutrition():
 
 
 # ============================================================
-# EXERCISE
+# EXERCISE ROUTE
 # ============================================================
 
 @app.route("/exercise")
 def exercise():
+
+    result = session.get(
+        "result"
+    )
 
     risk_level = session.get(
         "risk_level",
         "Low"
     )
 
-
     risk_info = get_care_plan(
         risk_level
     )
 
-
     videos = VIDEO_LIBRARY.get(
+
         risk_level,
+
         VIDEO_LIBRARY["Low"]
+
     )
 
 
@@ -1257,6 +1311,8 @@ def exercise():
 
         "exercise.html",
 
+        result=result,
+
         risk_level=risk_level,
 
         risk_info=risk_info,
@@ -1267,19 +1323,42 @@ def exercise():
 
 
 # ============================================================
-# GAMES
+# CAMERA GAMES ROUTE
 # ============================================================
 
 @app.route("/games")
 def games():
 
+    result = session.get(
+        "result"
+    )
+
+    risk_level = session.get(
+        "risk_level",
+        "Low"
+    )
+
+
+    risk_info = get_care_plan(
+        risk_level
+    )
+
+
     return render_template(
-        "games.html"
+
+        "games.html",
+
+        result=result,
+
+        risk_level=risk_level,
+
+        risk_info=risk_info
+
     )
 
 
 # ============================================================
-# ABOUT
+# ABOUT ROUTE
 # ============================================================
 
 @app.route("/about")
@@ -1304,6 +1383,11 @@ def report():
 
     if not result:
 
+        flash(
+            "Please complete the prediction assessment first.",
+            "error"
+        )
+
         return redirect(
             url_for("prediction")
         )
@@ -1324,43 +1408,13 @@ def report():
 
         "report.html",
 
-        patient=result.get(
-            "patient",
-            {}
-        ),
-
-        bmi=result.get(
-            "bmi"
-        ),
-
-        bmi_category=result.get(
-            "bmi_category"
-        ),
-
-        prediction=result.get(
-            "prediction"
-        ),
+        result=result,
 
         risk_level=risk_level,
-
-        confidence=result.get(
-            "confidence"
-        ),
-
-        feature_summary=result.get(
-            "feature_summary",
-            {}
-        ),
-
-        generated_at=result.get(
-            "generated_at"
-        ),
 
         risk_info=risk_info
 
     )
-
-
 # ============================================================
 # DOWNLOAD PDF REPORT
 # ============================================================
@@ -1375,15 +1429,14 @@ def download_report():
 
     if not result:
 
+        flash(
+            "Please complete the prediction assessment first.",
+            "error"
+        )
+
         return redirect(
             url_for("prediction")
         )
-
-
-    patient = result.get(
-        "patient",
-        {}
-    )
 
 
     risk_level = result.get(
@@ -1397,486 +1450,785 @@ def download_report():
     )
 
 
-    file_name = (
+    # --------------------------------------------------------
+    # PATIENT INFORMATION
+    # --------------------------------------------------------
+
+    patient = result.get(
+        "patient",
+        {}
+    )
+
+
+    patient_name = patient.get(
+        "name",
+        "User"
+    )
+
+
+    report_filename = (
+
         "PLANTARCARE_Report_"
-        + datetime.now().strftime(
-            "%Y%m%d_%H%M%S"
+
+        + patient_name.replace(
+            " ",
+            "_"
         )
+
         + ".pdf"
+
     )
 
 
-    file_path = os.path.join(
+    report_path = os.path.join(
+
         REPORT_FOLDER,
-        file_name
+
+        report_filename
+
     )
 
 
-    try:
+    # ========================================================
+    # PDF DOCUMENT
+    # ========================================================
 
-        document = SimpleDocTemplate(
+    document = SimpleDocTemplate(
 
-            file_path,
+        report_path,
 
-            pagesize=A4,
+        pagesize=A4,
 
-            rightMargin=40,
+        rightMargin=40,
 
-            leftMargin=40,
+        leftMargin=40,
 
-            topMargin=40,
+        topMargin=40,
 
-            bottomMargin=40
+        bottomMargin=40
+
+    )
+
+
+    styles = getSampleStyleSheet()
+
+
+    title_style = styles["Title"]
+
+    heading_style = styles["Heading2"]
+
+    normal_style = styles["BodyText"]
+
+
+    story = []
+
+
+    # ========================================================
+    # TITLE
+    # ========================================================
+
+    story.append(
+
+        Paragraph(
+
+            "PLANTARCARE",
+
+            title_style
 
         )
 
-
-        styles = getSampleStyleSheet()
-
-
-        story = []
+    )
 
 
-        # ----------------------------------------------------
-        # TITLE
-        # ----------------------------------------------------
+    story.append(
 
-        story.append(
+        Paragraph(
 
-            Paragraph(
-                "PLANTARCARE",
-                styles["Title"]
+            "Plantar Fasciitis Risk Prediction System",
+
+            heading_style
+
+        )
+
+    )
+
+
+    story.append(
+        Spacer(1, 15)
+    )
+
+
+    # ========================================================
+    # REPORT INFORMATION
+    # ========================================================
+
+    story.append(
+
+        Paragraph(
+
+            "<b>Assessment Report</b>",
+
+            heading_style
+
+        )
+
+    )
+
+
+    story.append(
+
+        Paragraph(
+
+            "Generated Date and Time: "
+
+            + str(
+                result.get(
+                    "generated_at",
+                    ""
+                )
+            ),
+
+            normal_style
+
+        )
+
+    )
+
+
+    story.append(
+        Spacer(1, 12)
+    )
+
+
+    # ========================================================
+    # PATIENT INFORMATION
+    # ========================================================
+
+    story.append(
+
+        Paragraph(
+
+            "Patient Information",
+
+            heading_style
+
+        )
+
+    )
+
+
+    patient_table_data = [
+
+        ["Name", patient.get("name", "")],
+
+        ["Age", str(
+            patient.get(
+                "age",
+                ""
             )
+        )],
 
-        )
-
-
-        story.append(
-
-            Paragraph(
-                "PLANTAR FASCIITIS RISK "
-                "PREDICTION REPORT",
-                styles["Heading2"]
+        ["Height", str(
+            patient.get(
+                "height",
+                ""
             )
+        ) + " cm"],
 
-        )
-
-
-        story.append(
-            Spacer(1, 20)
-        )
-
-
-        # ----------------------------------------------------
-        # PATIENT DETAILS
-        # ----------------------------------------------------
-
-        story.append(
-
-            Paragraph(
-                "Patient Information",
-                styles["Heading2"]
+        ["Weight", str(
+            patient.get(
+                "weight",
+                ""
             )
+        ) + " kg"],
 
-        )
+        ["BMI", str(
+            result.get(
+                "bmi",
+                ""
+            )
+        )],
+
+        ["BMI Category", str(
+            result.get(
+                "bmi_category",
+                ""
+            )
+        )]
+
+    ]
 
 
-        patient_table = Table([
+    patient_table = Table(
 
-            [
-                "Name",
-                str(
-                    patient.get(
-                        "name",
-                        "User"
-                    )
-                )
-            ],
+        patient_table_data,
 
-            [
-                "Age",
-                str(
-                    patient.get(
-                        "age",
-                        "-"
-                    )
-                )
-            ],
+        colWidths=[150, 300]
 
-            [
-                "Height",
-                str(
-                    patient.get(
-                        "height",
-                        "-"
-                    )
-                ) + " cm"
-            ],
+    )
 
-            [
-                "Weight",
-                str(
-                    patient.get(
-                        "weight",
-                        "-"
-                    )
-                ) + " kg"
-            ],
 
-            [
-                "BMI",
-                str(
-                    result.get(
-                        "bmi",
-                        "-"
-                    )
-                )
-            ],
+    patient_table.setStyle(
 
-            [
-                "BMI Category",
-                str(
-                    result.get(
-                        "bmi_category",
-                        "-"
-                    )
-                )
-            ]
+        TableStyle([
+
+            (
+                "GRID",
+                (0, 0),
+                (-1, -1),
+                0.5,
+                colors.grey
+            ),
+
+            (
+                "BACKGROUND",
+                (0, 0),
+                (0, -1),
+                colors.lightgrey
+            ),
+
+            (
+                "VALIGN",
+                (0, 0),
+                (-1, -1),
+                "MIDDLE"
+            ),
+
+            (
+                "FONTNAME",
+                (0, 0),
+                (-1, -1),
+                "Helvetica"
+            ),
+
+            (
+                "FONTSIZE",
+                (0, 0),
+                (-1, -1),
+                9
+            )
 
         ])
 
+    )
 
-        patient_table.setStyle(
 
-            TableStyle([
+    story.append(
+        patient_table
+    )
 
-                (
-                    "BACKGROUND",
-                    (0, 0),
-                    (0, -1),
-                    colors.lightgrey
-                ),
 
-                (
-                    "GRID",
-                    (0, 0),
-                    (-1, -1),
-                    0.5,
-                    colors.grey
-                ),
+    story.append(
+        Spacer(1, 15)
+    )
 
-                (
-                    "VALIGN",
-                    (0, 0),
-                    (-1, -1),
-                    "MIDDLE"
-                ),
 
-                (
-                    "PADDING",
-                    (0, 0),
-                    (-1, -1),
-                    7
+    # ========================================================
+    # PREDICTION RESULT
+    # ========================================================
+
+    story.append(
+
+        Paragraph(
+
+            "Prediction Result",
+
+            heading_style
+
+        )
+
+    )
+
+
+    prediction_table_data = [
+
+        [
+            "Machine Learning Prediction",
+            str(
+                result.get(
+                    "prediction",
+                    "Not Available"
                 )
-
-            ])
-
-        )
-
-
-        story.append(
-            patient_table
-        )
-
-
-        story.append(
-            Spacer(1, 20)
-        )
-
-
-        # ----------------------------------------------------
-        # PREDICTION
-        # ----------------------------------------------------
-
-        story.append(
-
-            Paragraph(
-                "Prediction Result",
-                styles["Heading2"]
             )
+        ],
 
-        )
-
-
-        prediction_table = Table([
-
-            [
-                "Risk Level",
-                str(
-                    result.get(
-                        "risk_level",
-                        "-"
-                    )
+        [
+            "Confidence",
+            str(
+                result.get(
+                    "confidence",
+                    0
                 )
-            ],
+            ) + "%"
+        ],
 
-            [
-                "ML Prediction",
-                str(
-                    result.get(
-                        "prediction",
-                        "-"
-                    )
+        [
+            "Risk Level",
+            str(
+                result.get(
+                    "risk_level",
+                    "Low"
                 )
-            ],
-
-            [
-                "Confidence",
-                str(
-                    result.get(
-                        "confidence",
-                        "-"
-                    )
-                )
-            ],
-
-            [
-                "Generated",
-                str(
-                    result.get(
-                        "generated_at",
-                        "-"
-                    )
-                )
-            ]
-
-        ])
-
-
-        prediction_table.setStyle(
-
-            TableStyle([
-
-                (
-                    "BACKGROUND",
-                    (0, 0),
-                    (0, -1),
-                    colors.lightgrey
-                ),
-
-                (
-                    "GRID",
-                    (0, 0),
-                    (-1, -1),
-                    0.5,
-                    colors.grey
-                ),
-
-                (
-                    "PADDING",
-                    (0, 0),
-                    (-1, -1),
-                    7
-                )
-
-            ])
-
-        )
-
-
-        story.append(
-            prediction_table
-        )
-
-
-        story.append(
-            Spacer(1, 20)
-        )
-
-
-        # ----------------------------------------------------
-        # FEATURE SUMMARY
-        # ----------------------------------------------------
-
-        story.append(
-
-            Paragraph(
-                "Assessment Features",
-                styles["Heading2"]
             )
-
-        )
-
-
-        feature_rows = [
-            ["Feature", "Response"]
         ]
 
+    ]
 
-        for key, value in result.get(
-            "feature_summary",
-            {}
-        ).items():
 
-            feature_rows.append([
+    prediction_table = Table(
 
-                str(key),
+        prediction_table_data,
 
+        colWidths=[250, 200]
+
+    )
+
+
+    prediction_table.setStyle(
+
+        TableStyle([
+
+            (
+                "GRID",
+                (0, 0),
+                (-1, -1),
+                0.5,
+                colors.grey
+            ),
+
+            (
+                "BACKGROUND",
+                (0, 0),
+                (0, -1),
+                colors.lightgrey
+            ),
+
+            (
+                "VALIGN",
+                (0, 0),
+                (-1, -1),
+                "MIDDLE"
+            ),
+
+            (
+                "FONTSIZE",
+                (0, 0),
+                (-1, -1),
+                9
+            )
+
+        ])
+
+    )
+
+
+    story.append(
+        prediction_table
+    )
+
+
+    story.append(
+        Spacer(1, 15)
+    )
+
+
+    # ========================================================
+    # ASSESSMENT FEATURES
+    # ========================================================
+
+    story.append(
+
+        Paragraph(
+
+            "Assessment Features",
+
+            heading_style
+
+        )
+
+    )
+
+
+    feature_rows = [
+
+        ["Feature", "Value"]
+
+    ]
+
+
+    for feature, value in result.get(
+        "feature_summary",
+        {}
+    ).items():
+
+        feature_rows.append(
+
+            [
+                str(feature),
                 str(value)
+            ]
 
-            ])
-
-
-        feature_table = Table(
-            feature_rows
         )
 
 
-        feature_table.setStyle(
+    feature_table = Table(
 
-            TableStyle([
+        feature_rows,
 
-                (
-                    "BACKGROUND",
-                    (0, 0),
-                    (-1, 0),
-                    colors.lightgrey
-                ),
+        colWidths=[250, 200],
 
-                (
-                    "GRID",
-                    (0, 0),
-                    (-1, -1),
-                    0.5,
-                    colors.grey
-                ),
+        repeatRows=1
 
-                (
-                    "PADDING",
-                    (0, 0),
-                    (-1, -1),
-                    7
+    )
+
+
+    feature_table.setStyle(
+
+        TableStyle([
+
+            (
+                "GRID",
+                (0, 0),
+                (-1, -1),
+                0.5,
+                colors.grey
+            ),
+
+            (
+                "BACKGROUND",
+                (0, 0),
+                (-1, 0),
+                colors.lightgrey
+            ),
+
+            (
+                "FONTNAME",
+                (0, 0),
+                (-1, 0),
+                "Helvetica-Bold"
+            ),
+
+            (
+                "FONTSIZE",
+                (0, 0),
+                (-1, -1),
+                9
+            ),
+
+            (
+                "VALIGN",
+                (0, 0),
+                (-1, -1),
+                "MIDDLE"
+            )
+
+        ])
+
+    )
+
+
+    story.append(
+        feature_table
+    )
+
+
+    story.append(
+        Spacer(1, 15)
+    )
+
+
+    # ========================================================
+    # CARE GUIDANCE
+    # ========================================================
+
+    story.append(
+
+        Paragraph(
+
+            "General Care Guidance",
+
+            heading_style
+
+        )
+
+    )
+
+
+    story.append(
+
+        Paragraph(
+
+            str(
+                risk_info.get(
+                    "summary",
+                    ""
                 )
+            ),
 
-            ])
+            normal_style
 
         )
 
-
-        story.append(
-            feature_table
-        )
+    )
 
 
-        story.append(
-            Spacer(1, 20)
-        )
+    story.append(
+        Spacer(1, 8)
+    )
 
 
-        # ----------------------------------------------------
-        # CARE GUIDANCE
-        # ----------------------------------------------------
+    for item in risk_info.get(
+        "care_details",
+        []
+    ):
 
         story.append(
 
             Paragraph(
-                "Care Guidance",
-                styles["Heading2"]
+
+                "• " + str(item),
+
+                normal_style
+
             )
 
         )
-
-
-        for item in risk_info.get(
-            "care_details",
-            []
-        ):
-
-            story.append(
-
-                Paragraph(
-                    "• " + item,
-                    styles["BodyText"]
-                )
-
-            )
-
-            story.append(
-                Spacer(1, 5)
-            )
-
 
         story.append(
-            Spacer(1, 10)
+            Spacer(1, 4)
         )
 
 
-        # ----------------------------------------------------
-        # DISCLAIMER
-        # ----------------------------------------------------
+    story.append(
+        Spacer(1, 10)
+    )
+
+
+    # ========================================================
+    # DAILY ROUTINE
+    # ========================================================
+
+    story.append(
+
+        Paragraph(
+
+            "Daily Routine",
+
+            heading_style
+
+        )
+
+    )
+
+
+    for item in risk_info.get(
+        "daily_routine",
+        []
+    ):
 
         story.append(
 
             Paragraph(
-                "PLANTARCARE is an academic project "
-                "for preliminary risk awareness and "
-                "educational support. The prediction "
-                "is not a confirmed medical diagnosis. "
-                "Persistent or concerning symptoms "
-                "should be discussed with a qualified "
-                "healthcare professional.",
-                styles["BodyText"]
+
+                "• " + str(item),
+
+                normal_style
+
             )
 
         )
 
 
-        # ----------------------------------------------------
-        # BUILD PDF
-        # ----------------------------------------------------
+    story.append(
+        Spacer(1, 10)
+    )
 
-        document.build(
-            story
+
+    # ========================================================
+    # FOOTWEAR GUIDANCE
+    # ========================================================
+
+    story.append(
+
+        Paragraph(
+
+            "Footwear Guidance",
+
+            heading_style
+
+        )
+
+    )
+
+
+    for item in risk_info.get(
+        "footwear",
+        []
+    ):
+
+        story.append(
+
+            Paragraph(
+
+                "• " + str(item),
+
+                normal_style
+
+            )
+
         )
 
 
-        return send_file(
+    story.append(
+        Spacer(1, 10)
+    )
 
-            file_path,
 
-            as_attachment=True,
+    # ========================================================
+    # NUTRITION GUIDANCE
+    # ========================================================
 
-            download_name=file_name
+    story.append(
+
+        Paragraph(
+
+            "Nutrition Guidance",
+
+            heading_style
+
+        )
+
+    )
+
+
+    for item in risk_info.get(
+        "nutrition",
+        []
+    ):
+
+        story.append(
+
+            Paragraph(
+
+                "• " + str(item),
+
+                normal_style
+
+            )
 
         )
 
 
-    except Exception as error:
+    story.append(
+        Spacer(1, 10)
+    )
 
-        print(
-            "PDF generation error:",
-            error
+
+    # ========================================================
+    # EXERCISE NOTE
+    # ========================================================
+
+    story.append(
+
+        Paragraph(
+
+            "Exercise Guidance",
+
+            heading_style
+
         )
 
+    )
 
-        flash(
-            "Unable to generate the PDF report."
+
+    story.append(
+
+        Paragraph(
+
+            str(
+                risk_info.get(
+                    "exercise_note",
+                    ""
+                )
+            ),
+
+            normal_style
+
         )
 
+    )
 
-        return redirect(
-            url_for("report")
+
+    story.append(
+        Spacer(1, 15)
+    )
+
+
+    # ========================================================
+    # DISCLAIMER
+    # ========================================================
+
+    story.append(
+
+        Paragraph(
+
+            "<b>Disclaimer:</b> "
+
+            "PLANTARCARE is an academic machine learning "
+            "project designed for educational and awareness "
+            "purposes. The prediction should not be considered "
+            "a medical diagnosis. Users should consult a "
+            "qualified healthcare professional for medical "
+            "evaluation and treatment.",
+
+            normal_style
+
         )
+
+    )
+
+
+    # ========================================================
+    # BUILD PDF
+    # ========================================================
+
+    document.build(
+        story
+    )
+
+
+    # ========================================================
+    # SEND PDF FILE
+    # ========================================================
+
+    return send_file(
+
+        report_path,
+
+        as_attachment=True,
+
+        download_name=report_filename
+
+    )
 
 
 # ============================================================
-# RUN APPLICATION
+# APPLICATION START
 # ============================================================
 
 if __name__ == "__main__":
 
     app.run(
-        host="127.0.0.1",
-        port=5000,
-        debug=True
+
+        host="0.0.0.0",
+
+        port=int(
+            os.environ.get(
+                "PORT",
+                5000
+            )
+        ),
+
+        debug=False
+
     )
