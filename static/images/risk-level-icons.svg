@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 120 120"
+     width="120"
+     height="120">
+
+    <!-- Background Circle -->
+    <circle
+        cx="60"
+        cy="60"
+        r="56"
+        fill="#E8F8F7"
+        stroke="#BFE7E4"
+        stroke-width="3"/>
+
+    <!-- Shield -->
+    <path
+        d="M60 16
+           L94 30
+           L90 62
+           C87 82 75 96 60 103
+           C45 96 33 82 30 62
+           L26 30
+           Z"
+        fill="#168DE2"
+        stroke="#0F496B"
+        stroke-width="4"
+        stroke-linejoin="round"/>
+
+    <!-- Inner Shield -->
+    <path
+        d="M60 27
+           L83 37
+           L80 61
+           C78 76 69 87 60 93
+           C51 87 42 76 40 61
+           L37 37
+           Z"
+        fill="#DFF8F6"/>
+
+    <!-- Warning Triangle -->
+    <path
+        d="M60 40
+           L78 73
+           H42
+           Z"
+        fill="#FFC83D"
+        stroke="#0F496B"
+        stroke-width="3"
+        stroke-linejoin="round"/>
+
+    <!-- Exclamation -->
+    <rect
+        x="57"
+        y="49"
+        width="6"
+        height="14"
+        rx="3"
+        fill="#0F496B"/>
+
+    <circle
+        cx="60"
+        cy="68"
+        r="3.5"
+        fill="#0F496B"/>
+
+    <!-- Small Decorative Dots -->
+    <circle
+        cx="18"
+        cy="60"
+        r="4"
+        fill="#36B37E"/>
+
+    <circle
+        cx="102"
+        cy="60"
+        r="4"
+        fill="#FFC83D"/>
+
+</svg>

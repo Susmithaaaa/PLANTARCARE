@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}
+PLANTARCARE | About
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="page-hero">
+
+    <div>
+
+        <p class="eyebrow">
+            ABOUT THE PROJECT
+        </p>
+
+        <h1>
+            PLANTARCARE
+        </h1>
+
+        <p>
+            A college-level machine learning web application
+            for plantar fasciitis risk prediction and
+            educational foot-care guidance.
+        </p>
+
+    </div>
+
+
+    <img
+        src="{{ url_for('static', filename='images/about.svg') }}"
+        alt="About illustration"
+    >
+
+</section>
+
+
+<div class="about-grid">
+
+
+    <article>
+
+        <h2>
+            Machine Learning
+        </h2>
+
+        <p>
+            A Random Forest classifier is trained on a
+            synthetic academic dataset containing demographic,
+            activity and symptom features.
+        </p>
+
+    </article>
+
+
+    <article>
+
+        <h2>
+            Web Application
+        </h2>
+
+        <p>
+            Flask connects the assessment form, model prediction,
+            risk-rule layer, reports, exercises and games.
+        </p>
+
+    </article>
+
+
+    <article>
+
+        <h2>
+            Project Scope
+        </h2>
+
+        <p>
+            The application demonstrates a complete ML workflow
+            from input collection to prediction and presentation.
+        </p>
+
+    </article>
+
+
+</div>
+
+
+<div class="notice">
+
+    The dataset supplied with this project is synthetic/demo data.
+    It should not be interpreted as clinical evidence.
+
+</div>
+
+
+{% endblock %}

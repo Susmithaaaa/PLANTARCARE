@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 260">
+
+  <rect width="1200" height="260"
+        rx="35"
+        fill="#e6faf7"/>
+
+  <!-- Background wave -->
+  <path d="M0 190
+           C200 110 350 245 570 170
+           C790 95 980 180 1200 100
+           L1200 260
+           L0 260Z"
+        fill="#d2f3ef"/>
+
+  <path d="M0 225
+           C200 150 380 260 600 200
+           C820 140 1000 225 1200 155
+           L1200 260
+           L0 260Z"
+        fill="#c0ebe6"/>
+
+  <!-- Decorative circles -->
+  <circle cx="1030" cy="70" r="45"
+          fill="#ffffff"
+          opacity=".7"/>
+
+  <circle cx="1090" cy="120" r="22"
+          fill="#36b37e"
+          opacity=".6"/>
+
+  <!-- Leaves -->
+  <path d="M970 175
+           C945 145 950 115 970 105
+           C990 125 990 155 970 175Z"
+        fill="#36b37e"/>
+
+  <path d="M990 165
+           C1005 130 1035 125 1050 138
+           C1038 160 1015 172 990 165Z"
+        fill="#168d70"/>
+</svg>

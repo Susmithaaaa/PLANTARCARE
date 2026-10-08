@@ -1,0 +1,847 @@
+{% extends "base.html" %}
+
+{% block title %}
+Prediction Assessment | PLANTARCARE
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.prediction-page {
+    width: 100%;
+    max-width: 1150px;
+    margin: 0 auto;
+    padding: 35px 45px 60px;
+    box-sizing: border-box;
+}
+
+.prediction-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.prediction-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    color: #e85d5d;
+    margin-bottom: 10px;
+}
+
+.prediction-header h1 {
+    margin: 0;
+    color: #173f5f;
+    font-size: 36px;
+    line-height: 1.25;
+    font-weight: 700;
+}
+
+.prediction-header p {
+    max-width: 720px;
+    margin: 14px auto 0;
+    color: #4d6270;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.assessment-card {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #eaded9;
+    border-radius: 18px;
+    padding: 35px 40px 40px;
+    box-sizing: border-box;
+    box-shadow: 0 8px 25px rgba(50, 60, 70, 0.08);
+}
+
+.form-section {
+    margin-bottom: 30px;
+}
+
+.form-section-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #173f5f;
+    margin: 0 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 35px;
+    row-gap: 18px;
+}
+
+.form-group {
+    width: 100%;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    color: #243f52;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group select {
+    width: 100%;
+    height: 44px;
+    padding: 0 13px;
+    box-sizing: border-box;
+    border: 1px solid #cfd8dd;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #243f52;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #e85d5d;
+    box-shadow: 0 0 0 3px rgba(232, 93, 93, 0.10);
+}
+
+.radio-options {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.radio-option {
+    position: relative;
+}
+
+.radio-option input {
+    position: absolute;
+    opacity: 0;
+}
+
+.radio-option label {
+    min-width: 85px;
+    height: 40px;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 1px solid #ccd6db;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #344e5f;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.radio-option label:hover {
+    border-color: #e85d5d;
+}
+
+.radio-option input:checked + label {
+    background: #ffe5dd;
+    border-color: #e85d5d;
+    color: #c94d4d;
+}
+
+.bmi-info {
+    margin-top: 25px;
+    padding: 18px 20px;
+    border: 1px solid #e7d9d4;
+    border-radius: 10px;
+    background: #fff8f5;
+}
+
+.bmi-info-title {
+    color: #173f5f;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.bmi-info-text {
+    color: #5c6870;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.form-actions {
+    margin-top: 35px;
+    padding-top: 25px;
+    border-top: 1px solid #eeeeee;
+    display: flex;
+    justify-content: center;
+}
+
+.submit-button {
+    min-width: 240px;
+    height: 48px;
+    border: none;
+    border-radius: 9px;
+    background: #e85d5d;
+    color: #ffffff;
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.submit-button:hover {
+    background: #d94f4f;
+    transform: translateY(-1px);
+}
+
+@media (max-width: 850px) {
+
+    .prediction-page {
+        padding: 25px 20px 50px;
+    }
+
+    .assessment-card {
+        padding: 25px 20px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full-width {
+        grid-column: auto;
+    }
+
+    .prediction-header h1 {
+        font-size: 30px;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .prediction-header h1 {
+        font-size: 25px;
+    }
+
+    .prediction-header p {
+        font-size: 14px;
+    }
+
+    .assessment-card {
+        border-radius: 12px;
+        padding: 20px 15px;
+    }
+
+    .radio-options {
+        gap: 8px;
+    }
+
+    .radio-option label {
+        min-width: 70px;
+    }
+}
+
+</style>
+
+
+<div class="prediction-page">
+
+
+    <!-- PAGE HEADER -->
+
+    <div class="prediction-header">
+
+        <span class="prediction-label">
+            PLANTARCARE ASSESSMENT
+        </span>
+
+        <h1>
+            Plantar Fasciitis Risk<br>
+            Prediction Assessment
+        </h1>
+
+        <p>
+            Enter the required assessment details to generate
+            a machine-learning based plantar fasciitis risk
+            assessment result.
+        </p>
+
+    </div>
+
+
+    <!-- ASSESSMENT CARD -->
+
+    <div class="assessment-card">
+
+
+        <!-- IMPORTANT:
+             POST must go to predict, NOT prediction -->
+
+        <form method="POST"
+              action="{{ url_for('predict') }}">
+
+
+            <!-- PERSONAL INFORMATION -->
+
+            <div class="form-section">
+
+                <h2 class="form-section-title">
+                    Personal Information
+                </h2>
+
+
+                <div class="form-grid">
+
+
+                    <!-- NAME -->
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- AGE -->
+
+                    <div class="form-group">
+
+                        <label for="age">
+                            Age
+                        </label>
+
+                        <input
+                            type="number"
+                            id="age"
+                            name="age"
+                            min="1"
+                            max="120"
+                            placeholder="Enter age"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- HEIGHT -->
+
+                    <div class="form-group">
+
+                        <label for="height">
+                            Height (cm)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="height"
+                            name="height"
+                            step="0.1"
+                            min="50"
+                            placeholder="Enter height"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- WEIGHT -->
+
+                    <div class="form-group">
+
+                        <label for="weight">
+                            Weight (kg)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="weight"
+                            name="weight"
+                            step="0.1"
+                            min="10"
+                            placeholder="Enter weight"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- STANDING HOURS -->
+
+                    <div class="form-group">
+
+                        <label for="standing_hours">
+                            Standing Hours
+                        </label>
+
+                        <input
+                            type="number"
+                            id="standing_hours"
+                            name="standing_hours"
+                            step="0.5"
+                            min="0"
+                            max="24"
+                            placeholder="Hours per day"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- WALKING ACTIVITY -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Walking Activity
+                        </label>
+
+                        <div class="radio-options">
+
+                            <div class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    id="walking_yes"
+                                    name="walking_activity"
+                                    value="Yes"
+                                    required
+                                >
+
+                                <label for="walking_yes">
+                                    Yes
+                                </label>
+
+                            </div>
+
+
+                            <div class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    id="walking_no"
+                                    name="walking_activity"
+                                    value="No"
+                                >
+
+                                <label for="walking_no">
+                                    No
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SYMPTOMS AND HEALTH FACTORS -->
+
+            <div class="form-section">
+
+                <h2 class="form-section-title">
+                    Symptoms and Health Factors
+                </h2>
+
+
+                <div class="form-grid">
+
+
+                    <!-- PLANTAR PAIN -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Plantar Pain
+                        </label>
+
+                        <div class="radio-options">
+
+                            <div class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    id="plantar_yes"
+                                    name="plantar_pain"
+                                    value="Yes"
+                                    required
+                                >
+
+                                <label for="plantar_yes">
+                                    Yes
+                                </label>
+
+                            </div>
+
+
+                            <div class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    id="plantar_no"
+                                    name="plantar_pain"
+                                    value="No"
+                                >
+
+                                <label for="plantar_no">
+                                    No
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MORNING PAIN -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Morning Pain
+                        </label>
+
+                        <div class="radio-options">
+
+                            <div class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    id="morning_yes"
+                                    name="morning_pain"
+                                    value="Yes"
+                                    required
+                                >
+
+                                <label for="morning_yes">
+                                    Yes
+                                </label>
+
+                            </div>
+
+
+                            <div class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    id="morning_no"
+                                    name="morning_pain"
+                                    value="No"
+                                >
+
+                                <label for="morning_no">
+                                    No
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PREVIOUS INJURY -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Previous Injury
+                        </label>
+
+                        <div class="radio-options">
+
+                            <div class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    id="injury_yes"
+                                    name="previous_injury"
+                                    value="Yes"
+                                    required
+                                >
+
+                                <label for="injury_yes">
+                                    Yes
+                                </label>
+
+                            </div>
+
+
+                            <div class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    id="injury_no"
+                                    name="previous_injury"
+                                    value="No"
+                                >
+
+                                <label for="injury_no">
+                                    No
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- HEEL SYMPTOM -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Heel Symptom
+                        </label>
+
+                        <div class="radio-options">
+
+                            <div class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    id="heel_yes"
+                                    name="heel_symptom"
+                                    value="Yes"
+                                    required
+                                >
+
+                                <label for="heel_yes">
+                                    Yes
+                                </label>
+
+                            </div>
+
+
+                            <div class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    id="heel_no"
+                                    name="heel_symptom"
+                                    value="No"
+                                >
+
+                                <label for="heel_no">
+                                    No
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ARCH SYMPTOM -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Arch Symptom
+                        </label>
+
+                        <div class="radio-options">
+
+                            <div class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    id="arch_yes"
+                                    name="arch_symptom"
+                                    value="Yes"
+                                    required
+                                >
+
+                                <label for="arch_yes">
+                                    Yes
+                                </label>
+
+                            </div>
+
+
+                            <div class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    id="arch_no"
+                                    name="arch_symptom"
+                                    value="No"
+                                >
+
+                                <label for="arch_no">
+                                    No
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SWELLING -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Swelling
+                        </label>
+
+                        <div class="radio-options">
+
+                            <div class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    id="swelling_yes"
+                                    name="swelling"
+                                    value="Yes"
+                                    required
+                                >
+
+                                <label for="swelling_yes">
+                                    Yes
+                                </label>
+
+                            </div>
+
+
+                            <div class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    id="swelling_no"
+                                    name="swelling"
+                                    value="No"
+                                >
+
+                                <label for="swelling_no">
+                                    No
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DIABETES -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Diabetes
+                        </label>
+
+                        <div class="radio-options">
+
+                            <div class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    id="diabetes_yes"
+                                    name="diabetes"
+                                    value="Yes"
+                                    required
+                                >
+
+                                <label for="diabetes_yes">
+                                    Yes
+                                </label>
+
+                            </div>
+
+
+                            <div class="radio-option">
+
+                                <input
+                                    type="radio"
+                                    id="diabetes_no"
+                                    name="diabetes"
+                                    value="No"
+                                >
+
+                                <label for="diabetes_no">
+                                    No
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- BMI INFORMATION -->
+
+            <div class="bmi-info">
+
+                <div class="bmi-info-title">
+                    BMI Analysis
+                </div>
+
+                <div class="bmi-info-text">
+                    BMI will be calculated automatically from
+                    the entered height and weight values.
+                    The BMI category will be displayed with
+                    the assessment result.
+                </div>
+
+            </div>
+
+
+            <!-- SUBMIT -->
+
+            <div class="form-actions">
+
+                <button
+                    type="submit"
+                    class="submit-button"
+                >
+                    Generate Risk Assessment
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

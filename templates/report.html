@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Report | PLANTARCARE
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page">
+
+
+    <section class="hero">
+
+        <span class="label">
+            PROJECT REPORT
+        </span>
+
+        <h1>
+            Assessment Report
+        </h1>
+
+        <p>
+            Review the assessment result and download
+            the generated PDF report.
+        </p>
+
+    </section>
+
+
+    <section class="section card">
+
+
+        <table class="report-table">
+
+
+            <tr>
+
+                <td>
+                    Patient
+                </td>
+
+                <td>
+                    {{ patient.get("name") }}
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Age
+                </td>
+
+                <td>
+                    {{ patient.get("age") }}
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Height
+                </td>
+
+                <td>
+                    {{ patient.get("height") }} cm
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Weight
+                </td>
+
+                <td>
+                    {{ patient.get("weight") }} kg
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    BMI
+                </td>
+
+                <td>
+                    {{ bmi }}
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    BMI Category
+                </td>
+
+                <td>
+                    {{ bmi_category }}
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    ML Prediction
+                </td>
+
+                <td>
+                    {{ prediction }}
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Risk Level
+                </td>
+
+                <td>
+                    {{ risk_level }}
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Confidence
+                </td>
+
+                <td>
+
+                    {{ confidence }}
+
+                    {% if confidence != "N/A" %}
+                        %
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Generated
+                </td>
+
+                <td>
+                    {{ generated_at }}
+                </td>
+
+            </tr>
+
+
+        </table>
+
+
+        <br>
+
+
+        <a
+            class="btn primary"
+            href="{{ url_for('download_report') }}"
+        >
+            Download PDF Report ↓
+        </a>
+
+
+    </section>
+
+
+</div>
+
+{% endblock %}

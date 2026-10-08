@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+
+{% block title %}
+Daily Care Routine | PLANTARCARE
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.daily-page {
+    padding: 30px;
+    background: #ffd8cc;
+    min-height: calc(100vh - 70px);
+}
+
+.daily-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.daily-header h1 {
+    margin: 0;
+    font-size: 30px;
+    color: #0f496b;
+}
+
+.daily-header p {
+    margin-top: 8px;
+    font-size: 15px;
+    color: #555;
+}
+
+.routine-grid {
+    max-width: 1000px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.routine-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 24px;
+    border: 1px solid #f0c7bb;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+}
+
+.routine-number {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #0f496b;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.routine-card h2 {
+    margin: 0 0 10px;
+    color: #0f496b;
+    font-size: 20px;
+}
+
+.routine-card p {
+    margin: 0;
+    color: #555;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.next-section {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.next-button {
+    display: inline-block;
+    padding: 13px 28px;
+    background: #168de2;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.next-button:hover {
+    background: #0f496b;
+}
+
+.back-button {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 13px 25px;
+    background: white;
+    color: #0f496b;
+    text-decoration: none;
+    border: 1px solid #0f496b;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+@media (max-width: 700px) {
+
+    .daily-page {
+        padding: 20px;
+    }
+
+    .routine-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .daily-header h1 {
+        font-size: 25px;
+    }
+}
+
+</style>
+
+
+<div class="daily-page">
+
+    <div class="daily-header">
+
+        <h1>
+            Daily Care Routine
+        </h1>
+
+        <p>
+            Follow a simple daily routine to support healthy feet and reduce plantar fasciitis risk.
+        </p>
+
+    </div>
+
+
+    <div class="routine-grid">
+
+
+        <!-- MORNING -->
+        <div class="routine-card">
+
+            <div class="routine-number">
+                1
+            </div>
+
+            <h2>
+                Morning Check
+            </h2>
+
+            <p>
+                Start the day by checking for heel or arch discomfort.
+                Avoid sudden heavy activity if pain or stiffness is noticed.
+            </p>
+
+        </div>
+
+
+        <!-- MOVEMENT -->
+        <div class="routine-card">
+
+            <div class="routine-number">
+                2
+            </div>
+
+            <h2>
+                Gentle Movement
+            </h2>
+
+            <p>
+                Perform gentle foot and ankle movements before beginning
+                regular walking or other daily activities.
+            </p>
+
+        </div>
+
+
+        <!-- ACTIVITY -->
+        <div class="routine-card">
+
+            <div class="routine-number">
+                3
+            </div>
+
+            <h2>
+                Activity Breaks
+            </h2>
+
+            <p>
+                If your routine involves prolonged standing or walking,
+                take regular breaks and avoid staying in one position for too long.
+            </p>
+
+        </div>
+
+
+        <!-- EVENING -->
+        <div class="routine-card">
+
+            <div class="routine-number">
+                4
+            </div>
+
+            <h2>
+                Evening Care
+            </h2>
+
+            <p>
+                Give your feet adequate rest after daily activities.
+                Gentle stretching and comfortable positioning can support relaxation.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="next-section">
+
+        <a href="{{ url_for('care') }}" class="back-button">
+            ← Back
+        </a>
+
+        <a href="{{ url_for('footwear') }}" class="next-button">
+            Next → Footwear Care
+        </a>
+
+    </div>
+
+
+</div>
+
+{% endblock %}

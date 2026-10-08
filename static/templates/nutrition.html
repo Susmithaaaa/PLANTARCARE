@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}
+PLANTARCARE | Nutrition
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="page-hero">
+
+    <div>
+
+        <p class="eyebrow">
+            NUTRITION GUIDE
+        </p>
+
+        <h1>
+            Balanced Nutrition
+        </h1>
+
+        <p>
+            General food ideas for a balanced diet.
+            This page does not prescribe a weight-loss diet.
+        </p>
+
+    </div>
+
+
+    <img
+        src="{{ url_for('static', filename='images/nutrition.svg') }}"
+        alt="Nutrition illustration"
+    >
+
+</section>
+
+
+<div class="nutrition-grid">
+
+
+    <article>
+
+        <span>
+            🥬
+        </span>
+
+        <h2>
+            Vegetables & Fruits
+        </h2>
+
+        <p>
+            Include a variety of colourful vegetables
+            and fruits across meals.
+        </p>
+
+    </article>
+
+
+    <article>
+
+        <span>
+            🥛
+        </span>
+
+        <h2>
+            Calcium Sources
+        </h2>
+
+        <p>
+            Milk, curd, paneer and suitable fortified foods
+            can contribute calcium.
+        </p>
+
+    </article>
+
+
+    <article>
+
+        <span>
+            🥚
+        </span>
+
+        <h2>
+            Protein Sources
+        </h2>
+
+        <p>
+            Dal, beans, eggs, fish or other suitable protein
+            foods can support a balanced meal.
+        </p>
+
+    </article>
+
+
+    <article>
+
+        <span>
+            💧
+        </span>
+
+        <h2>
+            Hydration
+        </h2>
+
+        <p>
+            Drink water regularly and pay attention to thirst,
+            activity and climate.
+        </p>
+
+    </article>
+
+
+</div>
+
+
+{% endblock %}

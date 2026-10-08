@@ -1,0 +1,261 @@
+{% extends "base.html" %}
+
+{% block title %}
+PLANTARCARE | Home
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="hero home-hero">
+
+
+    <div class="hero-copy">
+
+        <p class="eyebrow">
+            STEP TOWARDS A HEALTHIER TOMORROW
+        </p>
+
+
+        <h1>
+            PLANTAR<span>CARE</span>
+        </h1>
+
+
+        <h2>
+            Plantar Fasciitis Risk Prediction & Assessment Report
+        </h2>
+
+
+        <p>
+            Using Machine Learning to analyse plantar health
+            information and present a simple risk assessment
+            with educational care guidance.
+        </p>
+
+
+        <div class="hero-actions">
+
+            <a
+                class="btn primary"
+                href="{{ url_for('prediction') }}"
+            >
+                Start Assessment →
+            </a>
+
+
+            <a
+                class="btn outline"
+                href="{{ url_for('features') }}"
+            >
+                Learn More
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-art">
+
+        <img
+            src="{{ url_for('static', filename='images/foot-hero.svg') }}"
+            alt="PlantarCare foot illustration"
+        >
+
+    </div>
+
+
+</section>
+
+
+<section class="three-strip">
+
+
+    <div class="mini-card">
+
+        <b>
+            ◉
+        </b>
+
+        <div>
+
+            <strong>
+                Risk Prediction
+            </strong>
+
+            <small>
+                Know your risk early
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="mini-card">
+
+        <b>
+            ♟
+        </b>
+
+        <div>
+
+            <strong>
+                Personalized Care
+            </strong>
+
+            <small>
+                Get guided information
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="mini-card">
+
+        <b>
+            ✓
+        </b>
+
+        <div>
+
+            <strong>
+                Healthy Foot
+            </strong>
+
+            <small>
+                Support better daily habits
+            </small>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+<section class="about-banner">
+
+
+    <div>
+
+        <p class="eyebrow">
+            ABOUT PLANTARCARE
+        </p>
+
+
+        <h3>
+            Smart analysis. Simple guidance.
+        </h3>
+
+
+        <p>
+            PLANTARCARE combines a Random Forest machine-learning
+            model with BMI calculation, feature analysis,
+            care information, games and risk-based exercise
+            video suggestions.
+        </p>
+
+    </div>
+
+
+    <img
+        src="{{ url_for('static', filename='images/foot-heart.svg') }}"
+        alt="Foot care illustration"
+    >
+
+</section>
+
+
+<section class="section">
+
+
+    <div class="section-title">
+
+        <p class="eyebrow">
+            HOW IT WORKS
+        </p>
+
+        <h2>
+            From details to a clear result
+        </h2>
+
+    </div>
+
+
+    <div class="grid-4">
+
+
+        <div class="info-card">
+
+            <span>01</span>
+
+            <h3>
+                Enter Details
+            </h3>
+
+            <p>
+                Age, height, weight and Yes/No symptoms.
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <span>02</span>
+
+            <h3>
+                Calculate BMI
+            </h3>
+
+            <p>
+                BMI updates instantly while entering height
+                and weight.
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <span>03</span>
+
+            <h3>
+                ML Analysis
+            </h3>
+
+            <p>
+                The trained model predicts the target class.
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <span>04</span>
+
+            <h3>
+                View Guidance
+            </h3>
+
+            <p>
+                Risk level, feature summary and matching
+                videos are shown.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+{% endblock %}

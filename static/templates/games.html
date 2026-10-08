@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}
+PLANTARCARE | Games
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="page-hero">
+
+    <div>
+
+        <p class="eyebrow">
+            CAMERA-FREE GAMIFICATION
+        </p>
+
+        <h1>
+            Foot Care Games
+        </h1>
+
+        <p>
+            Simple seated, screen-based games for project
+            demonstration. No camera required.
+        </p>
+
+    </div>
+
+
+    <img
+        src="{{ url_for('static', filename='images/games.svg') }}"
+        alt="Game illustration"
+    >
+
+</section>
+
+
+<div class="game-grid">
+
+
+    <article class="game-card">
+
+        <div class="game-icon">
+            🎯
+        </div>
+
+        <h2>
+            Toe Tap Counter
+        </h2>
+
+        <p>
+            Tap the button to practise a simple
+            seated movement counter.
+        </p>
+
+        <strong id="tapCount">
+            0
+        </strong>
+
+        <button
+            class="btn primary"
+            onclick="tapGame()"
+        >
+            Tap
+        </button>
+
+        <button
+            class="btn outline"
+            onclick="resetTap()"
+        >
+            Reset
+        </button>
+
+    </article>
+
+
+    <article class="game-card">
+
+        <div class="game-icon">
+            🧠
+        </div>
+
+        <h2>
+            Memory Match
+        </h2>
+
+        <p>
+            Find matching foot-care symbols.
+        </p>
+
+        <div
+            id="memoryBoard"
+            class="memory-board"
+        ></div>
+
+        <button
+            class="btn outline"
+            onclick="startMemory()"
+        >
+            Restart Game
+        </button>
+
+    </article>
+
+
+    <article class="game-card">
+
+        <div class="game-icon">
+            🔤
+        </div>
+
+        <h2>
+            Ankle Alphabet
+        </h2>
+
+        <p>
+            Click the letters in order as a screen game.
+        </p>
+
+        <div
+            id="alphabetBoard"
+            class="alphabet-board"
+        ></div>
+
+        <p id="alphabetMessage">
+            Start with A
+        </p>
+
+        <button
+            class="btn outline"
+            onclick="startAlphabet()"
+        >
+            Start
+        </button>
+
+    </article>
+
+
+</div>
+
+
+{% endblock %}

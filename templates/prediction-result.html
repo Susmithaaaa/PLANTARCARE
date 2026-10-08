@@ -1,0 +1,796 @@
+{% extends "base.html" %}
+
+{% block title %}
+Prediction Result | PLANTARCARE
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.result-page {
+    padding: 30px 35px 50px;
+    background: #ffd8cc;
+    min-height: calc(100vh - 80px);
+    font-family: "Times New Roman", Times, serif;
+}
+
+
+/* ==============================
+   HEADER
+   ============================== */
+
+.result-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.result-label {
+    display: inline-block;
+    padding: 7px 18px;
+    background: #ffffff;
+    color: #0f496b;
+    border: 1px solid #cce7ef;
+    border-radius: 20px;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+.result-header h1 {
+    margin: 12px 0 8px;
+    font-size: 30px;
+    color: #0f496b;
+}
+
+.result-header p {
+    margin: 0;
+    color: #555555;
+    font-size: 15px;
+}
+
+
+/* ==============================
+   MAIN RESULT
+   ============================== */
+
+.result-main {
+    max-width: 1100px;
+    margin: auto;
+}
+
+.result-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+    border: 1px solid #f0cfc5;
+    margin-bottom: 25px;
+}
+
+
+/* ==============================
+   PATIENT INFORMATION
+   ============================== */
+
+.patient-title {
+    text-align: center;
+    color: #0f496b;
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.patient-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.patient-box {
+    background: #fff5f1;
+    border: 1px solid #f1d5cc;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+}
+
+.patient-box span {
+    display: block;
+    font-size: 12px;
+    color: #777777;
+    margin-bottom: 6px;
+}
+
+.patient-box strong {
+    display: block;
+    font-size: 16px;
+    color: #173f55;
+}
+
+
+/* ==============================
+   PREDICTION CARD
+   ============================== */
+
+.prediction-card {
+    text-align: center;
+}
+
+.prediction-title {
+    font-size: 20px;
+    color: #0f496b;
+    margin-bottom: 12px;
+}
+
+.risk-level {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 30px;
+    background: #fff0ea;
+    border: 1px solid #efc5b8;
+    color: #0f496b;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.prediction-summary {
+    max-width: 750px;
+    margin: auto;
+    color: #555555;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+
+/* ==============================
+   METRICS
+   ============================== */
+
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 25px;
+}
+
+.metric {
+    background: #ffffff;
+    border: 1px solid #d9eaf0;
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+}
+
+.metric-title {
+    color: #777777;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.metric-value {
+    color: #0f496b;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.metric-small {
+    color: #666666;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+
+/* ==============================
+   JOURNEY
+   ============================== */
+
+.journey-heading {
+    text-align: center;
+    color: #0f496b;
+    font-size: 24px;
+    margin: 35px 0 8px;
+}
+
+.journey-description {
+    text-align: center;
+    color: #666666;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.journey-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.journey-card {
+    background: #ffffff;
+    border: 1px solid #efd5cd;
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    min-height: 190px;
+}
+
+.step-number {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #0f496b;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.journey-content h3 {
+    color: #173f55;
+    margin: 0 0 8px;
+    font-size: 18px;
+}
+
+.journey-content p {
+    color: #666666;
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 0 0 15px;
+}
+
+.journey-btn {
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    padding: 10px 16px;
+    border-radius: 9px;
+    background: #168de2;
+    color: #ffffff;
+    font-size: 13px;
+    margin-top: auto;
+    transition: 0.2s;
+}
+
+.journey-btn:hover {
+    background: #0f496b;
+}
+
+
+/* ==============================
+   REPORT
+   ============================== */
+
+.report-box {
+    margin-top: 28px;
+    background: #ffffff;
+    border: 1px solid #cce7ef;
+    border-radius: 16px;
+    padding: 25px;
+    text-align: center;
+}
+
+.report-box h2 {
+    margin: 0 0 8px;
+    color: #0f496b;
+    font-size: 21px;
+}
+
+.report-box p {
+    color: #666666;
+    font-size: 14px;
+    margin-bottom: 18px;
+}
+
+.report-btn {
+    display: inline-block;
+    text-decoration: none;
+    background: #0f496b;
+    color: #ffffff;
+    padding: 12px 25px;
+    border-radius: 9px;
+    font-size: 14px;
+}
+
+.report-btn:hover {
+    background: #168de2;
+}
+
+
+/* ==============================
+   NOTE
+   ============================== */
+
+.result-note {
+    max-width: 1100px;
+    margin: 20px auto 0;
+    text-align: center;
+    color: #666666;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+/* ==============================
+   RESPONSIVE
+   ============================== */
+
+@media (max-width: 900px) {
+
+    .patient-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .journey-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .metrics {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .result-page {
+        padding: 20px 15px 40px;
+    }
+
+    .patient-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .journey-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .result-header h1 {
+        font-size: 24px;
+    }
+
+}
+
+</style>
+
+
+<div class="result-page">
+
+    <!-- ==============================
+         HEADER
+         ============================== -->
+
+    <div class="result-header">
+
+        <span class="result-label">
+            ASSESSMENT COMPLETED
+        </span>
+
+        <h1>
+            Plantar Fasciitis Risk Prediction Result
+        </h1>
+
+        <p>
+            Your PLANTARCARE assessment result has been generated successfully.
+        </p>
+
+    </div>
+
+
+    <div class="result-main">
+
+
+        <!-- ==============================
+             PATIENT INFORMATION
+             ============================== -->
+
+        <div class="result-card">
+
+            <div class="patient-title">
+                Patient Information
+            </div>
+
+
+            <div class="patient-grid">
+
+                <div class="patient-box">
+
+                    <span>
+                        Patient Name
+                    </span>
+
+                    <strong>
+                        {{ patient.get("name", "User") }}
+                    </strong>
+
+                </div>
+
+
+                <div class="patient-box">
+
+                    <span>
+                        Age
+                    </span>
+
+                    <strong>
+                        {{ patient.get("age", "N/A") }}
+                    </strong>
+
+                </div>
+
+
+                <div class="patient-box">
+
+                    <span>
+                        Height
+                    </span>
+
+                    <strong>
+                        {{ patient.get("height", "N/A") }} cm
+                    </strong>
+
+                </div>
+
+
+                <div class="patient-box">
+
+                    <span>
+                        Weight
+                    </span>
+
+                    <strong>
+                        {{ patient.get("weight", "N/A") }} kg
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==============================
+             PREDICTION RESULT
+             ============================== -->
+
+        <div class="result-card prediction-card">
+
+            <div class="prediction-title">
+                Risk Assessment
+            </div>
+
+
+            <div class="risk-level">
+
+                {{ risk_level }}
+
+            </div>
+
+
+            <div class="prediction-summary">
+
+                {{ risk_info.get("summary", "") }}
+
+            </div>
+
+
+            <div class="metrics">
+
+
+                <!-- BMI -->
+
+                <div class="metric">
+
+                    <div class="metric-title">
+                        BMI
+                    </div>
+
+                    <div class="metric-value">
+                        {{ bmi }}
+                    </div>
+
+                    <div class="metric-small">
+                        {{ bmi_category }}
+                    </div>
+
+                </div>
+
+
+                <!-- ML PREDICTION -->
+
+                <div class="metric">
+
+                    <div class="metric-title">
+                        ML Prediction
+                    </div>
+
+                    <div class="metric-value">
+                        {{ prediction }}
+                    </div>
+
+                    <div class="metric-small">
+                        Plantar Fasciitis Prediction
+                    </div>
+
+                </div>
+
+
+                <!-- CONFIDENCE -->
+
+                <div class="metric">
+
+                    <div class="metric-title">
+                        Confidence
+                    </div>
+
+                    <div class="metric-value">
+
+                        {% if confidence != "N/A" %}
+                            {{ confidence }}%
+                        {% else %}
+                            N/A
+                        {% endif %}
+
+                    </div>
+
+                    <div class="metric-small">
+                        Model Prediction Confidence
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- ==============================
+             NEXT STEPS
+             ============================== -->
+
+        <h2 class="journey-heading">
+            Your PLANTARCARE Care Journey
+        </h2>
+
+        <p class="journey-description">
+            Follow the steps below to continue with personalized care guidance.
+        </p>
+
+
+        <div class="journey-grid">
+
+
+            <!-- STEP 1 -->
+
+            <div class="journey-card">
+
+                <div class="step-number">
+                    1
+                </div>
+
+                <div class="journey-content">
+
+                    <h3>
+                        Care Guidance
+                    </h3>
+
+                    <p>
+                        View general plantar foot-care guidance based on your assessment.
+                    </p>
+
+                </div>
+
+                <a
+                    href="{{ url_for('care') }}"
+                    class="journey-btn"
+                >
+                    Next → Care Guidance
+                </a>
+
+            </div>
+
+
+            <!-- STEP 2 -->
+
+            <div class="journey-card">
+
+                <div class="step-number">
+                    2
+                </div>
+
+                <div class="journey-content">
+
+                    <h3>
+                        Daily Care Routine
+                    </h3>
+
+                    <p>
+                        Follow a simple daily routine for comfortable activity and recovery.
+                    </p>
+
+                </div>
+
+                <a
+                    href="{{ url_for('daily_routine') }}"
+                    class="journey-btn"
+                >
+                    Next → Daily Routine
+                </a>
+
+            </div>
+
+
+            <!-- STEP 3 -->
+
+            <div class="journey-card">
+
+                <div class="step-number">
+                    3
+                </div>
+
+                <div class="journey-content">
+
+                    <h3>
+                        Foot Care & Footwear
+                    </h3>
+
+                    <p>
+                        Learn about comfortable and suitable footwear choices.
+                    </p>
+
+                </div>
+
+                <a
+                    href="{{ url_for('footwear') }}"
+                    class="journey-btn"
+                >
+                    Next → Footwear
+                </a>
+
+            </div>
+
+
+            <!-- STEP 4 -->
+
+            <div class="journey-card">
+
+                <div class="step-number">
+                    4
+                </div>
+
+                <div class="journey-content">
+
+                    <h3>
+                        Nutrition Care
+                    </h3>
+
+                    <p>
+                        Explore balanced meal and hydration guidance.
+                    </p>
+
+                </div>
+
+                <a
+                    href="{{ url_for('nutrition') }}"
+                    class="journey-btn"
+                >
+                    Next → Nutrition
+                </a>
+
+            </div>
+
+
+            <!-- STEP 5 -->
+
+            <div class="journey-card">
+
+                <div class="step-number">
+                    5
+                </div>
+
+                <div class="journey-content">
+
+                    <h3>
+                        Exercise Videos
+                    </h3>
+
+                    <p>
+                        Watch the available gentle foot and ankle exercise demonstrations.
+                    </p>
+
+                </div>
+
+                <a
+                    href="{{ url_for('exercise') }}"
+                    class="journey-btn"
+                >
+                    Next → Exercises
+                </a>
+
+            </div>
+
+
+            <!-- STEP 6 -->
+
+            <div class="journey-card">
+
+                <div class="step-number">
+                    6
+                </div>
+
+                <div class="journey-content">
+
+                    <h3>
+                        Camera Exercise Game
+                    </h3>
+
+                    <p>
+                        Try the interactive camera-based target game and progress through levels.
+                    </p>
+
+                </div>
+
+                <a
+                    href="{{ url_for('games') }}"
+                    class="journey-btn"
+                >
+                    Next → Camera Game
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ==============================
+             REPORT
+             ============================== -->
+
+        <div class="report-box">
+
+            <h2>
+                Assessment Report
+            </h2>
+
+            <p>
+                View your complete assessment report and download the generated PDF report.
+            </p>
+
+            <a
+                href="{{ url_for('report') }}"
+                class="report-btn"
+            >
+                View Full Report →
+            </a>
+
+        </div>
+
+
+        <!-- ==============================
+             GENERATED DATE
+             ============================== -->
+
+        <div class="result-note">
+
+            Assessment generated on:
+            <strong>{{ generated_at }}</strong>
+
+            <br><br>
+
+            This PLANTARCARE result is intended for educational project purposes
+            and does not replace professional medical advice.
+
+        </div>
+
+
+    </div>
+
+</div>
+
+{% endblock %}

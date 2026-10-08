@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 280">
+  <rect width="420" height="280" rx="30" fill="#e6faf7"/>
+
+  <ellipse cx="210" cy="230" rx="145" ry="20" fill="#bdebea"/>
+
+  <!-- Foot -->
+  <path d="M145 35
+           C175 25 205 45 215 75
+           L230 125
+           C240 150 275 165 310 180
+           C335 191 345 215 325 228
+           C300 245 255 235 225 222
+           L160 195
+           C135 185 115 165 112 140
+           L105 85
+           C102 60 120 42 145 35Z"
+        fill="#ffd0b5"
+        stroke="#123b5d"
+        stroke-width="7"/>
+
+  <!-- Heel highlight -->
+  <path d="M120 130 C145 115 170 125 178 148"
+        fill="none"
+        stroke="#f39b78"
+        stroke-width="12"
+        stroke-linecap="round"/>
+
+  <!-- Plantar fascia -->
+  <path d="M135 160
+           C175 175 210 188 255 202"
+        fill="none"
+        stroke="#ef6b67"
+        stroke-width="10"
+        stroke-linecap="round"/>
+
+  <!-- Pain indicator -->
+  <circle cx="130" cy="155" r="30" fill="#ff6b6b" opacity=".25"/>
+  <circle cx="130" cy="155" r="18" fill="#ff5252"/>
+
+  <!-- Leaves -->
+  <path d="M330 70 C350 40 375 42 380 48 C370 72 350 82 330 70Z"
+        fill="#36b37e"/>
+  <path d="M345 100 C365 75 390 82 392 90 C380 110 360 115 345 100Z"
+        fill="#25a878"/>
+
+  <path d="M350 110 L370 55"
+        stroke="#167a62"
+        stroke-width="5"
+        stroke-linecap="round"/>
+</svg>

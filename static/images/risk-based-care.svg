@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240">
+  <rect width="300" height="240" rx="30" fill="#e6faf7"/>
+
+  <!-- Shield -->
+  <path d="M150 35
+           L220 58
+           L212 125
+           C205 160 180 182 150 198
+           C120 182 95 160 88 125
+           L80 58Z"
+        fill="#168de2"
+        stroke="#123b5d"
+        stroke-width="7"/>
+
+  <!-- Shield inner -->
+  <path d="M150 55
+           L195 70
+           L190 120
+           C185 142 170 158 150 170
+           C130 158 115 142 110 120
+           L105 70Z"
+        fill="#36b37e"/>
+
+  <!-- Plus -->
+  <path d="M150 82 L150 135
+           M124 108 L176 108"
+        stroke="#ffffff"
+        stroke-width="10"
+        stroke-linecap="round"/>
+
+  <!-- Hand -->
+  <path d="M50 185
+           C75 165 105 165 125 185
+           L140 205
+           L75 205
+           C62 202 52 195 50 185Z"
+        fill="#ffc4a5"
+        stroke="#123b5d"
+        stroke-width="6"/>
+</svg>

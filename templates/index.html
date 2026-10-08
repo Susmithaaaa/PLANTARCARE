@@ -1,0 +1,271 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+PLANTARCARE | Plantar Fasciitis Risk Prediction Assessment
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="home-page">
+
+
+    <!-- =================================================
+         HERO SECTION
+    ================================================== -->
+
+    <section class="hero">
+
+
+        <!-- LEFT -->
+
+        <div class="hero-content">
+
+
+            <!-- BADGE -->
+
+            <div class="hero-badge">
+
+                <span class="heart">
+                    ♥
+                </span>
+
+                <span>
+                    Better Foot Health
+                </span>
+
+                <span class="dot">
+                    •
+                </span>
+
+                <span>
+                    Brighter Future
+                </span>
+
+            </div>
+
+
+            <!-- TITLE -->
+
+            <h1 class="main-title">
+
+                PLANTAR<span>CARE</span>
+
+            </h1>
+
+
+            <!-- HEADING -->
+
+            <h2 class="main-heading" style="white-space: nowrap;">
+
+                Plantar Fasciitis Risk Prediction Assessment
+
+            </h2>
+
+
+            <!-- DESCRIPTION -->
+
+            <p class="main-description">
+
+                Machine Learning Based Assessment System
+
+            </p>
+
+
+            <!-- BUTTONS -->
+
+            <div class="hero-buttons">
+
+
+                <a href="{{ url_for('prediction') }}"
+                   class="primary-button">
+
+                    <span>
+                        Start Assessment
+                    </span>
+
+                    <span class="arrow">
+                        →
+                    </span>
+
+                </a>
+
+
+                <a href="{{ url_for('about') }}"
+                   class="secondary-button">
+
+                    About Project
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             RIGHT IMAGE
+        ================================================== -->
+
+        <div class="hero-image-area">
+
+
+            <!-- BACKGROUND PEACH CIRCLE -->
+
+            <div class="image-circle"></div>
+
+
+            <!-- HANDWRITTEN TEXT -->
+
+            <div class="healthy-note">
+
+                <span>
+                    Healthy Feet
+                </span>
+
+                <span>
+                    Happy Life
+                </span>
+
+                <div class="note-arrow">
+                    ↙
+                </div>
+
+            </div>
+
+
+            <!-- ACTUAL PROJECT IMAGE -->
+
+            <div class="foot-container">
+
+                <img
+                    src="{{ url_for('static', filename='plantarcare_assets/foot-care.svg') }}"
+                    alt="Plantar Care"
+                    class="foot-image"
+                >
+
+            </div>
+
+
+            <!-- DECORATIVE LEAVES -->
+
+            <div class="decorative-leaves">
+
+                <span class="leaf leaf-1"></span>
+                <span class="leaf leaf-2"></span>
+                <span class="leaf leaf-3"></span>
+                <span class="leaf leaf-4"></span>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =================================================
+         FEATURE CARDS
+    ================================================== -->
+
+    <section class="features">
+
+
+        <!-- CARD 1 -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon red-icon">
+                ✿
+            </div>
+
+            <h3>
+                Smart Prediction
+            </h3>
+
+            <p>
+                AI-powered assessment
+                <br>
+                for early risk detection.
+            </p>
+
+        </div>
+
+
+        <!-- CARD 2 -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon orange-icon">
+                ♨
+            </div>
+
+            <h3>
+                Better Care
+            </h3>
+
+            <p>
+                Personalized care and
+                <br>
+                recovery guidance.
+            </p>
+
+        </div>
+
+
+        <!-- CARD 3 -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon green-icon">
+                ♡
+            </div>
+
+            <h3>
+                Healthy Nutrition
+            </h3>
+
+            <p>
+                Food choices for
+                <br>
+                stronger feet.
+            </p>
+
+        </div>
+
+
+        <!-- CARD 4 -->
+
+        <div class="feature-card">
+
+            <div class="feature-icon purple-icon">
+                ♧
+            </div>
+
+            <h3>
+                Stay Active
+            </h3>
+
+            <p>
+                Safe exercises for
+                <br>
+                long term relief.
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+</div>
+
+
+{% endblock %}

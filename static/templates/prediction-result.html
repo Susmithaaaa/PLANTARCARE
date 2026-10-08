@@ -1,0 +1,324 @@
+{% extends "base.html" %}
+
+{% block title %}
+PLANTARCARE | Result
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="result-hero risk-{{ risk_level|lower }}">
+
+
+    <div>
+
+        <p class="eyebrow">
+            ASSESSMENT COMPLETE
+        </p>
+
+        <h1>
+            Hello, {{ patient.name }}
+        </h1>
+
+        <p>
+            Your PLANTARCARE analysis is ready.
+            Review the result and educational guidance below.
+        </p>
+
+    </div>
+
+
+    <div class="risk-badge">
+
+        <small>
+            RISK LEVEL
+        </small>
+
+        <strong>
+            {{ risk_level }}
+        </strong>
+
+    </div>
+
+
+</section>
+
+
+<section class="result-stats">
+
+
+    <div class="stat-card">
+
+        <small>
+            ML PREDICTION
+        </small>
+
+        <strong>
+            {{ prediction }}
+        </strong>
+
+        <span>
+            PlantarFasciitis target
+        </span>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <small>
+            MODEL CONFIDENCE
+        </small>
+
+        <strong>
+            {{ confidence }}%
+        </strong>
+
+        <span>
+            Prediction probability
+        </span>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <small>
+            BMI
+        </small>
+
+        <strong>
+            {{ bmi }}
+        </strong>
+
+        <span>
+            {{ bmi_category }}
+        </span>
+
+    </div>
+
+
+</section>
+
+
+<section class="result-grid">
+
+
+    <div class="result-card">
+
+
+        <div class="card-heading">
+
+            <span>
+                ✓
+            </span>
+
+            <div>
+
+                <h2>
+                    Feature Summary
+                </h2>
+
+                <p>
+                    Values submitted for this assessment.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="feature-list">
+
+
+            {% for key,value in feature_summary.items() %}
+
+
+            <div>
+
+                <strong>
+                    {{ key }}
+                </strong>
+
+                <span class="value-pill {{ value|lower }}">
+                    {{ value }}
+                </span>
+
+            </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+    </div>
+
+
+    <div class="result-card">
+
+
+        <img
+            class="result-illustration"
+            src="{{ url_for('static', filename='images/result.svg') }}"
+            alt="Result illustration"
+        >
+
+
+        <h2>
+            What this page shows
+        </h2>
+
+
+        <p>
+            The risk level is generated from the model prediction
+            together with the project risk-rule layer.
+            It is intended for academic demonstration,
+            not diagnosis.
+        </p>
+
+
+        <a
+            class="btn primary"
+            href="{{ url_for('report') }}"
+        >
+            View Full Report
+        </a>
+
+
+    </div>
+
+
+</section>
+
+
+<section class="section">
+
+
+    <div class="section-title">
+
+        <p class="eyebrow">
+            RISK-BASED EXERCISE
+        </p>
+
+        <h2>
+            Videos selected for {{ risk_level }} risk
+        </h2>
+
+        <p>
+            Camera is not required.
+            Add the matching MP4 files to
+            <b>static/videos/</b>.
+        </p>
+
+    </div>
+
+
+    <div class="video-grid">
+
+
+        {% for video in exercise_videos %}
+
+
+        <article class="video-card">
+
+
+            {% if video.available %}
+
+
+            <video
+                controls
+                preload="metadata"
+            >
+
+                <source
+                    src="{{ url_for('static', filename=video.file) }}"
+                    type="video/mp4"
+                >
+
+                Your browser does not support MP4 video.
+
+            </video>
+
+
+            {% else %}
+
+
+            <div class="video-missing">
+
+                <span>
+                    ▶
+                </span>
+
+                <b>
+                    Video file not found
+                </b>
+
+                <small>
+                    Add
+                    <code>
+                        {{ video.file }}
+                    </code>
+                    to your project.
+                </small>
+
+            </div>
+
+
+            {% endif %}
+
+
+            <div class="video-body">
+
+                <span class="tag">
+                    {{ risk_level }} RISK
+                </span>
+
+                <h3>
+                    {{ video.title }}
+                </h3>
+
+                <p>
+                    {{ video.description }}
+                </p>
+
+            </div>
+
+
+        </article>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</section>
+
+
+<div class="bottom-actions">
+
+
+    <a
+        class="btn outline"
+        href="{{ url_for('prediction') }}"
+    >
+        New Assessment
+    </a>
+
+
+    <a
+        class="btn primary"
+        href="{{ url_for('download_report') }}"
+    >
+        Download PDF Report
+    </a>
+
+
+</div>
+
+
+{% endblock %}

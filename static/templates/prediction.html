@@ -1,0 +1,336 @@
+{% extends "base.html" %}
+
+{% block title %}
+PLANTARCARE | Prediction
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="page-hero">
+
+    <div>
+
+        <p class="eyebrow">
+            PLANTAR FASCIITIS ASSESSMENT
+        </p>
+
+        <h1>
+            Analyse Your Risk
+        </h1>
+
+        <p>
+            Complete every field.
+            Choose both Yes and No options as applicable.
+        </p>
+
+    </div>
+
+
+    <img
+        src="{{ url_for('static', filename='images/assessment.svg') }}"
+        alt="Assessment illustration"
+    >
+
+</section>
+
+
+<form
+    method="POST"
+    action="{{ url_for('predict') }}"
+    class="assessment-form"
+>
+
+
+<div class="form-grid">
+
+
+<section class="form-card">
+
+
+    <div class="card-heading">
+
+        <span>
+            01
+        </span>
+
+        <div>
+
+            <h2>
+                Basic Information
+            </h2>
+
+            <p>
+                Used for BMI and model analysis.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <label>
+
+        Name
+
+        <input
+            name="name"
+            type="text"
+            placeholder="Enter your name"
+            required
+        >
+
+    </label>
+
+
+    <div class="two-col">
+
+
+        <label>
+
+            Age
+
+            <input
+                name="age"
+                type="number"
+                min="1"
+                max="120"
+                required
+            >
+
+        </label>
+
+
+        <label>
+
+            Standing Hours / Day
+
+            <input
+                name="standing_hours"
+                type="number"
+                min="0"
+                max="24"
+                step="0.5"
+                required
+            >
+
+        </label>
+
+
+    </div>
+
+
+    <div class="two-col">
+
+
+        <label>
+
+            Height (cm)
+
+            <input
+                id="heightInput"
+                name="height"
+                type="number"
+                min="50"
+                max="250"
+                step="0.1"
+                oninput="calculateLiveBMI()"
+                required
+            >
+
+        </label>
+
+
+        <label>
+
+            Weight (kg)
+
+            <input
+                id="weightInput"
+                name="weight"
+                type="number"
+                min="10"
+                max="300"
+                step="0.1"
+                oninput="calculateLiveBMI()"
+                required
+            >
+
+        </label>
+
+
+    </div>
+
+
+    <div class="bmi-live">
+
+
+        <div>
+
+            <small>
+                LIVE BMI
+            </small>
+
+            <strong id="bmiValue">
+                --
+            </strong>
+
+        </div>
+
+
+        <div>
+
+            <span id="bmiCategory">
+                Enter height & weight
+            </span>
+
+            <small>
+                BMI is calculated automatically and is not sent
+                as a model feature.
+            </small>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+<section class="form-card">
+
+
+    <div class="card-heading">
+
+        <span>
+            02
+        </span>
+
+        <div>
+
+            <h2>
+                Foot & Activity Features
+            </h2>
+
+            <p>
+                Select Yes or No for every feature.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    {% for name,label in [
+        ('plantar_pain','Plantar Pain'),
+        ('morning_pain','Morning Pain'),
+        ('walking_activity','Walking Activity'),
+        ('previous_injury','Previous Injury'),
+        ('heel_symptom','Heel Symptom'),
+        ('arch_symptom','Arch Symptom'),
+        ('swelling','Swelling'),
+        ('diabetes','Diabetes')
+    ] %}
+
+
+    <div class="choice-row">
+
+
+        <div>
+
+            <strong>
+                {{ label }}
+            </strong>
+
+            <small>
+
+                {% if name == 'walking_activity' %}
+
+                    Regular walking activity
+
+                {% else %}
+
+                    Current or previous presence
+
+                {% endif %}
+
+            </small>
+
+        </div>
+
+
+        <div class="choice">
+
+
+            <label>
+
+                <input
+                    type="radio"
+                    name="{{ name }}"
+                    value="Yes"
+                    required
+                >
+
+                <span>
+                    Yes
+                </span>
+
+            </label>
+
+
+            <label>
+
+                <input
+                    type="radio"
+                    name="{{ name }}"
+                    value="No"
+                >
+
+                <span>
+                    No
+                </span>
+
+            </label>
+
+
+        </div>
+
+
+    </div>
+
+
+    {% endfor %}
+
+
+</section>
+
+
+</div>
+
+
+<div class="form-submit">
+
+
+    <button
+        class="btn primary big"
+        type="submit"
+    >
+        Analyse My Risk →
+    </button>
+
+
+    <p>
+        Educational project output.
+        This does not provide a medical diagnosis.
+    </p>
+
+
+</div>
+
+
+</form>
+
+
+{% endblock %}

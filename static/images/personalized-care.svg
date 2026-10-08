@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240">
+  <rect width="300" height="240" rx="30" fill="#e6faf7"/>
+
+  <!-- Heart -->
+  <path d="M150 75
+           C125 38 70 52 78 92
+           C85 125 125 150 150 170
+           C175 150 215 125 222 92
+           C230 52 175 38 150 75Z"
+        fill="#36b37e"/>
+
+  <!-- Plus -->
+  <path d="M150 75 L150 125
+           M125 100 L175 100"
+        stroke="#ffffff"
+        stroke-width="10"
+        stroke-linecap="round"/>
+
+  <!-- Hands -->
+  <path d="M60 180
+           C85 155 110 158 135 185
+           L150 205
+           L100 205
+           C80 202 65 195 60 180Z"
+        fill="#ffc4a5"
+        stroke="#123b5d"
+        stroke-width="6"/>
+
+  <path d="M240 180
+           C215 155 190 158 165 185
+           L150 205
+           L200 205
+           C220 202 235 195 240 180Z"
+        fill="#ffc4a5"
+        stroke="#123b5d"
+        stroke-width="6"/>
+
+  <!-- Leaves -->
+  <path d="M45 100 C25 75 35 52 50 48 C65 65 60 85 45 100Z"
+        fill="#168d70"/>
+
+  <path d="M255 100 C275 75 265 52 250 48 C235 65 240 85 255 100Z"
+        fill="#168d70"/>
+</svg>

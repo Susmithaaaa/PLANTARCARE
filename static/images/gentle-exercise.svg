@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 220">
+
+<rect width="300" height="220" rx="28" fill="#E6FAF7"/>
+
+<!-- Leg -->
+<path
+d="M95 45
+L125 113
+L188 137"
+fill="none"
+stroke="#FFC83D"
+stroke-width="25"
+stroke-linecap="round"
+stroke-linejoin="round"/>
+
+<!-- Foot -->
+<path
+d="M181 130
+C203 128 228 132 246 143
+C257 150 253 166 240 170
+L184 170
+C168 170 160 157 166 146Z"
+fill="#FFC83D"
+stroke="#0F496B"
+stroke-width="6"/>
+
+<!-- Motion Arrows -->
+<path
+d="M73 86
+C45 104 45 139 70 157"
+fill="none"
+stroke="#168DE2"
+stroke-width="7"
+stroke-linecap="round"/>
+
+<path
+d="M62 147
+L70 158
+L82 151"
+fill="none"
+stroke="#168DE2"
+stroke-width="7"
+stroke-linecap="round"
+stroke-linejoin="round"/>
+
+<!-- Exercise Circle -->
+<circle cx="224" cy="60" r="27" fill="#36B37E"/>
+
+<path
+d="M211 60
+L220 69
+L238 49"
+fill="none"
+stroke="white"
+stroke-width="7"
+stroke-linecap="round"
+stroke-linejoin="round"/>
+
+</svg>

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}
+PLANTARCARE | Login
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="login-shell">
+
+
+    <div class="login-card">
+
+
+        <img
+            src="{{ url_for('static', filename='images/login.svg') }}"
+            alt="Login illustration"
+        >
+
+
+        <p class="eyebrow">
+            WELCOME TO PLANTARCARE
+        </p>
+
+
+        <h1>
+            Login
+        </h1>
+
+
+        <p>
+            Enter your name to start the academic
+            assessment demo.
+        </p>
+
+
+        <form method="POST">
+
+
+            <label>
+
+                Your Name
+
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Enter your name"
+                    required
+                >
+
+            </label>
+
+
+            <button
+                class="btn primary big"
+                type="submit"
+            >
+                Continue →
+            </button>
+
+
+        </form>
+
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}

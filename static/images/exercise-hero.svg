@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 280">
+
+<rect width="420" height="280" rx="30" fill="#E6FAF7"/>
+
+<!-- Leg -->
+<path
+d="M145 45
+L178 150
+L255 174"
+fill="none"
+stroke="#FFC83D"
+stroke-width="32"
+stroke-linecap="round"
+stroke-linejoin="round"/>
+
+<!-- Foot -->
+<path
+d="M246 160
+C272 156 304 162 329 176
+C343 184 338 203 321 207
+L250 207
+C229 207 217 190 224 175
+C229 165 237 161 246 160Z"
+fill="#FFC83D"
+stroke="#0F496B"
+stroke-width="7"/>
+
+<!-- Motion arrows -->
+<path
+d="M95 92
+C55 118 55 174 91 201"
+fill="none"
+stroke="#168DE2"
+stroke-width="9"
+stroke-linecap="round"/>
+
+<path
+d="M78 187
+L91 201
+L108 190"
+fill="none"
+stroke="#168DE2"
+stroke-width="9"
+stroke-linecap="round"
+stroke-linejoin="round"/>
+
+<!-- Play button -->
+<circle
+cx="305"
+cy="67"
+r="36"
+fill="#36B37E"/>
+
+<path
+d="M294 47
+L294 87
+L326 67
+Z"
+fill="white"/>
+
+<!-- Decorative -->
+<circle cx="52" cy="55" r="7" fill="#FFC83D"/>
+<circle cx="365" cy="116" r="8" fill="#168DE2"/>
+
+</svg>

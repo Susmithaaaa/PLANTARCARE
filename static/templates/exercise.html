@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block title %}
+PLANTARCARE | Exercise
+{% endblock %}
+
+
+{% block content %}
+
+<section class="page-hero">
+
+    <div class="page-hero-text">
+
+        <small>
+            PLANTARCARE EXERCISE HUB
+        </small>
+
+        <h1>
+            Guided Foot Exercises
+        </h1>
+
+        <p>
+            Camera தேவையில்லை. Local MP4 videos-ஐ
+            play செய்து follow செய்யலாம்.
+        </p>
+
+    </div>
+
+    <div class="page-hero-image">
+        🧘‍♀️🦶
+    </div>
+
+</section>
+
+
+<div class="video-grid">
+
+
+    <!-- VIDEO 1 -->
+
+    <div class="video-card">
+
+        <video controls preload="metadata">
+
+            <source
+                src="{{ url_for('static', filename='videos/towel-curls.mp4') }}"
+                type="video/mp4">
+
+            Your browser does not support
+            video playback.
+
+        </video>
+
+        <div class="video-content">
+
+            <h3>
+                🧻 Towel Curl Exercise
+            </h3>
+
+            <p>
+                A seated foot-movement demonstration
+                using a towel.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- VIDEO 2 -->
+
+    <div class="video-card">
+
+        <video controls preload="metadata">
+
+            <source
+                src="{{ url_for('static', filename='videos/marble-pickup.mp4') }}"
+                type="video/mp4">
+
+            Your browser does not support
+            video playback.
+
+        </video>
+
+        <div class="video-content">
+
+            <h3>
+                🔵 Marble Pickup
+            </h3>
+
+            <p>
+                A seated toe-movement activity
+                demonstration.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- VIDEO 3 -->
+
+    <div class="video-card">
+
+        <video controls preload="metadata">
+
+            <source
+                src="{{ url_for('static', filename='videos/ankle-alphabet.mp4') }}"
+                type="video/mp4">
+
+            Your browser does not support
+            video playback.
+
+        </video>
+
+        <div class="video-content">
+
+            <h3>
+                🔤 Ankle Alphabet
+            </h3>
+
+            <p>
+                Gentle ankle mobility demonstration
+                using alphabet movements.
+            </p>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<div class="about-home">
+
+    <div class="hero-kicker">
+        IMPORTANT
+    </div>
+
+    <h3>
+        Exercise Safety
+    </h3>
+
+    <p>
+        These videos are educational demonstrations.
+        Perform only comfortable movements and stop
+        if an exercise causes pain or discomfort.
+        For persistent symptoms, seek professional
+        healthcare guidance.
+    </p>
+
+</div>
+
+{% endblock %}

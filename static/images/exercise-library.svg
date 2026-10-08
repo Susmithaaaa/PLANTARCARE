@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+
+<circle
+cx="90"
+cy="90"
+r="82"
+fill="#E9FBF5"
+stroke="#C7EDE2"
+stroke-width="3"/>
+
+<!-- Video screen -->
+<rect
+x="38"
+y="45"
+width="104"
+height="78"
+rx="12"
+fill="#FFFFFF"
+stroke="#0F496B"
+stroke-width="5"/>
+
+<!-- Screen -->
+<rect
+x="48"
+y="55"
+width="84"
+height="58"
+rx="7"
+fill="#DFF8F6"/>
+
+<!-- Play -->
+<path
+d="M80 68
+L80 100
+L108 84
+Z"
+fill="#168DE2"/>
+
+<!-- Bottom controls -->
+<rect
+x="48"
+y="130"
+width="84"
+height="7"
+rx="3"
+fill="#168DE2"/>
+
+<circle
+cx="52"
+cy="133"
+r="7"
+fill="#36B37E"/>
+
+<!-- Small dots -->
+<circle cx="31" cy="39" r="5" fill="#FFC83D"/>
+<circle cx="149" cy="139" r="6" fill="#36B37E"/>
+
+</svg>

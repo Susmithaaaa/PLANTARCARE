@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 230">
+  <rect width="280" height="230" rx="30" fill="#e6faf7"/>
+
+  <!-- Calendar -->
+  <rect x="45" y="45"
+        width="155"
+        height="130"
+        rx="15"
+        fill="#ffffff"
+        stroke="#123b5d"
+        stroke-width="7"/>
+
+  <!-- Calendar top -->
+  <rect x="45" y="45"
+        width="155"
+        height="35"
+        rx="12"
+        fill="#168de2"/>
+
+  <circle cx="80" cy="42" r="8" fill="#123b5d"/>
+  <circle cx="165" cy="42" r="8" fill="#123b5d"/>
+
+  <!-- Date boxes -->
+  <rect x="65" y="100" width="20" height="20" rx="4" fill="#8fd4f5"/>
+  <rect x="105" y="100" width="20" height="20" rx="4" fill="#8fd4f5"/>
+  <rect x="145" y="100" width="20" height="20" rx="4" fill="#36b37e"/>
+
+  <rect x="65" y="135" width="20" height="20" rx="4" fill="#8fd4f5"/>
+  <rect x="105" y="135" width="20" height="20" rx="4" fill="#36b37e"/>
+  <rect x="145" y="135" width="20" height="20" rx="4" fill="#8fd4f5"/>
+
+  <!-- Clock -->
+  <circle cx="205" cy="160" r="43"
+          fill="#ffffff"
+          stroke="#123b5d"
+          stroke-width="7"/>
+
+  <path d="M205 160 L205 137"
+        stroke="#123b5d"
+        stroke-width="6"
+        stroke-linecap="round"/>
+
+  <path d="M205 160 L222 170"
+        stroke="#123b5d"
+        stroke-width="6"
+        stroke-linecap="round"/>
+
+  <circle cx="205" cy="160" r="6" fill="#36b37e"/>
+</svg>

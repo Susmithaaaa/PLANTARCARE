@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 280">
+  <rect width="420" height="280" rx="30" fill="#e9fbf5"/>
+
+  <ellipse cx="210" cy="220" rx="150" ry="22" fill="#c7ece8"/>
+
+  <!-- Shoe upper -->
+  <path d="M75 165
+           C105 155 135 145 160 125
+           L195 92
+           C210 78 225 82 235 98
+           L275 150
+           C288 166 320 172 345 180
+           C365 187 370 205 352 215
+           L100 215
+           C78 215 65 195 75 165Z"
+        fill="#168de2"
+        stroke="#123b5d"
+        stroke-width="7"/>
+
+  <!-- Sole -->
+  <path d="M73 193
+           C120 202 170 205 225 205
+           L350 198
+           C368 197 375 207 360 220
+           C330 235 120 235 85 220
+           C72 214 67 204 73 193Z"
+        fill="#ffffff"
+        stroke="#123b5d"
+        stroke-width="6"/>
+
+  <!-- Shoe panels -->
+  <path d="M160 126 L225 155"
+        stroke="#8fd4f5"
+        stroke-width="8"
+        fill="none"/>
+
+  <path d="M175 110 L245 145"
+        stroke="#8fd4f5"
+        stroke-width="8"
+        fill="none"/>
+
+  <!-- Laces -->
+  <path d="M195 105 L250 135"
+        stroke="#ffffff"
+        stroke-width="6"
+        stroke-linecap="round"/>
+
+  <path d="M190 120 L245 150"
+        stroke="#ffffff"
+        stroke-width="6"
+        stroke-linecap="round"/>
+
+  <!-- Shield -->
+  <path d="M315 65 L345 75 L340 108
+           C334 120 325 127 315 132
+           C305 127 296 120 290 108
+           L285 75Z"
+        fill="#36b37e"/>
+
+  <path d="M300 96 L311 107 L330 87"
+        fill="none"
+        stroke="#ffffff"
+        stroke-width="7"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+</svg>

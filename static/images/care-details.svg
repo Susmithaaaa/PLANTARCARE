@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+
+<circle cx="90" cy="90" r="82"
+fill="#E9FBF5"
+stroke="#C7EDE2"
+stroke-width="3"/>
+
+<!-- Clipboard -->
+<rect x="47" y="38"
+width="86"
+height="105"
+rx="13"
+fill="white"
+stroke="#0F496B"
+stroke-width="5"/>
+
+<!-- Clip -->
+<rect x="68" y="27"
+width="44"
+height="25"
+rx="8"
+fill="#168DE2"
+stroke="#0F496B"
+stroke-width="4"/>
+
+<!-- Check 1 -->
+<circle cx="65" cy="70" r="10" fill="#36B37E"/>
+<path d="M59 70l5 5 9-11"
+fill="none"
+stroke="white"
+stroke-width="4"
+stroke-linecap="round"/>
+
+<rect x="82" y="66" width="35" height="7" rx="3" fill="#168DE2"/>
+
+<!-- Check 2 -->
+<circle cx="65" cy="94" r="10" fill="#36B37E"/>
+<path d="M59 94l5 5 9-11"
+fill="none"
+stroke="white"
+stroke-width="4"
+stroke-linecap="round"/>
+
+<rect x="82" y="90" width="28" height="7" rx="3" fill="#168DE2"/>
+
+<!-- Check 3 -->
+<circle cx="65" cy="118" r="10" fill="#FFC83D"/>
+<path d="M59 118l5 5 9-11"
+fill="none"
+stroke="#0F496B"
+stroke-width="4"
+stroke-linecap="round"/>
+
+<rect x="82" y="114" width="38" height="7" rx="3" fill="#168DE2"/>
+
+</svg>

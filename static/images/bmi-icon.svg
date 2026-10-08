@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 220">
+  <rect width="240" height="220" rx="30" fill="#e6faf7"/>
+
+  <!-- Scale -->
+  <path d="M55 80
+           C55 55 80 38 120 38
+           C160 38 185 55 185 80
+           L185 165
+           C185 178 175 188 162 188
+           L78 188
+           C65 188 55 178 55 165Z"
+        fill="#168de2"
+        stroke="#123b5d"
+        stroke-width="7"/>
+
+  <!-- Dial -->
+  <circle cx="120" cy="80" r="32"
+          fill="#ffffff"
+          stroke="#123b5d"
+          stroke-width="5"/>
+
+  <path d="M120 80 L120 57"
+        stroke="#123b5d"
+        stroke-width="6"
+        stroke-linecap="round"/>
+
+  <circle cx="120" cy="80" r="6" fill="#36b37e"/>
+
+  <!-- BMI circle -->
+  <circle cx="160" cy="145" r="42"
+          fill="#36b37e"
+          stroke="#ffffff"
+          stroke-width="5"/>
+
+  <text x="160" y="152"
+        text-anchor="middle"
+        font-family="Arial"
+        font-size="25"
+        font-weight="700"
+        fill="#ffffff">BMI</text>
+</svg>

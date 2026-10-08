@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+Login | PLANTARCARE
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page">
+
+    <div class="card form-card">
+
+        <span class="label">
+            ACCESS
+        </span>
+
+        <h1>
+            Welcome to PLANTARCARE
+        </h1>
+
+        <p>
+            Enter your name to continue to the project.
+        </p>
+
+
+        <form method="POST">
+
+            <div class="field">
+
+                <label>
+                    Name
+                </label>
+
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Enter your name"
+                    required
+                >
+
+            </div>
+
+
+            <br>
+
+
+            <button
+                type="submit"
+                class="btn primary">
+                Continue →
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

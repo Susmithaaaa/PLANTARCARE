@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 230">
+  <rect width="300" height="230" rx="30" fill="#e6faf7"/>
+
+  <!-- Browser -->
+  <rect x="40" y="45"
+        width="220"
+        height="145"
+        rx="15"
+        fill="#ffffff"
+        stroke="#123b5d"
+        stroke-width="7"/>
+
+  <!-- Browser header -->
+  <path d="M40 75 L260 75"
+        stroke="#123b5d"
+        stroke-width="6"/>
+
+  <circle cx="65" cy="60" r="6" fill="#ff6b6b"/>
+  <circle cx="85" cy="60" r="6" fill="#f5a623"/>
+  <circle cx="105" cy="60" r="6" fill="#36b37e"/>
+
+  <!-- Video area -->
+  <rect x="65" y="92"
+        width="170"
+        height="105"
+        rx="8"
+        fill="#dff8f6"/>
+
+  <!-- Play button -->
+  <circle cx="150" cy="145" r="35"
+          fill="#ff5252"/>
+
+  <path d="M140 125 L140 165 L173 145 Z"
+        fill="#ffffff"/>
+
+  <!-- Progress -->
+  <rect x="80" y="178"
+        width="140"
+        height="6"
+        rx="3"
+        fill="#8ccfea"/>
+
+  <circle cx="120" cy="181" r="7" fill="#168de2"/>
+</svg>

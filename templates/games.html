@@ -1,0 +1,800 @@
+{% extends "base.html" %}
+
+{% block title %}
+Camera Games | PLANTARCARE
+{% endblock %}
+
+{% block content %}
+
+<div class="games-page">
+
+    <!-- PAGE HEADER -->
+    <div class="games-header">
+
+        <span class="games-label">
+            CAMERA GAME ZONE
+        </span>
+
+        <h1>
+            Interactive Camera Games
+        </h1>
+
+        <p>
+            Allow camera access and play the interactive target game.
+            The camera is displayed as a live preview for the game.
+        </p>
+
+    </div>
+
+
+    <!-- CAMERA + GAME SECTION -->
+    <section class="camera-game-wrapper">
+
+
+        <!-- CAMERA CARD -->
+        <div class="camera-card">
+
+            <div class="section-label">
+                CAMERA PREVIEW
+            </div>
+
+            <div class="camera-frame">
+
+                <video
+                    id="cameraVideo"
+                    autoplay
+                    playsinline
+                    muted>
+                </video>
+
+                <div
+                    id="cameraPlaceholder"
+                    class="camera-placeholder">
+
+                    <div class="camera-icon">
+                        📷
+                    </div>
+
+                    <h3>
+                        Camera Preview
+                    </h3>
+
+                    <p>
+                        Click Start Camera
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="camera-actions">
+
+                <button
+                    id="startCamera"
+                    class="game-btn primary"
+                    type="button">
+
+                    📷 Start Camera
+
+                </button>
+
+
+                <button
+                    id="stopCamera"
+                    class="game-btn secondary"
+                    type="button">
+
+                    Stop Camera
+
+                </button>
+
+            </div>
+
+
+            <div
+                id="cameraStatus"
+                class="camera-status">
+
+                Camera is off.
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CAMERA GAME CARD -->
+        <div class="camera-game-card">
+
+            <div class="section-label">
+                CAMERA-ASSISTED GAME
+            </div>
+
+            <h2>
+                Foot Target Challenge
+            </h2>
+
+            <p class="game-description">
+                Start the camera and then start the game.
+                Click the moving target as quickly as possible.
+            </p>
+
+
+            <!-- GAME STATS -->
+            <div class="game-stats">
+
+
+                <div class="stat-box">
+
+                    <span>
+                        Score
+                    </span>
+
+                    <strong id="cameraScore">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-box">
+
+                    <span>
+                        Time
+                    </span>
+
+                    <strong id="cameraTime">
+                        30
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-box">
+
+                    <span>
+                        Hits
+                    </span>
+
+                    <strong id="cameraHits">
+                        0
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- GAME AREA -->
+            <div
+                id="cameraGameArea"
+                class="camera-game-area">
+
+
+                <button
+                    id="cameraTarget"
+                    class="camera-target"
+                    type="button">
+
+                    TAP
+
+                </button>
+
+
+                <div
+                    id="cameraGameMessage"
+                    class="game-message">
+
+                    Start Camera first,
+                    then press Start Game.
+
+                </div>
+
+            </div>
+
+
+            <!-- GAME BUTTONS -->
+            <div class="game-button-row">
+
+                <button
+                    id="startCameraGame"
+                    class="game-btn primary"
+                    type="button">
+
+                    Start Game
+
+                </button>
+
+
+                <button
+                    id="resetCameraGame"
+                    class="game-btn secondary"
+                    type="button">
+
+                    Reset
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- OTHER GAMES -->
+    <section class="other-games">
+
+
+        <!-- TOE TAP -->
+        <div class="mini-game-card">
+
+            <div class="section-label">
+                CAMERA-FREE GAME
+            </div>
+
+            <h2>
+                Toe Tap Counter
+            </h2>
+
+            <p>
+                Tap the button to increase your score.
+            </p>
+
+
+            <div class="tap-score">
+
+                <strong id="gameScore">
+                    0
+                </strong>
+
+                <span>
+                    taps
+                </span>
+
+            </div>
+
+
+            <button
+                id="tapButton"
+                class="game-btn primary full-width"
+                type="button">
+
+                Tap +1
+
+            </button>
+
+
+            <div
+                id="gameMessage"
+                class="game-message">
+
+                Ready!
+
+            </div>
+
+        </div>
+
+
+
+        <!-- DAILY CHALLENGE -->
+        <div class="mini-game-card">
+
+            <div class="section-label">
+                DAILY CHALLENGE
+            </div>
+
+            <h2>
+                30 Second Challenge
+            </h2>
+
+            <p>
+                Start the camera game and try to hit
+                as many targets as possible.
+            </p>
+
+
+            <div class="challenge-list">
+
+                <div class="challenge-item">
+                    <span>✓</span>
+                    <p>Start Camera</p>
+                </div>
+
+
+                <div class="challenge-item">
+                    <span>✓</span>
+                    <p>Allow Permission</p>
+                </div>
+
+
+                <div class="challenge-item">
+                    <span>✓</span>
+                    <p>Start Game</p>
+                </div>
+
+
+                <div class="challenge-item">
+                    <span>✓</span>
+                    <p>Hit Targets</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+
+let cameraStream = null;
+
+let cameraGameRunning = false;
+
+let cameraTimer = null;
+
+let cameraTime = 30;
+
+let cameraScore = 0;
+
+let cameraHits = 0;
+
+let cameraLevel = 1;
+
+
+/* =========================================================
+   CAMERA ELEMENTS
+   ========================================================= */
+
+const cameraVideo =
+    document.getElementById("cameraVideo");
+
+const cameraPlaceholder =
+    document.getElementById("cameraPlaceholder");
+
+const cameraStatus =
+    document.getElementById("cameraStatus");
+
+const startCameraButton =
+    document.getElementById("startCamera");
+
+const stopCameraButton =
+    document.getElementById("stopCamera");
+
+
+
+/* =========================================================
+   START CAMERA
+   ========================================================= */
+
+startCameraButton.addEventListener(
+    "click",
+    async function () {
+
+        try {
+
+            cameraStream =
+                await navigator.mediaDevices.getUserMedia({
+
+                    video: true,
+
+                    audio: false
+
+                });
+
+
+            cameraVideo.srcObject =
+                cameraStream;
+
+
+            cameraVideo.style.display =
+                "block";
+
+
+            cameraPlaceholder.style.display =
+                "none";
+
+
+            cameraStatus.textContent =
+                "Camera is on and ready.";
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+
+            cameraStatus.textContent =
+                "Camera permission was not granted.";
+
+
+            cameraPlaceholder.style.display =
+                "flex";
+
+        }
+
+    }
+);
+
+
+
+/* =========================================================
+   STOP CAMERA
+   ========================================================= */
+
+stopCameraButton.addEventListener(
+    "click",
+    function () {
+
+        stopCamera();
+
+    }
+);
+
+
+function stopCamera() {
+
+    if (cameraStream) {
+
+        cameraStream
+            .getTracks()
+            .forEach(
+                function (track) {
+
+                    track.stop();
+
+                }
+            );
+
+        cameraStream = null;
+
+    }
+
+
+    cameraVideo.srcObject =
+        null;
+
+
+    cameraVideo.style.display =
+        "none";
+
+
+    cameraPlaceholder.style.display =
+        "flex";
+
+
+    cameraStatus.textContent =
+        "Camera is off.";
+
+}
+
+
+
+/* =========================================================
+   GAME ELEMENTS
+   ========================================================= */
+
+const cameraScoreElement =
+    document.getElementById("cameraScore");
+
+const cameraTimeElement =
+    document.getElementById("cameraTime");
+
+const cameraHitsElement =
+    document.getElementById("cameraHits");
+
+const cameraTarget =
+    document.getElementById("cameraTarget");
+
+const cameraGameMessage =
+    document.getElementById("cameraGameMessage");
+
+const cameraGameArea =
+    document.getElementById("cameraGameArea");
+
+const startCameraGame =
+    document.getElementById("startCameraGame");
+
+const resetCameraGame =
+    document.getElementById("resetCameraGame");
+
+
+
+/* =========================================================
+   START GAME
+   ========================================================= */
+
+startCameraGame.addEventListener(
+    "click",
+    function () {
+
+        if (!cameraStream) {
+
+            cameraGameMessage.textContent =
+                "Start Camera first.";
+
+            return;
+
+        }
+
+
+        if (cameraGameRunning) {
+
+            return;
+
+        }
+
+
+        cameraGameRunning = true;
+
+        cameraTime = 30;
+
+        cameraScore = 0;
+
+        cameraHits = 0;
+
+
+        updateCameraStats();
+
+
+        cameraGameMessage.textContent =
+            "Game started! Hit the target.";
+
+
+        cameraTarget.style.display =
+            "flex";
+
+
+        moveTarget();
+
+
+        cameraTimer =
+            setInterval(
+                function () {
+
+                    cameraTime--;
+
+                    cameraTimeElement.textContent =
+                        cameraTime;
+
+
+                    if (cameraTime <= 0) {
+
+                        endCameraGame();
+
+                    }
+
+                },
+                1000
+            );
+
+    }
+);
+
+
+
+/* =========================================================
+   TARGET CLICK
+   ========================================================= */
+
+cameraTarget.addEventListener(
+    "click",
+    function () {
+
+        if (!cameraGameRunning) {
+
+            return;
+
+        }
+
+
+        cameraScore += 10;
+
+        cameraHits += 1;
+
+
+        updateCameraStats();
+
+
+        moveTarget();
+
+    }
+);
+
+
+
+/* =========================================================
+   MOVE TARGET
+   ========================================================= */
+
+function moveTarget() {
+
+    const areaWidth =
+        cameraGameArea.clientWidth;
+
+    const areaHeight =
+        cameraGameArea.clientHeight;
+
+
+    const targetWidth =
+        cameraTarget.offsetWidth;
+
+    const targetHeight =
+        cameraTarget.offsetHeight;
+
+
+    const maxX =
+        Math.max(
+            0,
+            areaWidth - targetWidth
+        );
+
+
+    const maxY =
+        Math.max(
+            0,
+            areaHeight - targetHeight
+        );
+
+
+    const randomX =
+        Math.random() * maxX;
+
+
+    const randomY =
+        Math.random() * maxY;
+
+
+    cameraTarget.style.left =
+        randomX + "px";
+
+
+    cameraTarget.style.top =
+        randomY + "px";
+
+}
+
+
+
+/* =========================================================
+   UPDATE STATS
+   ========================================================= */
+
+function updateCameraStats() {
+
+    cameraScoreElement.textContent =
+        cameraScore;
+
+    cameraTimeElement.textContent =
+        cameraTime;
+
+    cameraHitsElement.textContent =
+        cameraHits;
+
+}
+
+
+
+/* =========================================================
+   END GAME
+   ========================================================= */
+
+function endCameraGame() {
+
+    cameraGameRunning = false;
+
+
+    clearInterval(
+        cameraTimer
+    );
+
+
+    cameraTarget.style.display =
+        "none";
+
+
+    cameraGameMessage.textContent =
+        "Game completed! Score: "
+        + cameraScore;
+
+
+}
+
+
+
+/* =========================================================
+   RESET GAME
+   ========================================================= */
+
+resetCameraGame.addEventListener(
+    "click",
+    function () {
+
+        clearInterval(
+            cameraTimer
+        );
+
+
+        cameraGameRunning = false;
+
+        cameraTime = 30;
+
+        cameraScore = 0;
+
+        cameraHits = 0;
+
+
+        updateCameraStats();
+
+
+        cameraTarget.style.display =
+            "none";
+
+
+        cameraGameMessage.textContent =
+            "Start Camera first, then press Start Game.";
+
+    }
+);
+
+
+
+/* =========================================================
+   TOE TAP GAME
+   ========================================================= */
+
+let tapScore = 0;
+
+
+const tapButton =
+    document.getElementById("tapButton");
+
+const gameScore =
+    document.getElementById("gameScore");
+
+const gameMessage =
+    document.getElementById("gameMessage");
+
+
+tapButton.addEventListener(
+    "click",
+    function () {
+
+        tapScore++;
+
+        gameScore.textContent =
+            tapScore;
+
+
+        if (tapScore >= 10) {
+
+            gameMessage.textContent =
+                "Great job! Challenge completed.";
+
+        }
+
+        else {
+
+            gameMessage.textContent =
+                "Keep going!";
+
+        }
+
+    }
+);
+
+</script>
+
+{% endblock %}

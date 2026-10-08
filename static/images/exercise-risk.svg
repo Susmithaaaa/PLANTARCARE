@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+
+<circle
+cx="90"
+cy="90"
+r="82"
+fill="#FFF4E8"
+stroke="#F3D4AD"
+stroke-width="3"/>
+
+<!-- Shield -->
+<path
+d="M90 25
+L139 47
+L133 91
+C129 119 110 139 90 151
+C70 139 51 119 47 91
+L41 47Z"
+fill="#168DE2"
+stroke="#0F496B"
+stroke-width="5"/>
+
+<!-- Warning -->
+<path
+d="M90 53
+L119 106
+H61
+Z"
+fill="#FFC83D"
+stroke="#0F496B"
+stroke-width="4"
+stroke-linejoin="round"/>
+
+<rect
+x="86"
+y="67"
+width="8"
+height="22"
+rx="4"
+fill="#0F496B"/>
+
+<circle
+cx="90"
+cy="98"
+r="4"
+fill="#0F496B"/>
+
+<!-- Motion lines -->
+<path
+d="M28 69
+L38 64"
+stroke="#36B37E"
+stroke-width="5"
+stroke-linecap="round"/>
+
+<path
+d="M142 69
+L152 64"
+stroke="#36B37E"
+stroke-width="5"
+stroke-linecap="round"/>
+
+</svg>

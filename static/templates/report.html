@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}
+PLANTARCARE | Report
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="report-sheet">
+
+
+    <div class="report-head">
+
+
+        <div>
+
+            <p class="eyebrow">
+                PLANTARCARE REPORT
+            </p>
+
+            <h1>
+                Assessment Summary
+            </h1>
+
+            <p>
+                Generated {{ generated_at }}
+            </p>
+
+        </div>
+
+
+        <img
+            src="{{ url_for('static', filename='images/report.svg') }}"
+            alt="Report illustration"
+        >
+
+    </div>
+
+
+    <div class="report-table">
+
+
+        <div>
+            <b>Patient</b>
+            <span>{{ patient.name }}</span>
+        </div>
+
+
+        <div>
+            <b>Age</b>
+            <span>{{ patient.age }}</span>
+        </div>
+
+
+        <div>
+            <b>Height</b>
+            <span>{{ patient.height }} cm</span>
+        </div>
+
+
+        <div>
+            <b>Weight</b>
+            <span>{{ patient.weight }} kg</span>
+        </div>
+
+
+        <div>
+            <b>BMI</b>
+            <span>{{ bmi }}</span>
+        </div>
+
+
+        <div>
+            <b>BMI Category</b>
+            <span>{{ bmi_category }}</span>
+        </div>
+
+
+        <div>
+            <b>ML Prediction</b>
+            <span>{{ prediction }}</span>
+        </div>
+
+
+        <div>
+            <b>Risk Level</b>
+            <span>{{ risk_level }}</span>
+        </div>
+
+
+        <div>
+            <b>Confidence</b>
+            <span>{{ confidence }}%</span>
+        </div>
+
+
+    </div>
+
+
+    <h2>
+        Risk Features
+    </h2>
+
+
+    <div class="feature-list">
+
+
+        {% for key,value in feature_summary.items() %}
+
+
+        <div>
+
+            <strong>
+                {{ key }}
+            </strong>
+
+            <span class="value-pill {{ value|lower }}">
+                {{ value }}
+            </span>
+
+        </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+    <div class="bottom-actions">
+
+
+        <a
+            class="btn primary"
+            href="{{ url_for('download_report') }}"
+        >
+            Download PDF
+        </a>
+
+
+        <a
+            class="btn outline"
+            href="{{ url_for('prediction_result') }}"
+        >
+            Back to Result
+        </a>
+
+
+    </div>
+
+
+</section>
+
+
+{% endblock %}

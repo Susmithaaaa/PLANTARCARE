@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block title %}
+Nutrition Care | PLANTARCARE
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+
+.nutrition-page {
+    max-width: 1050px;
+    margin: auto;
+    padding: 40px 45px 60px;
+}
+
+.nutrition-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.nutrition-header span {
+    color: #e85d5d;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.3px;
+}
+
+.nutrition-header h1 {
+    color: #173f5f;
+    font-size: 36px;
+    margin: 10px 0;
+}
+
+.nutrition-header p {
+    color: #5d6d76;
+}
+
+.nutrition-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.nutrition-card {
+    background: #ffffff;
+    border: 1px solid #eaded9;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 6px 20px rgba(40,50,60,.06);
+}
+
+.nutrition-card h2 {
+    color: #173f5f;
+    font-size: 19px;
+    margin-top: 0;
+}
+
+.nutrition-card p,
+.nutrition-card li {
+    color: #60717a;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.nutrition-card ul {
+    padding-left: 20px;
+}
+
+.next-area {
+    margin-top: 30px;
+    text-align: right;
+}
+
+.next-button {
+    background: #e85d5d;
+    color: white;
+    text-decoration: none;
+    padding: 13px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+@media(max-width:750px) {
+    .nutrition-page {
+        padding: 25px 20px;
+    }
+
+    .nutrition-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+
+
+<div class="nutrition-page">
+
+
+    <div class="nutrition-header">
+
+        <span>
+            STEP 04 • NUTRITION
+        </span>
+
+        <h1>
+            Nutrition Care
+        </h1>
+
+        <p>
+            General healthy eating guidance to support
+            overall health and healthy activity habits.
+        </p>
+
+    </div>
+
+
+    <div class="nutrition-grid">
+
+
+        <div class="nutrition-card">
+
+            <h2>
+                Balanced Meals
+            </h2>
+
+            <p>
+                Include a variety of vegetables, fruits,
+                whole grains, protein sources, and other
+                nutritious foods in regular meals.
+            </p>
+
+        </div>
+
+
+        <div class="nutrition-card">
+
+            <h2>
+                Hydration
+            </h2>
+
+            <p>
+                Maintain regular fluid intake according to
+                your individual needs and daily activity.
+            </p>
+
+        </div>
+
+
+        <div class="nutrition-card">
+
+            <h2>
+                Healthy Weight Habits
+            </h2>
+
+            <p>
+                Maintain balanced eating habits and regular
+                physical activity appropriate for your condition.
+            </p>
+
+        </div>
+
+
+        <div class="nutrition-card">
+
+            <h2>
+                Nutrient-Rich Foods
+            </h2>
+
+            <ul>
+                <li>Vegetables and fruits</li>
+                <li>Whole grains</li>
+                <li>Protein-rich foods</li>
+                <li>Healthy fats in suitable amounts</li>
+            </ul>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="next-area">
+
+        <a href="{{ url_for('exercise') }}"
+           class="next-button">
+
+            Next → Exercise Videos
+
+        </a>
+
+    </div>
+
+
+</div>
+
+{% endblock %}

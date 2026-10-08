@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}
+PLANTARCARE | Care
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="page-hero">
+
+    <div>
+
+        <p class="eyebrow">
+            PLANTAR CARE
+        </p>
+
+        <h1>
+            Daily Care Guidance
+        </h1>
+
+        <p>
+            General educational information to support
+            a foot-care routine.
+        </p>
+
+    </div>
+
+
+    <img
+        src="{{ url_for('static', filename='images/care.svg') }}"
+        alt="Care illustration"
+    >
+
+</section>
+
+
+<div class="care-grid">
+
+
+    <article>
+
+        <img
+            src="{{ url_for('static', filename='images/shoes.svg') }}"
+        >
+
+        <h2>
+            Comfortable Footwear
+        </h2>
+
+        <p>
+            Choose footwear that feels comfortable
+            and provides suitable support for daily activity.
+        </p>
+
+    </article>
+
+
+    <article>
+
+        <img
+            src="{{ url_for('static', filename='images/stretch.svg') }}"
+        >
+
+        <h2>
+            Gentle Mobility
+        </h2>
+
+        <p>
+            Use gentle, comfortable mobility activities
+            and avoid pushing through pain.
+        </p>
+
+    </article>
+
+
+    <article>
+
+        <img
+            src="{{ url_for('static', filename='images/rest.svg') }}"
+        >
+
+        <h2>
+            Balanced Activity
+        </h2>
+
+        <p>
+            Take reasonable breaks during long periods
+            of standing and vary your daily activity.
+        </p>
+
+    </article>
+
+
+    <article>
+
+        <img
+            src="{{ url_for('static', filename='images/doctor.svg') }}"
+        >
+
+        <h2>
+            Professional Guidance
+        </h2>
+
+        <p>
+            Persistent or worsening symptoms should be
+            discussed with a qualified healthcare professional.
+        </p>
+
+    </article>
+
+
+</div>
+
+
+<div class="notice">
+
+    PLANTARCARE is an academic ML project.
+    Its result should not be treated as a medical diagnosis
+    or a replacement for professional care.
+
+</div>
+
+
+{% endblock %}

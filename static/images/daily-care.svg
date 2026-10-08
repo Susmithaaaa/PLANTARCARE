@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 220">
+
+<rect width="300" height="220" rx="28" fill="#E9FBF5"/>
+
+<!-- Foot -->
+<g transform="translate(62 35) rotate(-8 90 75)">
+
+<path
+d="M95 5
+C117 8 130 28 132 49
+L137 91
+C140 111 127 128 108 137
+L78 151
+C58 160 43 145 49 126
+L60 88
+L40 49
+C32 31 51 2 76 3Z"
+fill="#FFC83D"
+stroke="#0F496B"
+stroke-width="6"/>
+
+</g>
+
+<!-- Relaxation Waves -->
+<path
+d="M185 55
+C208 43 231 43 250 55"
+fill="none"
+stroke="#168DE2"
+stroke-width="6"
+stroke-linecap="round"/>
+
+<path
+d="M190 73
+C210 62 229 62 246 72"
+fill="none"
+stroke="#36B37E"
+stroke-width="6"
+stroke-linecap="round"/>
+
+<path
+d="M197 91
+C213 83 226 83 239 90"
+fill="none"
+stroke="#168DE2"
+stroke-width="6"
+stroke-linecap="round"/>
+
+<!-- Small Heart -->
+<path
+d="M218 145
+C205 133 189 146 218 169
+C247 146 231 133 218 145Z"
+fill="#FF7A7A"/>
+
+</svg>

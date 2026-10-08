@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+
+<circle cx="90" cy="90" r="82"
+fill="#FFF4E8"
+stroke="#F5D4A8"
+stroke-width="3"/>
+
+<!-- Shield -->
+<path
+d="M90 27
+L140 48
+L134 94
+C129 121 111 139 90 150
+C69 139 51 121 46 94
+L40 48Z"
+fill="#168DE2"
+stroke="#0F496B"
+stroke-width="5"/>
+
+<!-- Heart -->
+<path
+d="M90 112
+C76 101 62 91 62 75
+C62 62 78 57 90 69
+C102 57 118 62 118 75
+C118 91 104 101 90 112Z"
+fill="#FFFFFF"/>
+
+<!-- Plus -->
+<rect x="86" y="74" width="8" height="25" rx="3" fill="#36B37E"/>
+<rect x="77" y="83" width="26" height="8" rx="3" fill="#36B37E"/>
+
+</svg>
