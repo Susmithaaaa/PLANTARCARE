@@ -2301,3 +2301,38 @@ body {
     }
 
 }
+
+/* PLANTARCARE - Camera Preview Fix */
+
+.camera-frame {
+    position: relative !important;
+    width: 100% !important;
+    min-height: 280px !important;
+    overflow: hidden !important;
+    background: #171717 !important;
+    border-radius: 14px;
+}
+
+#cameraVideo {
+    display: none;
+    position: relative !important;
+    z-index: 5 !important;
+    width: 100% !important;
+    height: 280px !important;
+    object-fit: cover !important;
+    visibility: visible !important;
+    background: #171717;
+    transform: scaleX(-1);
+}
+
+.camera-placeholder {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: 280px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    text-align: center;
+}

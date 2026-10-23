@@ -1,192 +1,527 @@
+ 
 {% extends "base.html" %}
 
-
-{% block title %}
-Report | PLANTARCARE
-{% endblock %}
-
+{% block title %}Assessment Report | PLANTARCARE{% endblock %}
 
 {% block content %}
 
-<div class="page">
+<style>
+    .report-page {
+        max-width: 1050px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 28px 20px 50px;
+        color: #263746;
+        box-sizing: border-box;
+    }
 
+    .report-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-bottom: 25px;
+    }
 
-    <section class="hero">
+    .report-heading h1 {
+        font-size: clamp(25px, 4vw, 34px);
+        margin: 0 0 8px;
+        color: #193b4a;
+        font-weight: 750;
+    }
 
-        <span class="label">
-            PROJECT REPORT
-        </span>
+    .report-heading p {
+        margin: 0;
+        color: #6b7b86;
+        font-size: 14px;
+        line-height: 1.6;
+    }
 
-        <h1>
-            Assessment Report
-        </h1>
+    .report-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
 
-        <p>
-            Review the assessment result and download
-            the generated PDF report.
-        </p>
+    .report-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 11px 17px;
+        border-radius: 9px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 650;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
 
+    .report-btn-primary {
+        background: #167d78;
+        color: #ffffff;
+    }
+
+    .report-btn-primary:hover {
+        background: #106661;
+        color: #ffffff;
+    }
+
+    .report-btn-secondary {
+        background: #ffffff;
+        color: #365361;
+        border-color: #d9e3e8;
+    }
+
+    .report-btn-secondary:hover {
+        background: #f2f8f8;
+    }
+
+    .report-banner {
+        padding: 24px;
+        border-radius: 16px;
+        margin-bottom: 22px;
+        background: #eef8f6;
+        border: 1px solid #d5ebe6;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .report-banner h2 {
+        margin: 0 0 8px;
+        font-size: 21px;
+        color: #1d4c4b;
+    }
+
+    .report-banner p {
+        margin: 0;
+        line-height: 1.7;
+        color: #526d70;
+        font-size: 14px;
+    }
+
+    .risk-pill {
+        display: inline-block;
+        padding: 10px 17px;
+        border-radius: 30px;
+        font-size: 14px;
+        font-weight: 750;
+        white-space: nowrap;
+    }
+
+    .risk-low {
+        color: #17623a;
+        background: #d9f5e3;
+    }
+
+    .risk-medium {
+        color: #855300;
+        background: #fff0c2;
+    }
+
+    .risk-high {
+        color: #a52929;
+        background: #ffe0e0;
+    }
+
+    .report-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+        align-items: stretch;
+    }
+
+    .report-card {
+        min-width: 0;
+        background: #ffffff;
+        border: 1px solid #e1e9ed;
+        border-radius: 14px;
+        padding: 22px;
+        box-shadow: 0 5px 18px rgba(35, 65, 80, 0.045);
+        box-sizing: border-box;
+    }
+
+    .report-card-full {
+        grid-column: 1 / -1;
+    }
+
+    .report-card h3 {
+        font-size: 18px;
+        color: #204451;
+        margin: 0 0 18px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #edf1f3;
+    }
+
+    .details-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .detail-item {
+        min-width: 0;
+        background: #f7fafb;
+        border-radius: 9px;
+        padding: 13px 14px;
+    }
+
+    .detail-label {
+        display: block;
+        color: #74848e;
+        font-size: 12px;
+        margin-bottom: 7px;
+        font-weight: 600;
+    }
+
+    .detail-value {
+        display: block;
+        color: #263f4b;
+        font-size: 15px;
+        font-weight: 700;
+        overflow-wrap: anywhere;
+    }
+
+    .bmi-value {
+        font-size: 26px;
+        color: #167d78;
+    }
+
+    .report-text {
+        margin: 0;
+        color: #5d707b;
+        font-size: 14px;
+        line-height: 1.8;
+        overflow-wrap: anywhere;
+    }
+
+    .report-list {
+        margin: 0;
+        padding-left: 21px;
+        color: #526671;
+        font-size: 14px;
+        line-height: 1.9;
+    }
+
+    .report-list li {
+        padding-left: 3px;
+        margin-bottom: 5px;
+    }
+
+    .report-note {
+        background: #fff9e9;
+        border: 1px solid #f1e3b9;
+        padding: 17px 19px;
+        border-radius: 11px;
+        color: #735d25;
+        font-size: 13px;
+        line-height: 1.8;
+        margin-top: 22px;
+    }
+
+    .report-footer {
+        text-align: center;
+        margin-top: 25px;
+        color: #84939b;
+        font-size: 12px;
+        line-height: 1.8;
+    }
+
+    @media (max-width: 700px) {
+        .report-page {
+            padding: 20px 13px 35px;
+        }
+
+        .report-header {
+            align-items: flex-start;
+        }
+
+        .report-actions {
+            width: 100%;
+        }
+
+        .report-actions .report-btn {
+            flex: 1;
+        }
+
+        .report-grid {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .report-card-full {
+            grid-column: auto;
+        }
+
+        .report-card {
+            padding: 18px;
+        }
+
+        .report-banner {
+            padding: 19px;
+        }
+
+        .details-grid {
+            gap: 10px;
+        }
+
+        .detail-item {
+            padding: 11px;
+        }
+    }
+
+    @media print {
+        body {
+            background: #ffffff !important;
+        }
+
+        .report-page {
+            max-width: 100%;
+            padding: 0;
+        }
+
+        .report-actions {
+            display: none !important;
+        }
+
+        .report-card,
+        .report-banner {
+            box-shadow: none;
+            break-inside: avoid;
+        }
+
+        .report-grid {
+            gap: 12px;
+        }
+
+        .report-note {
+            break-inside: avoid;
+        }
+    }
+</style>
+
+{% set patient_data = patient if patient is defined and patient else {} %}
+{% set display_risk = risk_level if risk_level is defined and risk_level else result.get("risk_level", "Not Available") %}
+{% set display_bmi = bmi if bmi is defined and bmi else result.get("bmi", "N/A") %}
+{% set display_prediction = prediction if prediction is defined and prediction else result.get("prediction", "Not Available") %}
+{% set display_confidence = confidence if confidence is defined and confidence is not none else result.get("confidence", "N/A") %}
+{% set display_date = generated_at if generated_at is defined and generated_at else result.get("generated_at", "N/A") %}
+
+<div class="report-page">
+
+    <div class="report-header">
+        <div class="report-heading">
+            <h1>Assessment Report</h1>
+            <p>PLANTARCARE · Plantar Fasciitis Risk Assessment</p>
+        </div>
+
+        <div class="report-actions">
+            <a href="{{ url_for('download_report') }}" class="report-btn report-btn-primary">
+                Download PDF
+            </a>
+            <button type="button" onclick="window.print()" class="report-btn report-btn-secondary">
+                Print Report
+            </button>
+        </div>
+    </div>
+
+    <section class="report-banner">
+        <div>
+            <h2>Your Assessment Summary</h2>
+            <p>
+                This report summarizes the assessment information and risk result
+                generated by the PLANTARCARE system.
+            </p>
+        </div>
+
+        <div>
+            {% set risk_class = 'risk-low' if display_risk|string|lower == 'low' else ('risk-medium' if display_risk|string|lower == 'medium' else 'risk-high') %}
+            <span class="risk-pill {{ risk_class }}">
+                {{ display_risk }} Risk
+            </span>
+        </div>
     </section>
 
-
-    <section class="section card">
-
-
-        <table class="report-table">
-
-
-            <tr>
-
-                <td>
-                    Patient
-                </td>
-
-                <td>
-                    {{ patient.get("name") }}
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>
-                    Age
-                </td>
-
-                <td>
-                    {{ patient.get("age") }}
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>
-                    Height
-                </td>
-
-                <td>
-                    {{ patient.get("height") }} cm
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>
-                    Weight
-                </td>
-
-                <td>
-                    {{ patient.get("weight") }} kg
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>
-                    BMI
-                </td>
-
-                <td>
-                    {{ bmi }}
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>
-                    BMI Category
-                </td>
-
-                <td>
-                    {{ bmi_category }}
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>
-                    ML Prediction
-                </td>
-
-                <td>
-                    {{ prediction }}
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>
-                    Risk Level
-                </td>
-
-                <td>
-                    {{ risk_level }}
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>
-                    Confidence
-                </td>
-
-                <td>
-
-                    {{ confidence }}
-
-                    {% if confidence != "N/A" %}
-                        %
-                    {% endif %}
-
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>
-                    Generated
-                </td>
-
-                <td>
-                    {{ generated_at }}
-                </td>
-
-            </tr>
-
-
-        </table>
-
-
-        <br>
-
-
-        <a
-            class="btn primary"
-            href="{{ url_for('download_report') }}"
-        >
-            Download PDF Report ↓
-        </a>
-
-
-    </section>
-
+    <div class="report-grid">
+
+        <section class="report-card">
+            <h3>Patient Information</h3>
+
+            <div class="details-grid">
+                <div class="detail-item">
+                    <span class="detail-label">Patient Name</span>
+                    <span class="detail-value">{{ patient_data.get("name", result.get("name", "N/A")) }}</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">Age</span>
+                    <span class="detail-value">
+                        {% if patient_data.get("age", result.get("age")) is not none %}
+                            {{ patient_data.get("age", result.get("age")) }} years
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">Height</span>
+                    <span class="detail-value">{{ patient_data.get("height", result.get("height", "N/A")) }}{% if patient_data.get("height", result.get("height")) is not none %} cm{% endif %}</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">Weight</span>
+                    <span class="detail-value">{{ patient_data.get("weight", result.get("weight", "N/A")) }}{% if patient_data.get("weight", result.get("weight")) is not none %} kg{% endif %}</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="report-card">
+            <h3>BMI & Prediction</h3>
+
+            <div class="details-grid">
+                <div class="detail-item">
+                    <span class="detail-label">Body Mass Index (BMI)</span>
+                    <span class="detail-value bmi-value">{{ display_bmi }}</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">BMI Category</span>
+                    <span class="detail-value">
+                        {{ bmi_category if bmi_category is defined and bmi_category else result.get("bmi_category", "N/A") }}
+                    </span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">ML Prediction</span>
+                    <span class="detail-value">{{ display_prediction }}</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">Model Confidence</span>
+                    <span class="detail-value">
+                        {% if display_confidence|string not in ["N/A", "None", ""] %}
+                            {% if display_confidence|string|replace('%', '')|float <= 1 %}
+                                {{ (display_confidence|string|replace('%', '')|float * 100)|round(2) }}%
+                            {% else %}
+                                {{ display_confidence }}{% if '%' not in display_confidence|string %}%{% endif %}
+                            {% endif %}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <section class="report-card report-card-full">
+            <h3>Risk Assessment Details</h3>
+
+            {% if risk_info is defined and risk_info %}
+                {% if risk_info.get("summary") %}
+                    <p class="report-text">{{ risk_info.get("summary") }}</p>
+                {% elif risk_info.get("description") %}
+                    <p class="report-text">{{ risk_info.get("description") }}</p>
+                {% else %}
+                    <p class="report-text">
+                        The displayed risk category is based on the assessment result
+                        produced by the system.
+                    </p>
+                {% endif %}
+            {% else %}
+                <p class="report-text">
+                    The displayed risk category is based on the assessment result
+                    produced by the system.
+                </p>
+            {% endif %}
+        </section>
+
+        <section class="report-card">
+            <h3>Recommended Care</h3>
+
+            {% if risk_info is defined and risk_info %}
+                {% set care_items = risk_info.get("care_details", []) %}
+                {% if care_items %}
+                    <ul class="report-list">
+                        {% for item in care_items %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                {% elif risk_info.get("title") %}
+                    <p class="report-text">{{ risk_info.get("title") }}</p>
+                {% else %}
+                    <p class="report-text">
+                        Follow suitable foot-care practices and seek professional
+                        advice if symptoms continue or worsen.
+                    </p>
+                {% endif %}
+            {% else %}
+                <p class="report-text">
+                    Follow suitable foot-care practices and seek professional
+                    advice if symptoms continue or worsen.
+                </p>
+            {% endif %}
+        </section>
+
+        <section class="report-card">
+            <h3>Daily Care Guidance</h3>
+
+            {% if risk_info is defined and risk_info %}
+                {% set routine_items = risk_info.get("daily_routine", []) %}
+                {% if routine_items %}
+                    <ul class="report-list">
+                        {% for item in routine_items %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="report-text">
+                        Avoid prolonged standing when possible, take rest breaks,
+                        and use comfortable supportive footwear.
+                    </p>
+                {% endif %}
+            {% else %}
+                <p class="report-text">
+                    Avoid prolonged standing when possible, take rest breaks,
+                    and use comfortable supportive footwear.
+                </p>
+            {% endif %}
+        </section>
+
+        <section class="report-card report-card-full">
+            <h3>Report Information</h3>
+
+            <div class="details-grid">
+                <div class="detail-item">
+                    <span class="detail-label">Report Generated</span>
+                    <span class="detail-value">{{ display_date }}</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">System</span>
+                    <span class="detail-value">PLANTARCARE</span>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <div class="report-note">
+        <strong>Medical Disclaimer:</strong>
+        This report is intended for educational and preliminary risk-assessment
+        purposes only. It does not provide a confirmed medical diagnosis.
+        Please consult a qualified healthcare professional for persistent heel
+        pain, severe symptoms, or concerns about your foot health.
+    </div>
+
+    <div class="report-footer">
+        PLANTARCARE – Plantar Fasciitis Risk Prediction Assessment System<br>
+        Generated by the PLANTARCARE application
+    </div>
 
 </div>
 

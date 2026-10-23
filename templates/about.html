@@ -1,141 +1,212 @@
 {% extends "base.html" %}
 
-
-{% block title %}
-About | PLANTARCARE
-{% endblock %}
-
+{% block title %}About | PLANTARCARE{% endblock %}
 
 {% block content %}
 
-<div class="page">
+<style>
+    .about-page {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 30px 22px 50px;
+        box-sizing: border-box;
+        color: #263746;
+    }
 
+    .about-hero {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 38px 30px;
+        margin: 0 0 28px;
+        text-align: center;
+        background: #eef8f6;
+        border: 1px solid #dceee9;
+        border-radius: 18px;
+    }
 
-    <section class="hero">
+    .about-label {
+        display: inline-block;
+        padding: 7px 13px;
+        margin-bottom: 13px;
+        border-radius: 20px;
+        background: #d8eee8;
+        color: #16766e;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
 
-        <span class="label">
-            ABOUT THE PROJECT
-        </span>
+    .about-hero h1 {
+        margin: 0 0 15px;
+        color: #194451;
+        font-size: clamp(28px, 4vw, 40px);
+        font-weight: 750;
+        line-height: 1.25;
+    }
 
-        <h1>
-            PLANTARCARE
-        </h1>
+    .about-hero p {
+        max-width: 720px;
+        margin: 0 auto;
+        color: #5c7079;
+        font-size: 15px;
+        line-height: 1.9;
+    }
+
+    .about-section-title {
+        margin: 0 0 18px;
+        color: #244653;
+        font-size: 23px;
+        font-weight: 700;
+    }
+
+    .about-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .about-card {
+        min-width: 0;
+        height: 100%;
+        padding: 26px;
+        box-sizing: border-box;
+        background: #ffffff;
+        border: 1px solid #e1e9ed;
+        border-radius: 15px;
+        box-shadow: 0 5px 18px rgba(35, 65, 80, 0.05);
+    }
+
+    .about-card h2 {
+        margin: 0 0 20px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #e9eff1;
+        color: #1b5960;
+        font-size: 21px;
+        font-weight: 700;
+    }
+
+    .about-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 11px;
+    }
+
+    .about-list li {
+        position: relative;
+        padding: 12px 14px 12px 38px;
+        background: #f6f9fa;
+        border-radius: 9px;
+        color: #435b66;
+        font-size: 14px;
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+    }
+
+    .about-list li::before {
+        content: "✓";
+        position: absolute;
+        left: 14px;
+        top: 12px;
+        color: #168078;
+        font-weight: 800;
+    }
+
+    .about-footer {
+        margin-top: 25px;
+        text-align: center;
+        color: #84939b;
+        font-size: 13px;
+        line-height: 1.8;
+    }
+
+    @media (max-width: 700px) {
+        .about-page {
+            padding: 20px 13px 35px;
+        }
+
+        .about-hero {
+            padding: 28px 18px;
+            margin-bottom: 20px;
+        }
+
+        .about-grid {
+            grid-template-columns: 1fr;
+            gap: 17px;
+        }
+
+        .about-card {
+            padding: 20px;
+        }
+
+        .about-card h2 {
+            font-size: 19px;
+        }
+    }
+</style>
+
+<div class="about-page">
+
+    <section class="about-hero">
+        <span class="about-label">ABOUT THE PROJECT</span>
+
+        <h1>PLANTARCARE</h1>
 
         <p>
-            Plantar Fasciitis Risk Prediction System
-            is a machine-learning mini-project demonstrating
-            structured assessment, BMI calculation,
-            Random Forest prediction and guided result flow.
+            Plantar Fasciitis Risk Prediction System is a machine-learning
+            project that demonstrates structured health assessment,
+            automatic BMI calculation, Random Forest prediction and
+            personalized care guidance.
         </p>
-
     </section>
 
+    <section>
+        <h2 class="about-section-title">Project Overview</h2>
 
-    <section class="section grid2">
+        <div class="about-grid">
 
+            <div class="about-card">
+                <h2>Technology Used</h2>
 
-        <div class="card">
+                <ul class="about-list">
+                    <li>Python</li>
+                    <li>Flask</li>
+                    <li>Pandas</li>
+                    <li>Scikit-learn</li>
+                    <li>Random Forest Algorithm</li>
+                    <li>HTML and CSS</li>
+                    <li>JavaScript</li>
+                    <li>ReportLab for PDF Reports</li>
+                </ul>
+            </div>
 
-            <h2>
-                Technology
-            </h2>
+            <div class="about-card">
+                <h2>Project Workflow</h2>
 
-
-            <ul>
-
-                <li>
-                    Python
-                </li>
-
-                <li>
-                    Flask
-                </li>
-
-                <li>
-                    Pandas
-                </li>
-
-                <li>
-                    Scikit-learn
-                </li>
-
-                <li>
-                    Random Forest
-                </li>
-
-                <li>
-                    HTML
-                </li>
-
-                <li>
-                    CSS
-                </li>
-
-                <li>
-                    JavaScript
-                </li>
-
-                <li>
-                    ReportLab
-                </li>
-
-            </ul>
+                <ul class="about-list">
+                    <li>Patient Assessment</li>
+                    <li>BMI Calculation</li>
+                    <li>Machine Learning Prediction</li>
+                    <li>Risk Result Display</li>
+                    <li>Personalized Care Tips</li>
+                    <li>Daily Routine and Footwear Guidance</li>
+                    <li>Nutrition Recommendations</li>
+                    <li>Exercise Videos and Camera Games</li>
+                    <li>PDF Assessment Report</li>
+                </ul>
+            </div>
 
         </div>
-
-
-        <div class="card">
-
-            <h2>
-                Project Flow
-            </h2>
-
-
-            <ul>
-
-                <li>
-                    Assessment
-                </li>
-
-                <li>
-                    ML Result
-                </li>
-
-                <li>
-                    Care Tips
-                </li>
-
-                <li>
-                    Daily Routine
-                </li>
-
-                <li>
-                    Footwear Guidance
-                </li>
-
-                <li>
-                    Nutrition
-                </li>
-
-                <li>
-                    Exercise Videos
-                </li>
-
-                <li>
-                    Camera Games
-                </li>
-
-                <li>
-                    PDF Report
-                </li>
-
-            </ul>
-
-        </div>
-
-
     </section>
 
+    <div class="about-footer">
+        PLANTARCARE · Plantar Fasciitis Risk Prediction Assessment System
+    </div>
 
 </div>
 

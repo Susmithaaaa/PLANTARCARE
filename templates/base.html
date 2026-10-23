@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta name="viewport"
@@ -10,512 +9,353 @@
 
     <title>{% block title %}PLANTARCARE Plantar Fasciitis Risk Prediction Assessment{% endblock %}</title>
 
-    <!-- Google Font -->
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
-
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
           rel="stylesheet">
 
-    <!-- Main CSS -->
     <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}?v=301">
+          href="{{ url_for('static', filename='style.css') }}?v=302">
 
+    <style>
+        /* =====================================
+           PLANTARCARE MAIN THEME
+        ===================================== */
+
+        html,
+        body {
+            background-color: #ffd8cc !important;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main {
+            background-color: #ffd8cc !important;
+        }
+
+        .home-page {
+            background-color: #ffd8cc !important;
+        }
+
+        .topbar {
+            background-color: #ffe5dd !important;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .topbar-title {
+            text-align: center;
+        }
+
+        .menu-button {
+            position: absolute;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .user-pill {
+            display: none !important;
+        }
+
+        .card,
+        .feature-card {
+            background-color: #ffffff !important;
+        }
+
+        /* =====================================
+           SIDEBAR ACTIVE LINK
+        ===================================== */
+
+        .sidebar .navigation .nav-link {
+            background-color: transparent;
+            color: inherit;
+            transition: background-color 0.2s ease,
+                        color 0.2s ease;
+        }
+
+        .sidebar .navigation .nav-link.active {
+            background-color: #ffddd3 !important;
+            color: #c94f50 !important;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .sidebar .navigation .nav-link.active .nav-icon {
+            color: #ed575c !important;
+        }
+
+        .sidebar .navigation .nav-link:hover {
+            background-color: #ffddd3;
+        }
+
+        /* Keep active link highlighted on hover */
+        .sidebar .navigation .nav-link.active:hover {
+            background-color: #ffddd3 !important;
+        }
+
+        /* =====================================
+           MOBILE RESPONSIVE
+        ===================================== */
+
+        @media (max-width: 768px) {
+            .menu-button {
+                left: 15px;
+            }
+        }
+    </style>
 </head>
-
-
-<style>
-
-/* =========================================
-   PLANTARCARE - PEACH BACKGROUND
-========================================= */
-
-html,
-body {
-    background-color: #ffd8cc !important;
-    margin: 0;
-    padding: 0;
-}
-
-
-/* MAIN AREA */
-
-.main {
-    background-color: #ffd8cc !important;
-}
-
-
-/* HOME PAGE */
-
-.home-page {
-    background-color: #ffd8cc !important;
-}
-
-
-/* =========================================
-   TOP BAR
-========================================= */
-
-.topbar {
-    background-color: #ffe5dd !important;
-}
-
-
-/* =========================================
-   CARDS
-========================================= */
-
-.card,
-.feature-card {
-    background-color: #ffffff !important;
-}
-
-
-/* =========================================
-   REMOVE USER PILL FROM TOPBAR
-========================================= */
-
-.user-pill {
-    display: none !important;
-}
-
-
-/* =========================================
-   TOPBAR TITLE CENTER
-========================================= */
-
-.topbar {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-
-.topbar-title {
-    text-align: center;
-}
-
-
-/* =========================================
-   MENU BUTTON
-========================================= */
-
-.menu-button {
-    position: absolute;
-    left: 25px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-</style>
-
 
 <body>
 
+    <!-- MOBILE OVERLAY -->
+    <div class="sidebar-overlay"></div>
 
-<!-- =====================================================
-     MOBILE OVERLAY
-===================================================== -->
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
 
-<div class="sidebar-overlay"></div>
+        <!-- BRAND -->
+        <div class="brand">
 
+            <div class="brand-logo">
+                P
+            </div>
 
-<!-- =====================================================
-     SIDEBAR
-===================================================== -->
+            <div class="brand-text">
+                <div class="brand-title">
+                    PLANTARCARE
+                </div>
 
-<aside class="sidebar">
+                <div class="brand-subtitle">
+                    Plantar Fasciitis
+                </div>
+            </div>
 
-
-    <!-- BRAND -->
-
-    <div class="brand">
-
-        <div class="brand-logo">
-            P
         </div>
 
-        <div class="brand-text">
+        <!-- PROJECT PAGES -->
+        <div class="nav-heading">
+            PROJECT PAGES
+        </div>
 
-            <div class="brand-title">
+        <nav class="navigation">
+
+            <!-- HOME -->
+            <a href="{{ url_for('home') }}"
+               class="nav-link {% if request.endpoint == 'home' %}active{% endif %}"
+               {% if request.endpoint == 'home' %}aria-current="page"{% endif %}>
+
+                <span class="nav-icon">⌂</span>
+                <span>Home</span>
+
+            </a>
+
+            <!-- FEATURES -->
+            <a href="{{ url_for('features') }}"
+               class="nav-link {% if request.endpoint == 'features' %}active{% endif %}"
+               {% if request.endpoint == 'features' %}aria-current="page"{% endif %}>
+
+                <span class="nav-icon">✿</span>
+                <span>Features</span>
+
+            </a>
+
+            <!-- PREDICTION ASSESSMENT -->
+            <a href="{{ url_for('prediction') }}"
+               class="nav-link {% if request.endpoint == 'prediction' %}active{% endif %}"
+               {% if request.endpoint == 'prediction' %}aria-current="page"{% endif %}>
+
+                <span class="nav-icon">▣</span>
+                <span>Prediction Assessment</span>
+
+            </a>
+
+            <!-- PREDICTION RESULT -->
+            <a href="{{ url_for('prediction_result') }}"
+               class="nav-link {% if request.endpoint == 'prediction_result' %}active{% endif %}"
+               {% if request.endpoint == 'prediction_result' %}aria-current="page"{% endif %}>
+
+                <span class="nav-icon">✓</span>
+                <span>Prediction Result</span>
+
+            </a>
+
+            <!-- PLANTAR CARE -->
+            <a href="{{ url_for('care') }}"
+               class="nav-link {% if request.endpoint == 'care' %}active{% endif %}"
+               {% if request.endpoint == 'care' %}aria-current="page"{% endif %}>
+
+                <span class="nav-icon">♡</span>
+                <span>Plantar Care</span>
+
+            </a>
+
+            <!-- NUTRITION -->
+            <a href="{{ url_for('nutrition') }}"
+               class="nav-link {% if request.endpoint == 'nutrition' %}active{% endif %}"
+               {% if request.endpoint == 'nutrition' %}aria-current="page"{% endif %}>
+
+                <span class="nav-icon">♡</span>
+                <span>Nutrition</span>
+
+            </a>
+
+            <!-- EXERCISE -->
+            <a href="{{ url_for('exercise') }}"
+               class="nav-link {% if request.endpoint == 'exercise' %}active{% endif %}"
+               {% if request.endpoint == 'exercise' %}aria-current="page"{% endif %}>
+
+                <span class="nav-icon">♧</span>
+                <span>Exercise</span>
+
+            </a>
+
+            <!-- GAMES -->
+            <a href="{{ url_for('games') }}"
+               class="nav-link {% if request.endpoint == 'games' %}active{% endif %}"
+               {% if request.endpoint == 'games' %}aria-current="page"{% endif %}>
+
+                <span class="nav-icon">◆</span>
+                <span>Games</span>
+
+            </a>
+
+            <!-- REPORT -->
+            <a href="{{ url_for('report') }}"
+               class="nav-link {% if request.endpoint == 'report' %}active{% endif %}"
+               {% if request.endpoint == 'report' %}aria-current="page"{% endif %}>
+
+                <span class="nav-icon">▤</span>
+                <span>Report</span>
+
+            </a>
+
+            <!-- ABOUT -->
+            <a href="{{ url_for('about') }}"
+               class="nav-link {% if request.endpoint == 'about' %}active{% endif %}"
+               {% if request.endpoint == 'about' %}aria-current="page"{% endif %}>
+
+                <span class="nav-icon">ⓘ</span>
+                <span>About</span>
+
+            </a>
+
+        </nav>
+
+        <!-- ACCOUNT -->
+        <div class="account-section">
+
+            <div class="nav-heading">
+                ACCOUNT
+            </div>
+
+            {% if session.get("username") %}
+
+                <div class="account-user">
+                    <span class="account-icon">♙</span>
+                    <span>User: {{ session.get("username") }}</span>
+                </div>
+
+                <a href="{{ url_for('logout') }}"
+                   class="account-link">
+
+                    <span class="account-icon">⇥</span>
+                    <span>Logout</span>
+
+                </a>
+
+            {% else %}
+
+                <a href="{{ url_for('login') }}"
+                   class="account-link {% if request.endpoint == 'login' %}active{% endif %}"
+                   {% if request.endpoint == 'login' %}aria-current="page"{% endif %}>
+
+                    <span class="account-icon">⇥</span>
+                    <span>Login</span>
+
+                </a>
+
+            {% endif %}
+
+        </div>
+
+        <!-- SIDEBAR DECORATION -->
+        <div class="sidebar-decoration">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <button class="menu-button"
+                    type="button"
+                    data-menu
+                    aria-label="Menu">
+
+                ☰
+
+            </button>
+
+            <div class="topbar-title">
                 PLANTARCARE
             </div>
 
-            <div class="brand-subtitle">
-                Plantar Fasciitis
+        </header>
+
+        <!-- FLASH MESSAGES -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                <div class="flash-area">
+
+                    {% for category, message in messages %}
+
+                        <div class="flash-message">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+        {% endwith %}
+
+        <!-- PAGE CONTENT -->
+        {% block content %}
+        {% endblock %}
+
+        <!-- FOOTER -->
+        <footer class="footer">
+
+            <div class="footer-line"></div>
+
+            <div class="footer-title">
+                PLANTARCARE
             </div>
 
-        </div>
-
-    </div>
-
-
-    <!-- =================================================
-         PROJECT PAGES
-    ================================================== -->
-
-    <div class="nav-heading">
-        PROJECT PAGES
-    </div>
-
-
-    <nav class="navigation">
-
-
-        <!-- HOME -->
-
-        <a href="{{ url_for('home') }}"
-           class="nav-link">
-
-            <span class="nav-icon">⌂</span>
-
-            <span>
-                Home
-            </span>
-
-        </a>
-
-
-        <!-- FEATURES -->
-
-        <a href="{{ url_for('features') }}"
-           class="nav-link">
-
-            <span class="nav-icon">✿</span>
-
-            <span>
-                Features
-            </span>
-
-        </a>
-
-
-        <!-- PREDICTION ASSESSMENT -->
-
-        <a href="{{ url_for('prediction') }}"
-           class="nav-link">
-
-            <span class="nav-icon">▣</span>
-
-            <span>
-                Prediction Assessment
-            </span>
-
-        </a>
-
-
-        <!-- PREDICTION RESULT -->
-
-        <a href="{{ url_for('prediction_result') }}"
-           class="nav-link">
-
-            <span class="nav-icon">✓</span>
-
-            <span>
-                Prediction Result
-            </span>
-
-        </a>
-
-
-        <!-- PLANTAR CARE -->
-
-        <a href="{{ url_for('care') }}"
-           class="nav-link">
-
-            <span class="nav-icon">♡</span>
-
-            <span>
-                Plantar Care
-            </span>
-
-        </a>
-
-
-        <!-- NUTRITION -->
-
-        <a href="{{ url_for('nutrition') }}"
-           class="nav-link">
-
-            <span class="nav-icon">♡</span>
-
-            <span>
-                Nutrition
-            </span>
-
-        </a>
-
-
-        <!-- EXERCISE -->
-
-        <a href="{{ url_for('exercise') }}"
-           class="nav-link">
-
-            <span class="nav-icon">♧</span>
-
-            <span>
-                Exercise
-            </span>
-
-        </a>
-
-
-        <!-- GAMES -->
-
-        <a href="{{ url_for('games') }}"
-           class="nav-link">
-
-            <span class="nav-icon">◆</span>
-
-            <span>
-                Games
-            </span>
-
-        </a>
-
-
-        <!-- REPORT -->
-
-        <a href="{{ url_for('report') }}"
-           class="nav-link">
-
-            <span class="nav-icon">▤</span>
-
-            <span>
-                Report
-            </span>
-
-        </a>
-
-
-        <!-- ABOUT -->
-
-        <a href="{{ url_for('about') }}"
-           class="nav-link">
-
-            <span class="nav-icon">ⓘ</span>
-
-            <span>
-                About
-            </span>
-
-        </a>
-
-
-    </nav>
-
-
-    <!-- =================================================
-         ACCOUNT
-    ================================================== -->
-
-    <div class="account-section">
-
-
-        <div class="nav-heading">
-            ACCOUNT
-        </div>
-
-
-        {% if session.get("username") %}
-
-
-        <!-- LOGGED USER -->
-
-        <div class="account-user">
-
-            <span class="account-icon">
-                ♙
-            </span>
-
-            <span>
-                User: {{ session.get("username") }}
-            </span>
-
-        </div>
-
-
-        <!-- LOGOUT -->
-
-        <a href="{{ url_for('logout') }}"
-           class="account-link">
-
-            <span class="account-icon">
-                ⇥
-            </span>
-
-            <span>
-                Logout
-            </span>
-
-        </a>
-
-
-        {% else %}
-
-
-        <!-- LOGIN -->
-
-        <a href="{{ url_for('login') }}"
-           class="account-link">
-
-            <span class="account-icon">
-                ⇥
-            </span>
-
-            <span>
-                Login
-            </span>
-
-        </a>
-
-
-        {% endif %}
-
-
-    </div>
-
-
-    <!-- =================================================
-         SIDEBAR DECORATION
-    ================================================== -->
-
-    <div class="sidebar-decoration">
-
-        <span></span>
-        <span></span>
-        <span></span>
-
-    </div>
-
-
-</aside>
-
-
-<!-- =====================================================
-     MAIN CONTENT
-===================================================== -->
-
-<main class="main">
-
-
-    <!-- =================================================
-         TOPBAR
-    ================================================== -->
-
-    <header class="topbar">
-
-
-        <!-- MENU BUTTON -->
-
-        <button class="menu-button"
-                type="button"
-                data-menu
-                aria-label="Menu">
-
-            ☰
-
-        </button>
-
-
-        <!-- CENTER TITLE -->
-
-        <div class="topbar-title">
-
-            PLANTARCARE
-
-        </div>
-
-
-    </header>
-
-
-    <!-- =================================================
-         FLASH MESSAGE
-    ================================================== -->
-
-    {% with messages = get_flashed_messages(with_categories=true) %}
-
-
-        {% if messages %}
-
-
-            <div class="flash-area">
-
-
-                {% for category, message in messages %}
-
-
-                    <div class="flash-message">
-
-                        {{ message }}
-
-                    </div>
-
-
-                {% endfor %}
-
-
+            <div class="footer-text">
+                Plantar Fasciitis Risk Prediction Assessment
             </div>
 
+        </footer>
 
-        {% endif %}
+    </main>
 
-
-    {% endwith %}
-
-
-    <!-- =================================================
-         PAGE CONTENT
-    ================================================== -->
-
-    {% block content %}
-
-    {% endblock %}
-
-
-    <!-- =================================================
-         FOOTER
-    ================================================== -->
-
-    <footer class="footer">
-
-
-        <div class="footer-line"></div>
-
-
-        <div class="footer-title">
-
-            PLANTARCARE
-
-        </div>
-
-
-        <div class="footer-text">
-
-            Plantar Fasciitis Risk Prediction Assessment
-
-        </div>
-
-
-    </footer>
-
-
-</main>
-
-
-<!-- =====================================================
-     JAVASCRIPT
-===================================================== -->
-
-<script src="{{ url_for('static', filename='script.js') }}"></script>
-
+    <!-- JAVASCRIPT -->
+    <script src="{{ url_for('static', filename='script.js') }}?v=302"></script>
 
 </body>
-
 </html>

@@ -6,6 +6,18 @@ Prediction Result | PLANTARCARE
 
 {% block content %}
 
+{# FIX: Provide safe defaults for variables used by this template #}
+{% set result = result|default({}, true) %}
+{% set patient = patient|default(result.get("patient", {}), true) %}
+{% set patient = patient if patient is mapping else {} %}
+{% set risk_level = risk_level|default(result.get("risk_level", "N/A"), true) %}
+{% set risk_info = risk_info|default({}, true) %}
+{% set bmi = bmi|default(result.get("bmi", "N/A"), true) %}
+{% set bmi_category = bmi_category|default(result.get("bmi_category", "N/A"), true) %}
+{% set prediction = prediction|default(result.get("prediction", "Not Available"), true) %}
+{% set confidence = confidence|default(result.get("confidence", "N/A"), true) %}
+{% set generated_at = generated_at|default(result.get("generated_at", "N/A"), true) %}
+
 <style>
 
 .result-page {
@@ -228,7 +240,6 @@ Prediction Result | PLANTARCARE
     font-size: 16px;
     margin-bottom: 15px;
 }
-
 .journey-content h3 {
     color: #173f55;
     margin: 0 0 8px;
@@ -451,9 +462,7 @@ Prediction Result | PLANTARCARE
             </div>
 
         </div>
-
-
-        <!-- ==============================
+                <!-- ==============================
              PREDICTION RESULT
              ============================== -->
 
@@ -463,23 +472,15 @@ Prediction Result | PLANTARCARE
                 Risk Assessment
             </div>
 
-
             <div class="risk-level">
-
                 {{ risk_level }}
-
             </div>
-
 
             <div class="prediction-summary">
-
                 {{ risk_info.get("summary", "") }}
-
             </div>
 
-
             <div class="metrics">
-
 
                 <!-- BMI -->
 
@@ -529,7 +530,7 @@ Prediction Result | PLANTARCARE
 
                     <div class="metric-value">
 
-                        {% if confidence != "N/A" %}
+                        {% if confidence != "N/A" and confidence is not none %}
                             {{ confidence }}%
                         {% else %}
                             N/A
@@ -542,7 +543,6 @@ Prediction Result | PLANTARCARE
                     </div>
 
                 </div>
-
 
             </div>
 
@@ -636,7 +636,7 @@ Prediction Result | PLANTARCARE
                 <div class="journey-content">
 
                     <h3>
-                        Foot Care & Footwear
+                        Foot Care &amp; Footwear
                     </h3>
 
                     <p>
@@ -653,9 +653,7 @@ Prediction Result | PLANTARCARE
                 </a>
 
             </div>
-
-
-            <!-- STEP 4 -->
+                        <!-- STEP 4 -->
 
             <div class="journey-card">
 
