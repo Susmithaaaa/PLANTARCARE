@@ -3,47 +3,48 @@
 
 <head>
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>{% block title %}PLANTARCARE Plantar Fasciitis Risk Prediction Assessment{% endblock %}</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-          rel="stylesheet">
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}?v=302">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=303">
 
     <style>
-        /* =====================================
-           PLANTARCARE MAIN THEME
-        ===================================== */
-
+        /* MAIN THEME */
         html,
         body {
-            background-color: #ffd8cc !important;
             margin: 0;
             padding: 0;
+            min-height: 100%;
+            background: #ffd8cc !important;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            overflow-x: hidden;
         }
 
         .main {
-            background-color: #ffd8cc !important;
+            min-width: 0;
+            background: #ffd8cc !important;
+            transition: margin-left 0.3s ease, width 0.3s ease;
         }
 
         .home-page {
-            background-color: #ffd8cc !important;
+            background: #ffd8cc !important;
         }
 
         .topbar {
-            background-color: #ffe5dd !important;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
+            background: #ffe5dd !important;
+            z-index: 20;
         }
 
         .topbar-title {
@@ -52,9 +53,33 @@
 
         .menu-button {
             position: absolute;
-            left: 25px;
+            left: 20px;
             top: 50%;
             transform: translateY(-50%);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 43px;
+            height: 43px;
+            padding: 0;
+            border: none;
+            border-radius: 10px;
+            background: transparent;
+            color: #f35d60;
+            font-size: 27px;
+            line-height: 1;
+            cursor: pointer;
+            z-index: 30;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .menu-button:hover {
+            background: #ffd7cd;
+        }
+
+        .menu-button:focus-visible {
+            outline: 2px solid #e9585b;
+            outline-offset: 3px;
         }
 
         .user-pill {
@@ -66,18 +91,21 @@
             background-color: #ffffff !important;
         }
 
-        /* =====================================
-           SIDEBAR ACTIVE LINK
-        ===================================== */
-
-        .sidebar .navigation .nav-link {
-            background-color: transparent;
-            color: inherit;
-            transition: background-color 0.2s ease,
-                        color 0.2s ease;
+        /* SIDEBAR NAVIGATION */
+        .sidebar {
+            z-index: 1000;
+            transition: transform 0.3s ease, width 0.3s ease;
         }
 
-        .sidebar .navigation .nav-link.active {
+        .sidebar .navigation .nav-link,
+        .sidebar .account-link {
+            background-color: transparent;
+            color: inherit;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .sidebar .navigation .nav-link.active,
+        .sidebar .account-link.active {
             background-color: #ffddd3 !important;
             color: #c94f50 !important;
             border-radius: 10px;
@@ -88,22 +116,89 @@
             color: #ed575c !important;
         }
 
-        .sidebar .navigation .nav-link:hover {
+        .sidebar .navigation .nav-link:hover,
+        .sidebar .account-link:hover {
             background-color: #ffddd3;
         }
 
-        /* Keep active link highlighted on hover */
-        .sidebar .navigation .nav-link.active:hover {
+        .sidebar .navigation .nav-link.active:hover,
+        .sidebar .account-link.active:hover {
             background-color: #ffddd3 !important;
         }
 
-        /* =====================================
-           MOBILE RESPONSIVE
-        ===================================== */
+        /* OVERLAY */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(37, 39, 43, 0.35);
+            z-index: 900;
+        }
 
+        .sidebar-overlay.show {
+            display: block;
+        }
+
+        /* DESKTOP: COLLAPSE SIDEBAR */
+        @media (min-width: 769px) {
+            body.sidebar-collapsed .sidebar {
+                transform: translateX(-100%);
+            }
+
+            body.sidebar-collapsed .main {
+                margin-left: 0 !important;
+                width: 100% !important;
+            }
+
+            body.sidebar-collapsed .sidebar-overlay {
+                display: none !important;
+            }
+        }
+
+        /* MOBILE: SLIDE SIDEBAR */
         @media (max-width: 768px) {
+            .sidebar {
+                position: fixed !important;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                height: 100vh;
+                height: 100dvh;
+                max-height: 100vh;
+                max-height: 100dvh;
+                overflow-y: auto;
+                overscroll-behavior: contain;
+                transform: translateX(-105%);
+                z-index: 1000;
+            }
+
+            body.sidebar-open .sidebar {
+                transform: translateX(0);
+            }
+
+            .main {
+                margin-left: 0 !important;
+                width: 100% !important;
+            }
+
+            .topbar {
+                min-height: 65px;
+            }
+
             .menu-button {
-                left: 15px;
+                left: 12px;
+            }
+
+            body.sidebar-open {
+                overflow: hidden;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .sidebar,
+            .main,
+            .menu-button {
+                transition: none !important;
             }
         }
     </style>
@@ -112,135 +207,93 @@
 <body>
 
     <!-- MOBILE OVERLAY -->
-    <div class="sidebar-overlay"></div>
+    <div class="sidebar-overlay" data-sidebar-overlay></div>
 
     <!-- SIDEBAR -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="plantarSidebar">
 
         <!-- BRAND -->
         <div class="brand">
-
-            <div class="brand-logo">
-                P
-            </div>
+            <div class="brand-logo">P</div>
 
             <div class="brand-text">
-                <div class="brand-title">
-                    PLANTARCARE
-                </div>
-
-                <div class="brand-subtitle">
-                    Plantar Fasciitis
-                </div>
+                <div class="brand-title">PLANTARCARE</div>
+                <div class="brand-subtitle">Plantar Fasciitis</div>
             </div>
-
         </div>
 
-        <!-- PROJECT PAGES -->
-        <div class="nav-heading">
-            PROJECT PAGES
-        </div>
+        <div class="nav-heading">PROJECT PAGES</div>
 
         <nav class="navigation">
 
-            <!-- HOME -->
             <a href="{{ url_for('home') }}"
                class="nav-link {% if request.endpoint == 'home' %}active{% endif %}"
                {% if request.endpoint == 'home' %}aria-current="page"{% endif %}>
-
                 <span class="nav-icon">⌂</span>
                 <span>Home</span>
-
             </a>
 
-            <!-- FEATURES -->
             <a href="{{ url_for('features') }}"
                class="nav-link {% if request.endpoint == 'features' %}active{% endif %}"
                {% if request.endpoint == 'features' %}aria-current="page"{% endif %}>
-
                 <span class="nav-icon">✿</span>
                 <span>Features</span>
-
             </a>
 
-            <!-- PREDICTION ASSESSMENT -->
             <a href="{{ url_for('prediction') }}"
                class="nav-link {% if request.endpoint == 'prediction' %}active{% endif %}"
                {% if request.endpoint == 'prediction' %}aria-current="page"{% endif %}>
-
                 <span class="nav-icon">▣</span>
                 <span>Prediction Assessment</span>
-
             </a>
 
-            <!-- PREDICTION RESULT -->
             <a href="{{ url_for('prediction_result') }}"
                class="nav-link {% if request.endpoint == 'prediction_result' %}active{% endif %}"
                {% if request.endpoint == 'prediction_result' %}aria-current="page"{% endif %}>
-
                 <span class="nav-icon">✓</span>
                 <span>Prediction Result</span>
-
             </a>
 
-            <!-- PLANTAR CARE -->
             <a href="{{ url_for('care') }}"
                class="nav-link {% if request.endpoint == 'care' %}active{% endif %}"
                {% if request.endpoint == 'care' %}aria-current="page"{% endif %}>
-
                 <span class="nav-icon">♡</span>
                 <span>Plantar Care</span>
-
             </a>
 
-            <!-- NUTRITION -->
             <a href="{{ url_for('nutrition') }}"
                class="nav-link {% if request.endpoint == 'nutrition' %}active{% endif %}"
                {% if request.endpoint == 'nutrition' %}aria-current="page"{% endif %}>
-
                 <span class="nav-icon">♡</span>
                 <span>Nutrition</span>
-
             </a>
 
-            <!-- EXERCISE -->
             <a href="{{ url_for('exercise') }}"
                class="nav-link {% if request.endpoint == 'exercise' %}active{% endif %}"
                {% if request.endpoint == 'exercise' %}aria-current="page"{% endif %}>
-
                 <span class="nav-icon">♧</span>
                 <span>Exercise</span>
-
             </a>
 
-            <!-- GAMES -->
             <a href="{{ url_for('games') }}"
                class="nav-link {% if request.endpoint == 'games' %}active{% endif %}"
                {% if request.endpoint == 'games' %}aria-current="page"{% endif %}>
-
                 <span class="nav-icon">◆</span>
                 <span>Games</span>
-
             </a>
 
-            <!-- REPORT -->
             <a href="{{ url_for('report') }}"
                class="nav-link {% if request.endpoint == 'report' %}active{% endif %}"
                {% if request.endpoint == 'report' %}aria-current="page"{% endif %}>
-
                 <span class="nav-icon">▤</span>
                 <span>Report</span>
-
             </a>
 
-            <!-- ABOUT -->
             <a href="{{ url_for('about') }}"
                class="nav-link {% if request.endpoint == 'about' %}active{% endif %}"
                {% if request.endpoint == 'about' %}aria-current="page"{% endif %}>
-
                 <span class="nav-icon">ⓘ</span>
                 <span>About</span>
-
             </a>
 
         </nav>
@@ -248,9 +301,7 @@
         <!-- ACCOUNT -->
         <div class="account-section">
 
-            <div class="nav-heading">
-                ACCOUNT
-            </div>
+            <div class="nav-heading">ACCOUNT</div>
 
             {% if session.get("username") %}
 
@@ -259,12 +310,9 @@
                     <span>User: {{ session.get("username") }}</span>
                 </div>
 
-                <a href="{{ url_for('logout') }}"
-                   class="account-link">
-
+                <a href="{{ url_for('logout') }}" class="account-link">
                     <span class="account-icon">⇥</span>
                     <span>Logout</span>
-
                 </a>
 
             {% else %}
@@ -272,10 +320,8 @@
                 <a href="{{ url_for('login') }}"
                    class="account-link {% if request.endpoint == 'login' %}active{% endif %}"
                    {% if request.endpoint == 'login' %}aria-current="page"{% endif %}>
-
                     <span class="account-icon">⇥</span>
                     <span>Login</span>
-
                 </a>
 
             {% endif %}
@@ -300,37 +346,27 @@
             <button class="menu-button"
                     type="button"
                     data-menu
-                    aria-label="Menu">
-
-                ☰
-
+                    aria-label="Open navigation menu"
+                    aria-controls="plantarSidebar"
+                    aria-expanded="true">
+                <span aria-hidden="true">☰</span>
             </button>
 
-            <div class="topbar-title">
-                PLANTARCARE
-            </div>
+            <div class="topbar-title">PLANTARCARE</div>
 
         </header>
 
         <!-- FLASH MESSAGES -->
         {% with messages = get_flashed_messages(with_categories=true) %}
-
             {% if messages %}
-
                 <div class="flash-area">
-
                     {% for category, message in messages %}
-
                         <div class="flash-message">
                             {{ message }}
                         </div>
-
                     {% endfor %}
-
                 </div>
-
             {% endif %}
-
         {% endwith %}
 
         <!-- PAGE CONTENT -->
@@ -339,23 +375,120 @@
 
         <!-- FOOTER -->
         <footer class="footer">
-
             <div class="footer-line"></div>
-
-            <div class="footer-title">
-                PLANTARCARE
-            </div>
-
+            <div class="footer-title">PLANTARCARE</div>
             <div class="footer-text">
                 Plantar Fasciitis Risk Prediction Assessment
             </div>
-
         </footer>
 
     </main>
 
-    <!-- JAVASCRIPT -->
-    <script src="{{ url_for('static', filename='script.js') }}?v=302"></script>
+    <!-- SIDEBAR MENU SCRIPT -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const body = document.body;
+            const sidebar = document.querySelector(".sidebar");
+            const overlay = document.querySelector("[data-sidebar-overlay]");
+            const menuButton = document.querySelector("[data-menu]");
+
+            if (!sidebar || !menuButton || !overlay) {
+                return;
+            }
+
+            const mobileQuery = window.matchMedia("(max-width: 768px)");
+
+            function updateButton() {
+                const isOpen = mobileQuery.matches
+                    ? body.classList.contains("sidebar-open")
+                    : !body.classList.contains("sidebar-collapsed");
+
+                menuButton.setAttribute("aria-expanded", String(isOpen));
+                menuButton.setAttribute(
+                    "aria-label",
+                    isOpen ? "Close navigation menu" : "Open navigation menu"
+                );
+
+                menuButton.innerHTML = isOpen
+                    ? '<span aria-hidden="true">☰</span>'
+                    : '<span aria-hidden="true">☰</span>';
+            }
+
+            function openSidebar() {
+                if (mobileQuery.matches) {
+                    body.classList.add("sidebar-open");
+                    overlay.classList.add("show");
+                } else {
+                    body.classList.remove("sidebar-collapsed");
+                }
+
+                updateButton();
+            }
+
+            function closeSidebar() {
+                if (mobileQuery.matches) {
+                    body.classList.remove("sidebar-open");
+                    overlay.classList.remove("show");
+                } else {
+                    body.classList.add("sidebar-collapsed");
+                }
+
+                updateButton();
+            }
+
+            function toggleSidebar() {
+                const isOpen = mobileQuery.matches
+                    ? body.classList.contains("sidebar-open")
+                    : !body.classList.contains("sidebar-collapsed");
+
+                if (isOpen) {
+                    closeSidebar();
+                } else {
+                    openSidebar();
+                }
+            }
+
+            menuButton.addEventListener("click", toggleSidebar);
+            overlay.addEventListener("click", closeSidebar);
+
+            sidebar.querySelectorAll("a").forEach(function (link) {
+                link.addEventListener("click", function () {
+                    if (mobileQuery.matches) {
+                        closeSidebar();
+                    }
+                });
+            });
+
+            document.addEventListener("keydown", function (event) {
+                if (event.key === "Escape") {
+                    closeSidebar();
+                }
+            });
+
+            function handleScreenChange() {
+                body.classList.remove("sidebar-open");
+                overlay.classList.remove("show");
+
+                if (mobileQuery.matches) {
+                    body.classList.remove("sidebar-collapsed");
+                } else {
+                    body.classList.remove("sidebar-collapsed");
+                }
+
+                updateButton();
+            }
+
+            if (mobileQuery.addEventListener) {
+                mobileQuery.addEventListener("change", handleScreenChange);
+            } else {
+                mobileQuery.addListener(handleScreenChange);
+            }
+
+            updateButton();
+        });
+    </script>
+
+    <script src="{{ url_for('static', filename='script.js') }}?v=303"></script>
 
 </body>
 </html>

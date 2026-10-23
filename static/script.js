@@ -2,27 +2,53 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     // ==================================================
-    // SIDEBAR
+    // SIDEBAR - OPEN / CLOSE
     // ==================================================
 
     const sidebar = document.querySelector(".sidebar");
     const overlay = document.querySelector(".sidebar-overlay");
     const menuButton = document.querySelector("[data-menu]");
 
-    if (menuButton && sidebar && overlay) {
-        menuButton.addEventListener("click", function () {
-            sidebar.classList.toggle("open");
-            overlay.classList.toggle("show");
-        });
+    function openSidebar() {
+        document.body.classList.add("menu-open");
+
+        if (menuButton) {
+            menuButton.setAttribute("aria-expanded", "true");
+        }
     }
 
-    if (overlay) {
-        overlay.addEventListener("click", function () {
-            if (sidebar) {
-                sidebar.classList.remove("open");
+    function closeSidebar() {
+        document.body.classList.remove("menu-open");
+
+        if (menuButton) {
+            menuButton.setAttribute("aria-expanded", "false");
+        }
+    }
+
+    if (sidebar && overlay && menuButton) {
+
+        menuButton.setAttribute("aria-expanded", "false");
+
+        menuButton.addEventListener("click", function () {
+            if (document.body.classList.contains("menu-open")) {
+                closeSidebar();
+            } else {
+                openSidebar();
             }
-            overlay.classList.remove("show");
         });
+
+        overlay.addEventListener("click", closeSidebar);
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                closeSidebar();
+            }
+        });
+
+        sidebar.querySelectorAll(".nav-link, .account-link")
+            .forEach(function (link) {
+                link.addEventListener("click", closeSidebar);
+            });
     }
 
 
@@ -33,10 +59,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const heightInput = document.querySelector("#height");
     const weightInput = document.querySelector("#weight");
     const bmiPreview = document.querySelector("#bmiPreview");
+
     const bmiCategoryPreview =
         document.querySelector("#bmiCategoryPreview");
 
     function calculateBMI() {
+
         if (!heightInput || !weightInput || !bmiPreview) {
             return;
         }
@@ -45,25 +73,32 @@ document.addEventListener("DOMContentLoaded", function () {
         const weight = parseFloat(weightInput.value);
 
         if (!height || !weight || height <= 0 || weight <= 0) {
+
             bmiPreview.textContent = "--";
 
             if (bmiCategoryPreview) {
                 bmiCategoryPreview.textContent =
                     "Enter height and weight";
             }
+
             return;
         }
 
         const bmi = weight / Math.pow(height / 100, 2);
+
         bmiPreview.textContent = bmi.toFixed(1);
 
         if (bmiCategoryPreview) {
+
             if (bmi < 18.5) {
                 bmiCategoryPreview.textContent = "Underweight";
+
             } else if (bmi < 25) {
                 bmiCategoryPreview.textContent = "Healthy Range";
+
             } else if (bmi < 30) {
                 bmiCategoryPreview.textContent = "Overweight";
+
             } else {
                 bmiCategoryPreview.textContent = "Higher BMI Range";
             }
@@ -89,6 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const stepDots = document.querySelectorAll("[data-step-dot]");
 
     function showCareStep(stepNumber) {
+
         careSteps.forEach(function (step, index) {
             step.classList.toggle("active", index === stepNumber);
         });
@@ -103,25 +139,45 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    document.querySelectorAll("[data-next-care]").forEach(function (button) {
-        button.addEventListener("click", function () {
-            const nextStep = parseInt(button.dataset.nextCare, 10);
+    document.querySelectorAll("[data-next-care]")
+        .forEach(function (button) {
 
-            if (!Number.isNaN(nextStep)) {
-                showCareStep(nextStep);
-            }
+            button.addEventListener("click", function () {
+
+                const nextStep = parseInt(
+                    button.dataset.nextCare,
+                    10
+                );
+
+                if (
+                    !Number.isNaN(nextStep) &&
+                    nextStep >= 0 &&
+                    nextStep < careSteps.length
+                ) {
+                    showCareStep(nextStep);
+                }
+            });
         });
-    });
 
-    document.querySelectorAll("[data-back-care]").forEach(function (button) {
-        button.addEventListener("click", function () {
-            const previousStep = parseInt(button.dataset.backCare, 10);
+    document.querySelectorAll("[data-back-care]")
+        .forEach(function (button) {
 
-            if (!Number.isNaN(previousStep)) {
-                showCareStep(previousStep);
-            }
+            button.addEventListener("click", function () {
+
+                const previousStep = parseInt(
+                    button.dataset.backCare,
+                    10
+                );
+
+                if (
+                    !Number.isNaN(previousStep) &&
+                    previousStep >= 0 &&
+                    previousStep < careSteps.length
+                ) {
+                    showCareStep(previousStep);
+                }
+            });
         });
-    });
 
     if (careSteps.length > 0) {
         showCareStep(0);
@@ -132,23 +188,135 @@ document.addEventListener("DOMContentLoaded", function () {
     // CAMERA ELEMENTS
     // ==================================================
 
-    const startCameraButton = document.querySelector("#startCamera");
-    const stopCameraButton = document.querySelector("#stopCamera");
-    const cameraVideo = document.querySelector("#cameraVideo");
+    const startCameraButton =
+        document.querySelector("#startCamera");
+
+    const stopCameraButton =
+        document.querySelector("#stopCamera");
+
+    const cameraVideo =
+        document.querySelector("#cameraVideo");
+
     const cameraPlaceholder =
         document.querySelector("#cameraPlaceholder");
-    const cameraStatus = document.querySelector("#cameraStatus");
+
+    const cameraStatus =
+        document.querySelector("#cameraStatus");
+
+    const startCameraGame =
+        document.querySelector("#startCameraGame");
+
+    const resetCameraGame =
+        document.querySelector("#resetCameraGame");
+
+    const gameArea =
+        document.querySelector("#cameraGameArea");
+
+    const cameraTarget =
+        document.querySelector("#cameraTarget");
+
+    const cameraScoreElement =
+        document.querySelector("#cameraScore");
+
+    const cameraTimeElement =
+        document.querySelector("#cameraTime");
+
+    const cameraHitsElement =
+        document.querySelector("#cameraHits");
+
+    const cameraGameMessage =
+        document.querySelector("#cameraGameMessage");
 
     let cameraStream = null;
     let cameraStarting = false;
 
+    let score = 0;
+    let hits = 0;
+    let timeLeft = 30;
+
+    let gameRunning = false;
+    let gameTimer = null;
+
 
     // ==================================================
-    // START CAMERA - LIVE PREVIEW FIX
+    // CAMERA GAME UI
+    // ==================================================
+
+    function updateCameraGameUI() {
+
+        if (cameraScoreElement) {
+            cameraScoreElement.textContent = score;
+        }
+
+        if (cameraHitsElement) {
+            cameraHitsElement.textContent = hits;
+        }
+
+        if (cameraTimeElement) {
+            cameraTimeElement.textContent = timeLeft;
+        }
+    }
+
+
+    // ==================================================
+    // STOP CAMERA GAME TIMER
+    // ==================================================
+
+    function stopCameraGameTimer() {
+
+        gameRunning = false;
+
+        if (gameTimer !== null) {
+            clearInterval(gameTimer);
+            gameTimer = null;
+        }
+    }
+
+
+    // ==================================================
+    // MOVE GAME TARGET
+    // ==================================================
+
+    function moveTarget() {
+
+        if (!gameArea || !cameraTarget) {
+            return;
+        }
+
+        const areaWidth = gameArea.clientWidth;
+        const areaHeight = gameArea.clientHeight;
+
+        const targetWidth = cameraTarget.offsetWidth || 62;
+        const targetHeight = cameraTarget.offsetHeight || 62;
+
+        const maxX = Math.max(0, areaWidth - targetWidth);
+        const maxY = Math.max(0, areaHeight - targetHeight);
+
+        const x = Math.random() * maxX;
+        const y = Math.random() * maxY;
+
+        cameraTarget.style.left = x + "px";
+        cameraTarget.style.top = y + "px";
+    }
+
+
+    // ==================================================
+    // START CAMERA
     // ==================================================
 
     async function startWebcam() {
+
         if (cameraStarting) {
+            return false;
+        }
+
+        if (!cameraVideo) {
+
+            if (cameraStatus) {
+                cameraStatus.textContent =
+                    "Camera video element was not found.";
+            }
+
             return false;
         }
 
@@ -156,19 +324,31 @@ document.addEventListener("DOMContentLoaded", function () {
             !navigator.mediaDevices ||
             !navigator.mediaDevices.getUserMedia
         ) {
+
             if (cameraStatus) {
                 cameraStatus.textContent =
                     "Camera unavailable. Open the app using localhost or HTTPS.";
             }
+
             return false;
         }
 
-        if (!cameraVideo) {
-            if (cameraStatus) {
-                cameraStatus.textContent =
-                    "Camera video element was not found.";
+        if (cameraStream && cameraStream.active) {
+
+            if (
+                cameraVideo.srcObject === cameraStream &&
+                cameraVideo.videoWidth > 0 &&
+                !cameraVideo.paused
+            ) {
+                return true;
             }
-            return false;
+
+            // Release an old or inactive stream.
+            cameraStream.getTracks().forEach(function (track) {
+                track.stop();
+            });
+
+            cameraStream = null;
         }
 
         cameraStarting = true;
@@ -182,27 +362,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         try {
-            // Stop the previous stream if one exists.
-            if (cameraStream) {
-                cameraStream.getTracks().forEach(function (track) {
-                    track.stop();
-                });
-                cameraStream = null;
-            }
 
             cameraVideo.pause();
             cameraVideo.srcObject = null;
 
-            // Request the laptop webcam.
-            // A lower resolution is often more compatible.
-            cameraStream = await navigator.mediaDevices.getUserMedia({
-                video: {
-                    facingMode: "user",
-                    width: { ideal: 640 },
-                    height: { ideal: 480 }
-                },
-                audio: false
-            });
+            cameraStream =
+                await navigator.mediaDevices.getUserMedia({
+
+                    video: {
+                        facingMode: "user",
+                        width: { ideal: 640 },
+                        height: { ideal: 480 }
+                    },
+
+                    audio: false
+                });
 
             cameraVideo.srcObject = cameraStream;
             cameraVideo.muted = true;
@@ -219,53 +393,74 @@ document.addEventListener("DOMContentLoaded", function () {
                 cameraPlaceholder.style.display = "none";
             }
 
-            // Wait for video metadata and actual frames.
+            // Wait for the camera to produce video frames.
             await new Promise(function (resolve, reject) {
+
                 let finished = false;
 
+                let timeoutId;
+
                 function cleanup() {
+
                     clearTimeout(timeoutId);
+
                     cameraVideo.removeEventListener(
-                        "loadeddata", onLoaded
+                        "loadeddata",
+                        onLoaded
                     );
+
                     cameraVideo.removeEventListener(
-                        "error", onError
+                        "error",
+                        onError
                     );
                 }
 
                 function onLoaded() {
+
                     if (finished) return;
+
                     finished = true;
                     cleanup();
                     resolve();
                 }
 
                 function onError() {
+
                     if (finished) return;
+
                     finished = true;
                     cleanup();
-                    reject(new Error("The camera video could not load."));
+
+                    reject(
+                        new Error("The camera video could not load.")
+                    );
                 }
 
-                const timeoutId = setTimeout(function () {
+                timeoutId = setTimeout(function () {
+
                     if (finished) return;
+
                     finished = true;
                     cleanup();
 
-                    reject(new Error(
-                        "Camera opened, but no video frames arrived."
-                    ));
+                    reject(
+                        new Error(
+                            "Camera opened, but no video frames arrived."
+                        )
+                    );
+
                 }, 10000);
 
                 cameraVideo.addEventListener(
-                    "loadeddata", onLoaded, { once: true }
+                    "loadeddata",
+                    onLoaded
                 );
 
                 cameraVideo.addEventListener(
-                    "error", onError, { once: true }
+                    "error",
+                    onError
                 );
 
-                // Handle a video that is already ready.
                 if (
                     cameraVideo.readyState >= 2 &&
                     cameraVideo.videoWidth > 0
@@ -274,7 +469,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
 
-            // Explicitly play the video stream.
             await cameraVideo.play();
 
             if (cameraStatus) {
@@ -290,12 +484,15 @@ document.addEventListener("DOMContentLoaded", function () {
             return true;
 
         } catch (error) {
+
             console.error("Camera error:", error);
 
             if (cameraStream) {
+
                 cameraStream.getTracks().forEach(function (track) {
                     track.stop();
                 });
+
                 cameraStream = null;
             }
 
@@ -308,19 +505,27 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             if (cameraStatus) {
+
                 if (
                     error.name === "NotAllowedError" ||
                     error.name === "SecurityError"
                 ) {
+
                     cameraStatus.textContent =
                         "Camera permission denied. Allow camera access in Chrome settings.";
+
                 } else if (error.name === "NotFoundError") {
+
                     cameraStatus.textContent =
                         "No camera device found. Check your laptop camera.";
+
                 } else if (error.name === "NotReadableError") {
+
                     cameraStatus.textContent =
                         "Camera is busy. Close other apps using the camera.";
+
                 } else {
+
                     cameraStatus.textContent =
                         "Camera error: " + error.message;
                 }
@@ -329,6 +534,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return false;
 
         } finally {
+
             cameraStarting = false;
 
             if (startCameraButton) {
@@ -339,20 +545,44 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // ==================================================
+    // FINISH CAMERA GAME
+    // ==================================================
+
+    function finishCameraGame() {
+
+        stopCameraGameTimer();
+
+        if (cameraTarget) {
+            cameraTarget.style.display = "none";
+        }
+
+        if (cameraGameMessage) {
+            cameraGameMessage.textContent =
+                "Game completed! Final score: " +
+                score + " points.";
+        }
+    }
+
+
+    // ==================================================
     // STOP CAMERA
     // ==================================================
 
     function stopWebcam() {
+
         stopCameraGameTimer();
 
         if (cameraStream) {
+
             cameraStream.getTracks().forEach(function (track) {
                 track.stop();
             });
+
             cameraStream = null;
         }
 
         if (cameraVideo) {
+
             cameraVideo.pause();
             cameraVideo.srcObject = null;
             cameraVideo.style.display = "none";
@@ -377,12 +607,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (startCameraButton) {
+
         startCameraButton.addEventListener("click", function () {
             startWebcam();
         });
     }
 
     if (stopCameraButton) {
+
         stopCameraButton.addEventListener("click", function () {
             stopWebcam();
         });
@@ -390,115 +622,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // ==================================================
-    // CAMERA TARGET GAME ELEMENTS
-    // ==================================================
-
-    const startCameraGame = document.querySelector("#startCameraGame");
-    const resetCameraGame = document.querySelector("#resetCameraGame");
-    const gameArea = document.querySelector("#cameraGameArea");
-    const cameraTarget = document.querySelector("#cameraTarget");
-
-    const cameraScoreElement = document.querySelector("#cameraScore");
-    const cameraTimeElement = document.querySelector("#cameraTime");
-    const cameraHitsElement = document.querySelector("#cameraHits");
-    const cameraGameMessage =
-        document.querySelector("#cameraGameMessage");
-
-    let score = 0;
-    let hits = 0;
-    let timeLeft = 30;
-    let gameRunning = false;
-    let gameTimer = null;
-
-
-    // ==================================================
-    // UPDATE CAMERA GAME UI
-    // ==================================================
-
-    function updateCameraGameUI() {
-        if (cameraScoreElement) {
-            cameraScoreElement.textContent = score;
-        }
-
-        if (cameraHitsElement) {
-            cameraHitsElement.textContent = hits;
-        }
-
-        if (cameraTimeElement) {
-            cameraTimeElement.textContent = timeLeft;
-        }
-    }
-
-
-    // ==================================================
-    // MOVE TARGET
-    // ==================================================
-
-    function moveTarget() {
-        if (!gameArea || !cameraTarget) {
-            return;
-        }
-
-        const areaWidth = gameArea.clientWidth;
-        const areaHeight = gameArea.clientHeight;
-
-        const targetWidth = cameraTarget.offsetWidth || 58;
-        const targetHeight = cameraTarget.offsetHeight || 58;
-
-        const maxX = Math.max(0, areaWidth - targetWidth);
-        const maxY = Math.max(0, areaHeight - targetHeight);
-
-        const x = Math.random() * maxX;
-        const y = Math.random() * maxY;
-
-        cameraTarget.style.left = x + "px";
-        cameraTarget.style.top = y + "px";
-    }
-
-
-    // ==================================================
-    // STOP CAMERA GAME TIMER
-    // ==================================================
-
-    function stopCameraGameTimer() {
-        gameRunning = false;
-
-        if (gameTimer !== null) {
-            clearInterval(gameTimer);
-            gameTimer = null;
-        }
-    }
-
-
-    // ==================================================
-    // FINISH CAMERA GAME
-    // ==================================================
-
-    function finishCameraGame() {
-        stopCameraGameTimer();
-
-        if (cameraTarget) {
-            cameraTarget.style.display = "none";
-        }
-
-        if (cameraGameMessage) {
-            cameraGameMessage.textContent =
-                "Game completed! Final score: " +
-                score + " points.";
-        }
-    }
-
-
-    // ==================================================
-    // START CAMERA GAME
+    // START CAMERA TARGET GAME
     // ==================================================
 
     async function startTargetGame() {
+
         if (gameRunning) {
             return;
         }
 
-        // Start camera if it is not active.
         if (
             !cameraStream ||
             !cameraStream.active ||
@@ -506,13 +638,16 @@ document.addEventListener("DOMContentLoaded", function () {
             cameraVideo.paused ||
             cameraVideo.videoWidth === 0
         ) {
+
             const cameraGranted = await startWebcam();
 
             if (!cameraGranted) {
+
                 if (cameraGameMessage) {
                     cameraGameMessage.textContent =
                         "Please start the camera before playing.";
                 }
+
                 return;
             }
         }
@@ -522,6 +657,7 @@ document.addEventListener("DOMContentLoaded", function () {
         score = 0;
         hits = 0;
         timeLeft = 30;
+
         gameRunning = true;
 
         updateCameraGameUI();
@@ -538,16 +674,20 @@ document.addEventListener("DOMContentLoaded", function () {
         moveTarget();
 
         gameTimer = setInterval(function () {
+
             timeLeft--;
+
             updateCameraGameUI();
 
             if (timeLeft <= 0) {
                 finishCameraGame();
             }
+
         }, 1000);
     }
 
     if (startCameraGame) {
+
         startCameraGame.addEventListener("click", function () {
             startTargetGame();
         });
@@ -555,11 +695,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // ==================================================
-    // TARGET CLICK
+    // CAMERA TARGET CLICK
     // ==================================================
 
     if (cameraTarget) {
+
         cameraTarget.addEventListener("click", function () {
+
             if (!gameRunning) {
                 return;
             }
@@ -583,7 +725,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // ==================================================
 
     if (resetCameraGame) {
+
         resetCameraGame.addEventListener("click", function () {
+
             stopCameraGameTimer();
 
             score = 0;
@@ -597,6 +741,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             if (cameraGameMessage) {
+
                 cameraGameMessage.textContent =
                     cameraStream && cameraStream.active
                         ? "Camera ready. Press Start Game."
@@ -613,13 +758,19 @@ document.addEventListener("DOMContentLoaded", function () {
     // ==================================================
 
     const tapButton = document.querySelector("#tapButton");
-    const gameScoreElement = document.querySelector("#gameScore");
-    const gameMessage = document.querySelector("#gameMessage");
+
+    const gameScoreElement =
+        document.querySelector("#gameScore");
+
+    const gameMessage =
+        document.querySelector("#gameMessage");
 
     let tapScore = 0;
 
     if (tapButton) {
+
         tapButton.addEventListener("click", function () {
+
             tapScore++;
 
             if (gameScoreElement) {
@@ -627,10 +778,14 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             if (gameMessage) {
+
                 if (tapScore >= 10) {
+
                     gameMessage.textContent =
                         "Great job! Challenge completed.";
+
                 } else {
+
                     gameMessage.textContent =
                         "Good! Keep the movement comfortable.";
                 }
@@ -640,16 +795,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // ==================================================
-    // CLEAN UP WHEN LEAVING PAGE
+    // CLEANUP WHEN LEAVING PAGE
     // ==================================================
 
     window.addEventListener("pagehide", function () {
+
         stopCameraGameTimer();
 
         if (cameraStream) {
+
             cameraStream.getTracks().forEach(function (track) {
                 track.stop();
             });
+
             cameraStream = null;
         }
     });
