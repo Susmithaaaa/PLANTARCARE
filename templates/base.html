@@ -11,15 +11,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=303">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=304">
 
     <style>
-        /* MAIN THEME */
+        /* BASE THEME */
         html,
         body {
             margin: 0;
             padding: 0;
             min-height: 100%;
+            width: 100%;
             background: #ffd8cc !important;
             font-family: 'Inter', sans-serif;
         }
@@ -44,42 +45,11 @@
             align-items: center;
             justify-content: center;
             background: #ffe5dd !important;
-            z-index: 20;
+            z-index: 100;
         }
 
         .topbar-title {
             text-align: center;
-        }
-
-        .menu-button {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 43px;
-            height: 43px;
-            padding: 0;
-            border: none;
-            border-radius: 10px;
-            background: transparent;
-            color: #f35d60;
-            font-size: 27px;
-            line-height: 1;
-            cursor: pointer;
-            z-index: 30;
-            transition: background 0.2s ease, transform 0.2s ease;
-        }
-
-        .menu-button:hover {
-            background: #ffd7cd;
-        }
-
-        .menu-button:focus-visible {
-            outline: 2px solid #e9585b;
-            outline-offset: 3px;
         }
 
         .user-pill {
@@ -91,10 +61,38 @@
             background-color: #ffffff !important;
         }
 
+        /* MENU BUTTON */
+        .menu-button {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            border: none;
+            border-radius: 10px;
+            background: transparent;
+            color: #f35d60;
+            font-size: 29px;
+            line-height: 1;
+            cursor: pointer;
+            z-index: 110;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+
+        .menu-button:hover {
+            background: #ffd7cd;
+        }
+
         /* SIDEBAR NAVIGATION */
         .sidebar {
             z-index: 1000;
-            transition: transform 0.3s ease, width 0.3s ease;
+            transition: transform 0.3s ease, visibility 0.3s ease;
         }
 
         .sidebar .navigation .nav-link,
@@ -121,33 +119,30 @@
             background-color: #ffddd3;
         }
 
-        .sidebar .navigation .nav-link.active:hover,
-        .sidebar .account-link.active:hover {
-            background-color: #ffddd3 !important;
-        }
-
         /* OVERLAY */
         .sidebar-overlay {
             display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(37, 39, 43, 0.35);
-            z-index: 900;
         }
 
         .sidebar-overlay.show {
             display: block;
+            position: fixed;
+            inset: 0;
+            background: rgba(30, 35, 40, 0.4);
+            z-index: 999;
         }
 
-        /* DESKTOP: COLLAPSE SIDEBAR */
-        @media (min-width: 769px) {
+        /* DESKTOP SIDEBAR COLLAPSE */
+        @media screen and (min-width: 769px) {
             body.sidebar-collapsed .sidebar {
-                transform: translateX(-100%);
+                transform: translateX(-105%) !important;
+                visibility: hidden;
             }
 
             body.sidebar-collapsed .main {
                 margin-left: 0 !important;
                 width: 100% !important;
+                max-width: 100% !important;
             }
 
             body.sidebar-collapsed .sidebar-overlay {
@@ -155,49 +150,118 @@
             }
         }
 
-        /* MOBILE: SLIDE SIDEBAR */
-        @media (max-width: 768px) {
+        /* PHONE AND TABLET SIDEBAR */
+        @media screen and (max-width: 768px) {
+            html,
+            body {
+                width: 100%;
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+
             .sidebar {
+                display: flex !important;
+                flex-direction: column;
                 position: fixed !important;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                height: 100vh;
-                height: 100dvh;
-                max-height: 100vh;
-                max-height: 100dvh;
-                overflow-y: auto;
+                top: 0 !important;
+                left: 0 !important;
+                bottom: 0 !important;
+
+                width: 275px !important;
+                min-width: 0 !important;
+                max-width: 85vw !important;
+
+                height: 100vh !important;
+                height: 100dvh !important;
+                max-height: 100vh !important;
+                max-height: 100dvh !important;
+
+                padding-bottom: 25px;
+                box-sizing: border-box;
+                overflow-x: hidden !important;
+                overflow-y: auto !important;
                 overscroll-behavior: contain;
-                transform: translateX(-105%);
-                z-index: 1000;
+
+                background: #ffad98 !important;
+
+                transform: translateX(-105%) !important;
+                visibility: hidden;
+                pointer-events: none;
+
+                z-index: 10000 !important;
+                box-shadow: none;
             }
 
             body.sidebar-open .sidebar {
-                transform: translateX(0);
+                transform: translateX(0) !important;
+                visibility: visible !important;
+                pointer-events: auto !important;
+                box-shadow: 8px 0 30px rgba(50, 30, 20, 0.15);
             }
 
             .main {
+                display: block;
                 margin-left: 0 !important;
+                padding-left: 0 !important;
                 width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+                box-sizing: border-box;
             }
 
             .topbar {
+                display: flex !important;
+                position: sticky !important;
+                top: 0;
+                width: 100%;
                 min-height: 65px;
+                box-sizing: border-box;
+                z-index: 100;
+            }
+
+            .topbar-title {
+                max-width: calc(100% - 105px);
+                font-size: clamp(18px, 5vw, 25px);
+                white-space: nowrap;
             }
 
             .menu-button {
-                left: 12px;
+                display: inline-flex !important;
+                left: 10px !important;
+                top: 50% !important;
+                transform: translateY(-50%) !important;
+                width: 42px;
+                height: 42px;
+                font-size: 28px;
+                z-index: 110 !important;
+            }
+
+            .sidebar-overlay.show {
+                display: block !important;
+                position: fixed !important;
+                inset: 0 !important;
+                width: 100%;
+                height: 100%;
+                background: rgba(30, 35, 40, 0.4) !important;
+                z-index: 9999 !important;
             }
 
             body.sidebar-open {
-                overflow: hidden;
+                overflow: hidden !important;
+            }
+
+            .brand {
+                flex-shrink: 0;
+            }
+
+            .navigation {
+                flex-shrink: 0;
             }
         }
 
         @media (prefers-reduced-motion: reduce) {
             .sidebar,
-            .main,
-            .menu-button {
+            .main {
                 transition: none !important;
             }
         }
@@ -212,7 +276,6 @@
     <!-- SIDEBAR -->
     <aside class="sidebar" id="plantarSidebar">
 
-        <!-- BRAND -->
         <div class="brand">
             <div class="brand-logo">P</div>
 
@@ -328,7 +391,6 @@
 
         </div>
 
-        <!-- SIDEBAR DECORATION -->
         <div class="sidebar-decoration">
             <span></span>
             <span></span>
@@ -340,7 +402,6 @@
     <!-- MAIN CONTENT -->
     <main class="main">
 
-        <!-- TOPBAR -->
         <header class="topbar">
 
             <button class="menu-button"
@@ -348,7 +409,7 @@
                     data-menu
                     aria-label="Open navigation menu"
                     aria-controls="plantarSidebar"
-                    aria-expanded="true">
+                    aria-expanded="false">
                 <span aria-hidden="true">☰</span>
             </button>
 
@@ -361,9 +422,7 @@
             {% if messages %}
                 <div class="flash-area">
                     {% for category, message in messages %}
-                        <div class="flash-message">
-                            {{ message }}
-                        </div>
+                        <div class="flash-message">{{ message }}</div>
                     {% endfor %}
                 </div>
             {% endif %}
@@ -384,34 +443,41 @@
 
     </main>
 
-    <!-- SIDEBAR MENU SCRIPT -->
+    <!-- SIDEBAR SCRIPT -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const body = document.body;
-            const sidebar = document.querySelector(".sidebar");
+            const sidebar = document.getElementById("plantarSidebar");
             const overlay = document.querySelector("[data-sidebar-overlay]");
             const menuButton = document.querySelector("[data-menu]");
+            const mobileQuery = window.matchMedia("(max-width: 768px)");
 
-            if (!sidebar || !menuButton || !overlay) {
+            if (!sidebar || !overlay || !menuButton) {
                 return;
             }
 
-            const mobileQuery = window.matchMedia("(max-width: 768px)");
+            function isSidebarOpen() {
+                if (mobileQuery.matches) {
+                    return body.classList.contains("sidebar-open");
+                }
 
-            function updateButton() {
-                const isOpen = mobileQuery.matches
-                    ? body.classList.contains("sidebar-open")
-                    : !body.classList.contains("sidebar-collapsed");
+                return !body.classList.contains("sidebar-collapsed");
+            }
 
-                menuButton.setAttribute("aria-expanded", String(isOpen));
+            function updateState() {
+                const open = isSidebarOpen();
+
+                menuButton.setAttribute("aria-expanded", String(open));
                 menuButton.setAttribute(
                     "aria-label",
-                    isOpen ? "Close navigation menu" : "Open navigation menu"
+                    open ? "Close navigation menu" : "Open navigation menu"
                 );
 
-                menuButton.innerHTML = isOpen
-                    ? '<span aria-hidden="true">☰</span>'
-                    : '<span aria-hidden="true">☰</span>';
+                if (mobileQuery.matches && open) {
+                    overlay.classList.add("show");
+                } else {
+                    overlay.classList.remove("show");
+                }
             }
 
             function openSidebar() {
@@ -422,26 +488,22 @@
                     body.classList.remove("sidebar-collapsed");
                 }
 
-                updateButton();
+                updateState();
             }
 
             function closeSidebar() {
-                if (mobileQuery.matches) {
-                    body.classList.remove("sidebar-open");
-                    overlay.classList.remove("show");
-                } else {
+                body.classList.remove("sidebar-open");
+
+                if (!mobileQuery.matches) {
                     body.classList.add("sidebar-collapsed");
                 }
 
-                updateButton();
+                overlay.classList.remove("show");
+                updateState();
             }
 
             function toggleSidebar() {
-                const isOpen = mobileQuery.matches
-                    ? body.classList.contains("sidebar-open")
-                    : !body.classList.contains("sidebar-collapsed");
-
-                if (isOpen) {
+                if (isSidebarOpen()) {
                     closeSidebar();
                 } else {
                     openSidebar();
@@ -465,30 +527,24 @@
                 }
             });
 
-            function handleScreenChange() {
+            function handleViewportChange() {
                 body.classList.remove("sidebar-open");
+                body.classList.remove("sidebar-collapsed");
                 overlay.classList.remove("show");
-
-                if (mobileQuery.matches) {
-                    body.classList.remove("sidebar-collapsed");
-                } else {
-                    body.classList.remove("sidebar-collapsed");
-                }
-
-                updateButton();
+                updateState();
             }
 
             if (mobileQuery.addEventListener) {
-                mobileQuery.addEventListener("change", handleScreenChange);
+                mobileQuery.addEventListener("change", handleViewportChange);
             } else {
-                mobileQuery.addListener(handleScreenChange);
+                mobileQuery.addListener(handleViewportChange);
             }
 
-            updateButton();
+            updateState();
         });
     </script>
 
-    <script src="{{ url_for('static', filename='script.js') }}?v=303"></script>
+    <script src="{{ url_for('static', filename='script.js') }}?v=304"></script>
 
 </body>
 </html>
